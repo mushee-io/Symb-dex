@@ -59,9 +59,27 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Derive historical LP fees with transfer-aware attribution in Milestone 6; do not invent APR.
 - [ ] Audit contracts and complete controlled low-value mainnet verification.
 
-## M06 — Indexing and market data
-- [ ] On-chain event indexer, API, candles, TVL and volume.
-- [ ] Handle reorgs and reconcile chain state.
+## M06 — Market data and analytics
+### 6A — Indexer foundation (source implemented, deployment tests pending)
+- [x] Resumable, bounded confirmed-block scanning, cursor-based backfill and factory PairCreated discovery.
+- [x] Strict contract/pool provenance validation and decoded Mint/Burn/Swap/Sync/LP Transfer logs.
+- [x] Canonical-block hash tracking, ancestor detection, rollback/replay and deep-reorg halt.
+- [x] Tests with deterministic block and event fixtures.
+- [ ] Execute against verified M02 contracts and real VERY RPC with production monitoring.
+
+### 6B — Durable Neon indexing data (source implemented, operational proof pending)
+- [x] Versioned migration for canonical block, factory pair, raw event and normalized market records.
+- [x] Atomic commits and per-chain advisory locking with optimistic checkpoint assertion.
+- [x] On-chain reserve reconciliation and persisted audit outcomes.
+- [x] Historical write schema with cascading fork cleanup and precise NUMERIC amounts.
+- [ ] Apply migration to user-approved Neon project and verify concurrent-worker/reorg recovery on real DB.
+- [ ] Operationalize metrics and runbooks after contract deployment.
+
+### 6C–6F — Future
+- [ ] Verified prices, token-denominated volume, trustworthy TVL, OHLCV and LP fee analytics.
+- [ ] Versioned public APIs, history and wallet views.
+- [ ] Frontend market charts, trending pools and dashboards.
+- [ ] Alerting, production monitoring and independent data-integrity audit.
 
 ## M07 — Security readiness
 - [ ] Threat model, fuzz/invariants, dependency review, external audit.
