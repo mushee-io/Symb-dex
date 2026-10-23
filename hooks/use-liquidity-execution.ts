@@ -77,13 +77,16 @@ export function useLiquidityExecution() {
     setPhase("pending");
     try {
       const receipt=await client.waitForTransactionReceipt({hash:signed,confirmations:1,timeout:120_000});
-      if (receipt.status!=="success") throw new Error("The liquidity transaction reverted. Inspect the receipt on VeryScan.");
+      if (receipt.status!=="success") {
+        setPhase("failed");
+        throw new Error("The liquidity transaction reverted. Inspect the receipt on VeryScan.");
+      }
       setPhase("confirmed");
       await cache.invalidateQueries();
       return signed;
     } catch (e) {
-      // A timeout does NOT mean a signed transaction failed; retain hash and mark unknown.
-      setPhase("unknown");
+      // A reverted receipt is a known failure; only an unresolved receipt has unknown status.
+      setPhase(prev=>prev==="failed"?prev:"unknown");
       throw e;
     }
   }
@@ -172,9 +175,9 @@ export function useLiquidityExecution() {
       setHash(signed);setPhase("pending");
       try {
         const receipt=await ctx.client.waitForTransactionReceipt({hash:signed,confirmations:1,timeout:120_000});
-        if (receipt.status!=="success") throw new Error("Approval reverted.");
+        if (receipt.status!=="success") {setPhase("failed");throw new Error("Approval reverted.");}
         setPhase("confirmed");await cache.invalidateQueries();return signed;
-      } catch (e){setPhase("unknown");throw e;}
+      } catch (e){setPhase(prev=>prev==="failed"?prev:"unknown");throw e;}
     } catch(e) {
       setError(e instanceof Error?e.message:"Approval failed.");
       setPhase(prev=>prev==="unknown"?prev:"failed");return null;
