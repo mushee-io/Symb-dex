@@ -4,7 +4,8 @@ import { amountOut, parseAmount, quoteRoute, minimumReceived, parseSlippage, tra
 
 test("constant product quote matches integer V2 math", () => {
   assert.equal(amountOut(100n, 1_000n, 1_000n, 30), 90n);
-  assert.ok(amountOut(100n, 1_000n, 1_000n, 0) > 90n);
+  assert.equal(amountOut(1_000n, 1_000n, 1_000n, 0), 500n);
+  assert.equal(amountOut(1_000n, 1_000n, 1_000n, 30), 499n);
 });
 test("rejects empty pools, zero input, invalid fee and dust", () => {
   assert.throws(()=>amountOut(0n,100n,100n,30));

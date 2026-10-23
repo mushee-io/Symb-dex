@@ -32,11 +32,17 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Enable live approval flow only after M02 deployed and M07 reviewed.
 
 
-## M04 — Quotes and real swaps
-- [ ] Pool reserve reads and gas / output quotes.
-- [ ] Slippage and transaction deadline protections.
-- [ ] Allow verified swaps after review and deployment.
-- [ ] Test low-value real swaps and independently verify receipts.
+## M04 — Quotes and real swaps (code implemented; deployment and live tests pending)
+- [x] Factory/pair reserve reads, direct/WVERY multihop routing and integer-safe output quotes.
+- [x] Slippage presets/custom limits, min-output calculation and 1–60-minute deadlines.
+- [x] Mandatory fresh requote, route equality and quote-bound slippage checks before execution.
+- [x] Mandatory on-chain simulation, allowance checks, balance/gas buffer validation, wallet signature and receipt monitoring.
+- [x] Swap UI: direction, reviewed tokens, output, route, impact, fee settings, refresh, transaction hash.
+- [x] Unit tests for math, paths, failure cases and execution gates.
+- [ ] Finish M02 audited AMM, verify factory/router/WVERY and approved fee configuration.
+- [ ] Verify independent chain code, approved token list, deploy reviewer signoff.
+- [ ] Perform browser/wallet smoke tests and small-value confirmed mainnet trades.
+- [ ] Validate native gas estimation, router ABI compatibility and behaviour against deployed contracts.
 
 ## M05 — Pool management
 - [ ] Create pools, add/remove liquidity, track ownership and fees.
