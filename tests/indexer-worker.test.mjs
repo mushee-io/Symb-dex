@@ -8,7 +8,7 @@ function createFake(height=25n, hashes={}){
   getChainId:async()=>4613,
   getBytecode:async()=> "0x60006000",
   getBlockNumber:async()=>height,
-  getBlock:async({blockNumber})=>({number:blockNumber,hash:hashes[String(blockNumber)]??h(blockNumber+1n),parentHash:hashes[String(blockNumber-1n)]??h(blockNumber),timestamp:1700000000n+blockNumber}),
+  getBlock:async({blockNumber})=>({number:blockNumber,hash:hashes[String(blockNumber)]??h(blockNumber+1n),parentHash:h(blockNumber),timestamp:1700000000n+blockNumber}),
   getLogs:async()=>[],
  };
  const cursor={value:null};
