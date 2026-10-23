@@ -51,7 +51,8 @@ export function useTokenRegistry() {
   const trusted = useMemo<LiddeToken[]>(() => {
     if (verifiedList.chainId !== very.id) return [];
     // Importing a token never adds it to this independently reviewed registry.
-    return verifiedList.tokens.filter((t) => isExplicitlyVerified(t.address, verifiedList.tokens))
+    const curated: {address: string; name: string; symbol: string; decimals: number; reviewed: boolean}[] = verifiedList.tokens;
+    return curated.filter((t) => isExplicitlyVerified(t.address, curated))
       .map((t) => ({ address: getAddress(t.address), name: t.name, symbol: t.symbol, decimals: t.decimals, verified: true }));
   }, []);
   const tokens = useMemo(() => [...trusted, ...imported.filter((token) =>
