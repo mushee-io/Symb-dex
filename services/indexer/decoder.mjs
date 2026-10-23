@@ -1,7 +1,7 @@
 import { decodeEventLog, parseAbi, getAddress, isAddress, zeroAddress } from "viem";
 
 export const factoryEvents = parseAbi([
-  "event PairCreated(address indexed token0,address indexed token1,address pair,uint256)"
+  "event PairCreated(address indexed token0,address indexed token1,address pair,uint256 pairIndex)"
 ]);
 export const pairEvents = parseAbi([
   "event Mint(address indexed sender,uint256 amount0,uint256 amount1)",
