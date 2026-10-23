@@ -44,9 +44,20 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Perform browser/wallet smoke tests and small-value confirmed mainnet trades.
 - [ ] Validate native gas estimation, router ABI compatibility and behaviour against deployed contracts.
 
-## M05 — Pool management
-- [ ] Create pools, add/remove liquidity, track ownership and fees.
-- [ ] Test withdrawal and adverse-token behaviour.
+## M05 — Pool deep integration (source implemented; security and live tests pending)
+- [x] Factory-based pool discovery with paginated, same-block reserve, supply and LP ownership snapshots.
+- [x] Bigint math for initial mint, proportional deposits, LP share and min-output withdrawal.
+- [x] Create/add and remove liquidity frontend, exact ERC-20/LP allowances, simulation, gas and receipts.
+- [x] Review-gated V2 router calldata for token/token and native VERY/token pairs.
+- [x] Portfolio LP positions for reviewed pools, plus pool detail pages.
+- [x] Raw Mint/Burn/Swap/Sync/Transfer Neon schema and bounded read-only indexer scaffold.
+- [x] Unit tests for liquidity math, reviews, approvals, invalid input and ABI availability.
+- [ ] Implement, verify and deploy the Milestone 2 factory/router/pairs/WVERY.
+- [ ] Independently review supported tokens and the deployed router interface/fees.
+- [ ] Test wallet approvals, initial mint, add/remove, partial/full withdrawal and reserve updates against a deployed environment.
+- [ ] Run the indexer in an operator-provisioned Neon database and verify reorg/runbook handling.
+- [ ] Derive historical LP fees with transfer-aware attribution in Milestone 6; do not invent APR.
+- [ ] Audit contracts and complete controlled low-value mainnet verification.
 
 ## M06 — Indexing and market data
 - [ ] On-chain event indexer, API, candles, TVL and volume.

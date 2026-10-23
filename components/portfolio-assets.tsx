@@ -6,6 +6,7 @@ import { useAccount, useBalance, useChainId } from "wagmi";
 import { very } from "@/lib/very";
 import { useTokenRegistry } from "@/hooks/use-token-registry";
 import { TokenBalanceRow } from "@/components/token-balances";
+import { PortfolioLiquidity } from "@/components/liquidity/portfolio-liquidity";
 
 export function PortfolioAssets() {
   const { address, isConnected } = useAccount();
@@ -34,10 +35,7 @@ export function PortfolioAssets() {
         <Link className="secondary-link" href="/approvals">Manage token approvals ↗</Link>
         <a className="secondary-link" href="https://veryscan.io" target="_blank" rel="noreferrer">Explore VERY Mainnet ↗</a>
       </div>
-      <div className="empty-panel lp-coming">
-        <h2>Liquidity positions are not live.</h2>
-        <p>No LP contracts are configured. Lidde does not hold your private keys or custody funds.</p>
-      </div>
+      <PortfolioLiquidity />
     </section>
   );
 }
