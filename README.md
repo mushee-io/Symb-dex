@@ -77,3 +77,18 @@ This work adds:
 - Read-only and fail-closed behaviour if no approved factory, router, WVERY, fee and reviewed ERC-20 addresses exist. **No trading can occur against the current empty deployment registry.**
 
 **Important:** Milestone 2 has not deployed any AMM or canonical wrapped VERY for Lidde. Execution is untested on live contracts and cannot be treated as production-ready merely because the UI compiles. See [docs/MILESTONE-04.md](docs/MILESTONE-04.md).
+
+## Milestone 5 — Liquidity pools and LP portfolio
+
+Source implemented in `build/milestone-05-liquidity`:
+- `/pools`: verified factory pool discovery, paginated snapshots and on-chain reserve reads.
+- `/pools/create`: create an initial market through the V2 add-liquidity router, or add to an existing pool.
+- `/pools/[pair]`: factory-verified pair details and add/remove liquidity controls.
+- `/portfolio`: LP token holdings and pool share for reviewed pools on the current page.
+- On-chain checks for pool authenticity, router factory/WVERY binding, reviewed assets, explicit wallet allowances, minimum outputs, transaction expiry, simulation and gas coverage.
+- Exact integer math for first mint, ratio deposits, LP supply/ownership and partial/full withdrawals.
+- Read-only optional Neon event indexer schema and script for confirmed Mint, Burn, Swap, Sync and Transfer history.
+
+**Milestone 2 is still outstanding.** No AMM is deployed in this repository, verified token list is empty and all liquidity transaction controls remain disabled. The supplied event indexer does not run or write data unless an operator explicitly configures it.
+
+See [Milestone 5 implementation and remaining release requirements](docs/MILESTONE-05.md).
