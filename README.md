@@ -65,3 +65,15 @@ Implemented on branch `build/milestone-03-wallets-tokens`:
 **Risk boundaries:** a valid ERC-20 contract may be malicious, pausable, blocklisted, fee-on-transfer, honeypot or illiquid. Imported token balances should not be interpreted as tradable or priced assets. Approval write support is inactive while `config/deployments.json` uses null router and false review flags.
 
 Read [docs/MILESTONE-03.md](docs/MILESTONE-03.md) for technical acceptance and human smoke tests.
+
+## Milestone 4 — Quote and guarded swap engine
+
+This work adds:
+
+- Constant-product AMM calculations using bigint integer arithmetic and the **actual documented fee rate** of a verified deployment (unconfigured until contracts are reviewed).
+- Factory/pair bytecode and reserve reads on chain 4613; direct routes and up to two hops through independently verified wrapped VERY.
+- Swap direction, live query refresh, slippage settings, minimum received, price impact (including fees), and transaction deadlines.
+- A transaction pipeline that revalidates latest pool reserves, enforces the original minimum output, checks allowance/balances and gas, simulates the contract call, signs through the connected wallet, and checks the receipt.
+- Read-only and fail-closed behaviour if no approved factory, router, WVERY, fee and reviewed ERC-20 addresses exist. **No trading can occur against the current empty deployment registry.**
+
+**Important:** Milestone 2 has not deployed any AMM or canonical wrapped VERY for Lidde. Execution is untested on live contracts and cannot be treated as production-ready merely because the UI compiles. See [docs/MILESTONE-04.md](docs/MILESTONE-04.md).

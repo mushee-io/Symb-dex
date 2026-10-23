@@ -6,5 +6,6 @@
   "factory": null,
   "router": null,
   "wrappedVery": null,
+  "feeBps": null,
   "verifiedTokens": []
 }
