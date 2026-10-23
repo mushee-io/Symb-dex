@@ -11,6 +11,9 @@ import { parseSlippage, minimumReceived } from "@/lib/swap/math.mjs";
 import { isTradingEnabled } from "@/lib/release-gate.mjs";
 import { very } from "@/lib/very";
 import deployments from "@/config/deployments.json";
+import type { SwapDeployment } from "@/lib/swap/execution-policy.mjs";
+
+const deployment: SwapDeployment = deployments as SwapDeployment;
 
 type Direction = "very-to-token" | "token-to-very";
 
@@ -34,7 +37,7 @@ export function SwapTerminal() {
   const token = useMemo(() => tokens.find(t=>t.address === selectedAddress) ?? null, [tokens, selectedAddress]);
   const { data: quote, configured, isFetching, isError, error: quoteError, refetch } =
     useSwapQuote(token, direction, amount);
-  const swapEnabled = isTradingEnabled(deployments);
+  const swapEnabled = isTradingEnabled(deployment);
   let slippageBps: number | null = null;
   let minReceived: bigint | null = null;
   let settingError = "";
@@ -124,9 +127,9 @@ export function SwapTerminal() {
         <div><span>Estimated output</span><strong>{quote ? `${formatUnits(quote.amountOut,quote.outputDecimals)} ${outSymbol}` : "—"}</strong></div>
         <div><span>Minimum received</span><strong>{minReceived && quote ? `${formatUnits(minReceived,quote.outputDecimals)} ${outSymbol}` : "—"}</strong></div>
         <div><span>Price impact (includes fees)</span><strong>{quote ? `${(quote.priceImpactBps/100).toFixed(2)}%` : "—"}</strong></div>
-        <div><span>Liquidity provider fee</span><strong>{deployments.feeBps===null ? "Unconfigured" : `${deployments.feeBps/100}% per hop`}</strong></div>
+        <div><span>Liquidity provider fee</span><strong>{deployment.feeBps===null ? "Unconfigured" : `${deployment.feeBps/100}% per hop`}</strong></div>
         <div><span>Network fee (estimated)</span><strong>{estimatedGasFee ? `${formatUnits(estimatedGasFee,18)} VERY` : "Not available"}</strong></div>
-        <div><span>Route</span><strong>{quote ? quote.path.map(p=>p.toLowerCase()===deployments.wrappedVery?.toLowerCase()?"WVERY":p.slice(0,8)+"…").join(" → ") : "No verified pool"}</strong></div>
+        <div><span>Route</span><strong>{quote ? quote.path.map(p=>p.toLowerCase()===deployment.wrappedVery?.toLowerCase()?"WVERY":p.slice(0,8)+"…").join(" → ") : "No verified pool"}</strong></div>
         <div><span>Quote refreshed</span><strong>{quote ? new Date(quote.checkedAt).toLocaleTimeString() : "—"}</strong></div>
       </div>
       {quote && quote.priceImpactBps >= 500 && <p className="inline-notice">High price impact ({(quote.priceImpactBps/100).toFixed(2)}%). Confirm liquidity and expected outcome before trading.</p>}
