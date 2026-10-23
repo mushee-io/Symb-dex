@@ -48,3 +48,20 @@ See [docs/MILESTONES.md](docs/MILESTONES.md), [docs/NETWORK.md](docs/NETWORK.md)
 No private key, mnemonic, live contract address, token address, or claimed liquidity value is bundled with this application. Liquidity and swaps will be enabled only after verified deployments and a security signoff.
 
 Copyright (c) Mushee contributors. License pending.
+
+## Milestone 3 — Wallets, tokens and approvals
+
+Implemented on branch `build/milestone-03-wallets-tokens`:
+- Multi-wallet injected EIP-6963 discovery with Wagmi; wallet account switch, disconnect and VERY chain switching.
+- Optional WalletConnect QR connection: set `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` in Vercel and local `.env.local`. Obtain your own ID from [Reown Cloud](https://cloud.reown.com/); without it injected wallets still work.
+- Native VERY and ERC-20 balance readouts via chain RPC; available in Portfolio and Explore.
+- Import a token by its exact contract address after bytecode and `name/symbol/decimals` verification; metadata does not imply an asset is safe. Imported addresses are saved in browser localStorage only.
+- `config/verified-tokens.json` is **empty** until each address is independently reviewed. A user's imported token can never mark itself verified.
+- Router allowance management and exact amount/revoke flow are written but **locked** until valid reviewed production deployment configuration exists. No unlimited token approvals.
+- Swap screen supports asset selection for UI preview only; no swap quote or live swap is available.
+
+**Wallet limitations:** WalletConnect requires your own project ID. Injected-wallet support depends on an installed browser extension. No WalletConnect identifier, wallet seed phrase, private key, or mainnet deployment addresses are committed.
+
+**Risk boundaries:** a valid ERC-20 contract may be malicious, pausable, blocklisted, fee-on-transfer, honeypot or illiquid. Imported token balances should not be interpreted as tradable or priced assets. Approval write support is inactive while `config/deployments.json` uses null router and false review flags.
+
+Read [docs/MILESTONE-03.md](docs/MILESTONE-03.md) for technical acceptance and human smoke tests.

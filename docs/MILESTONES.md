@@ -2,7 +2,7 @@
 
 All code is developed milestone-by-milestone. Checkmarks here represent delivered source code only; no feature is production-ready until its acceptance criteria pass.
 
-## M01 — VERY network and foundation (this PR)
+## M01 — VERY network and foundation (merged)
 - [x] Document official chain ID, RPC, currency and explorer.
 - [x] Implement a read-only chain ID + latest block RPC check (run separately).
 - [x] Create Next.js app shell and page navigation.
@@ -12,7 +12,7 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Confirm actual RPC responses from an external network-enabled environment.
 - [ ] Verify canonical wrapped VERY contract and issuer/ownership.
 - [ ] Obtain and review trusted production token addresses.
-- [ ] Confirm CI build is green.
+- [x] Confirm M01 CI build is green.
 
 ## M02 — AMM architecture and Foundry project
 - [ ] Choose and document audited, license-compatible constant-product AMM base.
@@ -21,10 +21,16 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Write swap, liquidity, fuzz and invariant tests.
 - [ ] Complete internal review; do not deploy to mainnet yet.
 
-## M03 — Wallet and token flows
-- [ ] WalletConnect and multiple wallets.
-- [ ] ERC-20 balances, approvals and network mismatch handling.
-- [ ] Token import, verified token registry and risk warnings.
+## M03 — Wallet and token flows (implemented, awaiting human chain smoke test)
+- [x] EIP-6963 multi-injected wallet detection, optional WalletConnect and disconnect UI.
+- [x] ERC-20 real balance reads and network mismatch handling.
+- [x] Router allowance reads and exact approve/revoke flows **fail closed** without reviewed deployment.
+- [x] On-chain token metadata import, local watchlist and explicit unverified risk warnings.
+- [x] Automated token validation and allowance security-gate tests.
+- [ ] Verify EIP-6963 multi-wallet and WalletConnect QR flow against real wallets.
+- [ ] Verify an ERC-20 balance read with a legitimately deployed VERY token.
+- [ ] Enable live approval flow only after M02 deployed and M07 reviewed.
+
 
 ## M04 — Quotes and real swaps
 - [ ] Pool reserve reads and gas / output quotes.

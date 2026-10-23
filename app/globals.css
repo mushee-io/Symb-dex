@@ -79,3 +79,71 @@ button {cursor:pointer}
 .metric-box small {font-size:12px;color:#747985}
 @media(max-width:850px) {.top-nav{gap:15px}.chain-panel{grid-template-columns:repeat(2,1fr);row-gap:23px}.chain-panel>div:nth-child(3){border-left:0;padding-left:0}.progress-banner{flex-direction:column;align-items:flex-start}.feature-grid{grid-template-columns:1fr}.feature-card{min-height:190px}.feature-card h3{margin-top:30px}.wallet-balance{display:none}}
 @media(max-width:610px) {.header-inner{flex-wrap:wrap;padding:14px 17px;gap:12px}.brand{font-size:22px}.brand-mark{width:30px;height:30px}.top-nav{order:3;width:100%;justify-content:space-between;gap:10px}.top-nav a{font-size:12px}.wallet-button{padding:10px;font-size:12px}.shell{padding-left:18px;padding-right:18px}.hero{padding-top:85px;padding-bottom:84px;min-height:0}.hero-copy{font-size:15px}.chain-panel strong{font-size:13px}.section-spaced{padding-top:85px;padding-bottom:70px}.progress-banner{margin:0 18px 80px;padding:28px}.subpage{padding-top:57px}.empty-panel{padding:30px}.metric-grid{grid-template-columns:1fr}.swap-container{padding:15px}.footer{padding:25px 18px}}
+
+/* Milestone 3: wallet chooser, token watchlist and guarded approvals */
+.wallet-dialog-backdrop {position:fixed;inset:0;z-index:80;display:grid;place-items:center;background:#000b;padding:18px}
+.wallet-dialog {background:#17191f;border:1px solid #42444e;border-radius:20px;width:min(430px,100%);padding:26px;box-shadow:0 24px 120px #000b}
+.wallet-dialog-top {display:flex;align-items:center;justify-content:space-between;gap:12px}
+.wallet-dialog-top h2 {font-size:24px;letter-spacing:-.8px;margin:0}
+.icon-button {border:0;background:#292c33;color:white;border-radius:9px;padding:7px 12px}
+.wallet-caption {color:#abb0bd;font-size:13px;line-height:1.6}
+.wallet-current {background:#242630;padding:13px;border-radius:12px;color:#d9dce2;font-size:13px;line-height:1.8}
+.wallet-current a {color:var(--accent)}
+.wallet-options {display:grid;gap:9px;margin-top:18px}
+.wallet-options button {display:flex;justify-content:space-between;padding:15px 16px;border:1px solid #42444d;border-radius:12px;background:#262932;color:#fff;text-align:left;font-size:14px}
+.wallet-options button:hover {border-color:var(--accent)}
+.wallet-options button:disabled {opacity:.55}
+.disconnect-button {margin-top:16px;width:100%;border:1px solid #854e51;background:#332325;color:#ffc9cb;padding:13px;border-radius:10px}
+.wallet-inline-error,.form-error {color:#ffb4b4;font-size:13px;line-height:1.6}
+.form-success {color:#c4f2a0;font-size:13px}
+.registry-section {margin:30px 0 70px}
+.section-title-row {display:flex;justify-content:space-between;align-items:center;gap:18px;margin:40px 0 19px}
+.section-title-row h2 {font-size:29px;letter-spacing:-1px;margin:9px 0 0}
+.token-count {border-radius:30px;border:1px solid #414651;color:#bfc4d0;padding:7px 13px;font-size:12px}
+.import-panel {border:1px solid var(--line);background:var(--panel);padding:26px;border-radius:17px}
+.import-panel h3 {font-size:22px;letter-spacing:-.5px;margin:0 0 8px}
+.import-panel p {max-width:760px;color:#a1a5ae;line-height:1.7;font-size:13px}
+.import-panel p strong {color:#e1e2e5}
+.import-panel form {margin:20px 0}
+.import-actions {display:flex;gap:11px;margin-top:8px}
+.import-actions input,.approval-data input {background:#0b0d12;border:1px solid #3a3e48;color:#fff;border-radius:10px;padding:14px 13px;min-width:0;font-size:14px}
+.import-actions input {flex:1}
+.import-actions button,.approval-data button {background:var(--accent);border:0;border-radius:10px;padding:13px 17px;font-weight:750;color:#222b13;white-space:nowrap}
+.import-actions button:disabled,.approval-data button:disabled {background:#3a3e36;color:#858d79;cursor:not-allowed}
+.acknowledge-row {display:flex;gap:10px;align-items:flex-start;margin-top:18px;color:#a5aab5;font-size:12px;line-height:1.65}
+.acknowledge-row input {margin-top:4px;accent-color:var(--accent)}
+.inline-notice {background:#28251a;border:1px solid #625739;padding:18px;border-radius:12px;color:#f0d9a2;font-size:13px;line-height:1.7;margin:22px 0}
+.asset-table {border:1px solid #30323a;border-radius:15px;overflow:hidden;background:var(--panel)}
+.asset-row,.approval-row {display:flex;justify-content:space-between;align-items:center;gap:20px;padding:21px 24px;border-bottom:1px solid var(--line)}
+.asset-row:last-child,.approval-row:last-child {border-bottom:0}
+.asset-details {display:flex;align-items:center;gap:13px;min-width:0}
+.asset-symbol {display:grid;place-items:center;background:#303b23;color:var(--accent);min-width:42px;height:42px;border-radius:50%;font-size:13px;font-weight:750;letter-spacing:-.5px}
+.asset-name {display:grid;gap:5px;min-width:0}
+.asset-name strong {font-size:15px}
+.asset-name small {color:#858c99;overflow-wrap:anywhere}
+.asset-values {display:grid;gap:6px;justify-items:end;text-align:right;min-width:0}
+.asset-amount {max-width:280px;overflow-wrap:anywhere;font-size:16px;font-weight:650;font-variant-numeric:tabular-nums}
+.asset-controls {display:flex;gap:11px;flex-wrap:wrap;justify-content:flex-end}
+.asset-controls a,.asset-controls button {padding:0;border:0;background:transparent;color:#b0b8c7;font-size:11px}
+.asset-controls a:hover,.asset-controls button:hover {color:var(--accent)}
+.token-reviewed,.token-unverified {font-size:10px}
+.token-reviewed {color:#a6db85}
+.token-unverified {color:#e9ba7d}
+.no-assets {padding:45px 25px;color:#999daa;font-size:14px;line-height:1.8}
+.portfolio-section {margin:25px 0}
+.native-asset {background:#151c13;border:1px solid #394b33;padding:30px;border-radius:17px}
+.native-asset strong {display:block;font-size:clamp(32px,5vw,50px);letter-spacing:-1.7px;overflow-wrap:anywhere;margin-top:14px;font-variant-numeric:tabular-nums}
+.native-asset strong span {font-size:15px;letter-spacing:0;color:#8ca879}
+.native-asset p {color:#abb5ac;font-size:12px;line-height:1.6}
+.portfolio-footer-links {display:flex;gap:26px;flex-wrap:wrap;margin:24px 0 44px}
+.lp-coming {margin-top:36px}
+.approval-row {align-items:start;flex-direction:column}
+.approval-row>div:first-child {display:grid;gap:6px}
+.approval-row small {color:#abb0ba}
+.approval-data {display:flex;gap:10px;align-items:center;flex-wrap:wrap;width:100%}
+.approval-data span {color:#bec2cb;font-size:12px;min-width:160px}
+.approval-data input {flex:1;min-width:140px}
+.approval-hash,.link-accent {color:var(--accent);font-size:12px}
+.approval-warning {color:#9da3af;font-size:13px;line-height:1.7;margin:22px 0}
+.token-dropdown {background:#282a32;color:#fff;border:1px solid #454751;border-radius:30px;max-width:65%;padding:11px 9px;font-size:12px}
+@media(max-width:650px) {.asset-row{padding:17px 13px;gap:10px}.asset-symbol{min-width:35px;height:35px}.asset-amount{font-size:13px}.import-actions{flex-direction:column}.import-panel{padding:18px}.approval-data{flex-direction:column;align-items:stretch}.approval-data button{width:100%}.wallet-dialog{padding:19px}.section-title-row h2{font-size:24px}}
