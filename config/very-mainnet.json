@@ -1,0 +1,13 @@
+{
+  "name": "VERY Mainnet",
+  "chainId": 4613,
+  "chainIdHex": "0x1205",
+  "rpcUrl": "https://rpc.verylabs.io",
+  "currency": {
+    "name": "VERY",
+    "symbol": "VERY",
+    "decimals": 18
+  },
+  "blockExplorer": "https://veryscan.io",
+  "officialDocs": "https://verylabs.io/whitepaper/en/developers/"
+}
