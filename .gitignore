@@ -8,3 +8,9 @@ coverage/
 !.env.example
 *.tsbuildinfo
 .DS_Store
+
+# Foundry build products
+/out/
+/cache/
+/broadcast/
+/lib/
