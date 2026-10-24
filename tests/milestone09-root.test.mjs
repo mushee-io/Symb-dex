@@ -24,12 +24,15 @@ test("M09 has 20 distinct stages with exactly seven tasks and acceptance evidenc
   }
 });
 
-test("root README and roadmap present M09 without displacing M08 current priority",()=>{
-  assert.ok(readme.indexOf("## MILESTONE 8 — CURRENT PRIORITY")>=0);
-  assert.ok(readme.includes("## Milestone 9 — Future public launch"));
-  assert.ok(readme.indexOf("## Milestone 9 — Future public launch")<readme.indexOf("## MILESTONE 8 — CURRENT PRIORITY"));
+test("root README and roadmap retain M09 as deferred while public testnet M10 is current priority",()=>{
+  assert.ok(readme.includes("## Milestone 10 — CURRENT PRIORITY"));
+  assert.ok(readme.includes("## Milestone 9 — DEFERRED real-value public launch"));
+  assert.ok(readme.includes("## Milestone 8 — DEFERRED mainnet beta planning"));
+  assert.ok(readme.indexOf("## Milestone 10 — CURRENT PRIORITY")<readme.indexOf("## Milestone 9 — DEFERRED"));
   assert.ok(readme.includes("](MILESTONE-09.md)"));
+  assert.ok(readme.includes("](MILESTONE-10.md)"));
   assert.ok(milestones.includes("../MILESTONE-09.md"));
+  assert.ok(milestones.includes("../MILESTONE-10.md"));
   assert.ok(runbook.includes("../MILESTONE-09.md"));
 });
 
