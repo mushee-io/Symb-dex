@@ -4,6 +4,16 @@ Lidde is a **non-custodial decentralized exchange under development** for VERY C
 
 > **CURRENT BUILD GOAL: PUBLIC TESTNET FOR USERS — NO REAL FUNDS.** Original MIT Solidity and local Foundry tests exist, but a persistent hosted Lidde test network, faucet, working testnet deployments and public test transactions are **not yet live**. The mainnet chain ID 4613 and its release registry remain locked. Do not send real assets to test contracts.
 
+## New demo testnet modules: token creator + escrow limit orders (source + Anvil testing)
+
+**Built in test-only Solidity and wallet interfaces:** an isolated [demo token factory](contracts/src/testnet/LiddeDemoTokenFactory.sol) that issues capped, initially owned fake-value ERC20s; an [on-chain demo order book](contracts/src/testnet/LiddeDemoLimitBook.sol) with escrow, partial fills, expiry, cancellation and refunds; a [user token launch page](app/testnet/launch/page.tsx), a [demo limit order page](app/testnet/orders/page.tsx), and support for creator-origin tokens in the [test liquidity UI](app/testnet/pools/page.tsx).
+
+The [isolated local deployment script](script/TestnetDeploy.s.sol), verified [broadcast-derived config parser](lib/testnet/deployment-config.mjs), [testnet registry](config/deployments.testnet.json) and [on-chain smoke script](scripts/smoke-testnet.mjs) now include the two advanced demonstration contracts. The local smoke suite creates a fresh valueless test token, creates/withdraws its LP pool and performs a partial-filled and cancelled escrow order with real **disposable Anvil** transactions.
+
+**NOT live on an external testnet** until a verified separate EVM chain with actual contract deployments and operator keys exists. The two new addresses default to `null`, and all advanced UI writes fail closed. This is an **unaudited demo**, not a real-value order matching protocol.
+
+---
+
 ## M11 P0 code delivered — external public testnet not yet hosted
 
 **Implemented:** [testnet liquidity creation and full withdrawal](app/testnet/pools/page.tsx), [demo pool reads](lib/testnet/pools.ts), [isolated Neon canonical indexer](scripts/index-testnet.mjs), [reconciliation](scripts/reconcile-testnet.mjs), [testnet explorer](app/testnet/explorer/page.tsx), [restricted RPC gateway and persistent node deployment recipe](infra/devnet/README.md), and [fresh-wallet transaction smoke test](scripts/smoke-testnet.mjs).
