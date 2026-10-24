@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { formatUnits } from "viem";
 import { useAccount, useBalance, useChainId, useConnect, useDisconnect, useSwitchChain } from "wagmi";
 import { very } from "@/lib/very";
@@ -16,6 +17,7 @@ function readableError(err: unknown) {
 }
 
 export function WalletConnect() {
+  const path = usePathname();
   const [open, setOpen] = useState(false);
   const { address, isConnected, connector } = useAccount();
   const chainId = useChainId();
@@ -53,6 +55,10 @@ export function WalletConnect() {
   const walletList = connectors.filter((item, index, list) =>
     list.findIndex((other) => other.uid === item.uid) === index
   );
+
+  // The /testnet page has its own strictly test-chain-scoped wallet flow.
+  // Do not show the mainnet-switching button on that page.
+  if (path.startsWith("/testnet")) return null;
 
   return (
     <div className="wallet-area">
