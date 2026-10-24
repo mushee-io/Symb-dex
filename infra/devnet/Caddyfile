@@ -1,0 +1,9 @@
+{$LIDDE_RPC_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy rpc-gateway:3000
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        Cache-Control no-store
+    }
+}
