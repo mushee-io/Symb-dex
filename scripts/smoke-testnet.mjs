@@ -1,7 +1,7 @@
 // Actual EVM TEST CHAIN transactions: faucet → swap → LP mint → full redemption.
 // Never broadcasts on VERY Mainnet. Uses ephemeral tester keys, not user wallets.
 import {readFile} from "node:fs/promises";
-import {createPublicClient,createWalletClient,http,erc20Abi,parseAbi} from "viem";
+import {createPublicClient,createWalletClient,http,erc20Abi,parseAbi,parseEventLogs} from "viem";
 import {privateKeyToAccount,generatePrivateKey} from "viem/accounts";
 import {deploymentAddresses} from "../lib/testnet/deployment-config.mjs";
 const chainId=Number(process.env.TESTNET_EXPECTED_CHAIN_ID);
@@ -74,5 +74,66 @@ result=await tx(wallet,d.router,routerAbi,"removeLiquidity",
 log.tx.push({step:"full-lp-withdrawal",...result});
 const lpAfter=await client.readContract({address:pair,abi:pairAbi,functionName:"balanceOf",args:[tester.address]});
 if(lpAfter!==0n)throw new Error("Wallet could not fully exit test LP.");
+
+if(!d.tokenCreator||!d.limitBook)throw new Error("Advanced contracts missing from verified Foundry broadcast.");
+const creatorAbi=parseAbi([
+ "function createToken(string,string,uint8,uint256,uint256) returns(address)",
+ "function creatorOf(address) view returns(address)",
+ "event DemoTokenCreated(address indexed creator,address indexed token,string symbol,uint8 decimals,uint256 initialSupply,uint256 maxSupply)"
+]);
+const bookAbi=parseAbi([
+ "function createOrder(address,address,uint128,uint128,uint64) returns(uint256)",
+ "function fill(uint256,uint128) returns(uint128)",
+ "function cancel(uint256)",
+ "function orders(uint256) view returns(address,address,address,uint128,uint128,uint128,uint128,uint64,bool)"
+]);
+for(const contract of [d.tokenCreator,d.limitBook])
+ if(!(await client.getBytecode({address:contract})))throw new Error("Missing deployed advanced test contract.");
+result=await tx(wallet,d.tokenCreator,creatorAbi,"createToken",
+ ["Externally made test token","tGEM",18,1000n*10n**18n,10000n*10n**18n]);
+log.tx.push({step:"create-unverified-demo-token",...result});
+const tokenReceipt=await client.getTransactionReceipt({hash:result.hash});
+const tokenEvents=parseEventLogs({abi:creatorAbi,eventName:"DemoTokenCreated",logs:tokenReceipt.logs,strict:true});
+const created=tokenEvents.find(ev=>ev.address.toLowerCase()===d.tokenCreator.toLowerCase());
+if(!created || created.args.creator.toLowerCase()!==tester.address.toLowerCase())
+ throw new Error("Demo ERC20 creator event missing.");
+const custom=created.args.token;
+const actualCreator=await client.readContract({address:d.tokenCreator,abi:creatorAbi,functionName:"creatorOf",args:[custom]});
+if(actualCreator.toLowerCase()!==tester.address.toLowerCase())throw new Error("Custom token issuer mismatch.");
+result=await tx(wallet,tUSD,erc20Abi,"approve",[d.router,100e6]);
+log.tx.push({step:"custom-pool-base-approval",...result});
+result=await tx(wallet,custom,erc20Abi,"approve",[d.router,100n*10n**18n]);
+log.tx.push({step:"custom-pool-token-approval",...result});
+result=await tx(wallet,d.router,routerAbi,"addLiquidity",
+ [custom,tUSD,100n*10n**18n,100e6,1n,1n,tester.address,deadline()]);
+log.tx.push({step:"user-created-token-pool",...result});
+const customPair=await client.readContract({address:d.factory,abi:factoryAbi,functionName:"getPair",args:[custom,tUSD]});
+if(!(await client.getBytecode({address:customPair})))throw new Error("Custom token LP pair missing.");
+const customLP=await client.readContract({address:customPair,abi:pairAbi,functionName:"balanceOf",args:[tester.address]});
+if(customLP<=0n)throw new Error("Custom pool LP not minted");
+result=await tx(wallet,customPair,erc20Abi,"approve",[d.router,customLP]);
+log.tx.push({step:"custom-pool-lp-approval",...result});
+result=await tx(wallet,d.router,routerAbi,"removeLiquidity",
+ [custom,tUSD,customLP,1n,1n,tester.address,deadline()]);
+log.tx.push({step:"custom-pool-lp-withdrawal",...result});
+if(await client.readContract({address:customPair,abi:pairAbi,functionName:"balanceOf",args:[tester.address]})!==0n)
+ throw new Error("User-created token LP still locked after exit.");
+
+result=await tx(wallet,tUSD,erc20Abi,"approve",[d.limitBook,20e6]);
+log.tx.push({step:"limit-order-maker-approval",...result});
+result=await tx(wallet,d.limitBook,bookAbi,"createOrder",
+ [tUSD,tBTC,20e6,2e6,BigInt(Math.floor(Date.now()/1000)+3600)]);
+log.tx.push({step:"onchain-limit-order-create",...result});
+result=await tx(ownerWallet,tBTC,erc20Abi,"approve",[d.limitBook,1e6]);
+log.tx.push({step:"limit-order-taker-approval",...result});
+result=await tx(ownerWallet,d.limitBook,bookAbi,"fill",[1n,10e6]);
+log.tx.push({step:"onchain-limit-order-partial-fill",...result});
+result=await tx(wallet,d.limitBook,bookAbi,"cancel",[1n]);
+log.tx.push({step:"onchain-limit-order-cancel-refund",...result});
+const state=await client.readContract({address:d.limitBook,abi:bookAbi,functionName:"orders",args:[1n]});
+if(!state[8]||state[5]!==0n||state[6]!==0n)
+ throw new Error("Cancelled limit order retains live or unrefunded escrow.");
+log.customToken=custom;log.customPair=customPair;log.orderId="1";
+
 log.pool=pair;log.steps=log.tx.length;log.status="PASSED";
 console.log(JSON.stringify(log,(_k,v)=>typeof v==="bigint"?v.toString():v,2));

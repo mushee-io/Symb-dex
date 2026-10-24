@@ -1,12 +1,13 @@
 "use client";
 import {useCallback,useEffect,useMemo,useState} from "react";
 import {
- createPublicClient,http,erc20Abi,parseUnits,formatUnits,parseAbi,type Address,type Hash
+ createPublicClient,http,erc20Abi,parseUnits,formatUnits,parseAbi,isAddress,getAddress,zeroAddress,type Address,type Hash
 } from "viem";
 import {useAccount,useChainId,useSwitchChain,useWriteContract} from "wagmi";
 import {demoChain,demoDeployment,demoNetwork,testnetReady} from "@/lib/testnet/network";
 import {demoPoolByTokens,demoPoolList,type DemoPool} from "@/lib/testnet/pools";
 import {previewAdd,previewRemove,percentageOfBalance,applySlippage} from "@/lib/liquidity/math.mjs";
+const demoCreatorAbi=parseAbi(["function creatorOf(address) view returns(address)"]);
 const routerAbi=parseAbi([
  "function factory() view returns(address)",
  "function WETH() view returns(address)",
@@ -29,10 +30,15 @@ export function TestnetPools(){
  const client=useMemo(()=>demoChain&&net?createPublicClient({
   chain:demoChain,transport:http(net.rpcUrl,{timeout:15_000,retryCount:1})
  }):null,[net]);
- const assets=useMemo<Asset[]>(()=>dep?[
-  {symbol:"tVERY",address:dep.wrappedTestNative,decimals:18,native:true},
-  ...dep.tokens.map(x=>({...x,native:false}))
- ]:[],[dep]);
+ const [customAddress,setCustomAddress]=useState("");
+ const [customAsset,setCustomAsset]=useState<Asset|null>(null);
+ const [customError,setCustomError]=useState("");
+ const assets=useMemo<Asset[]>(()=>{
+  const seeded:Asset[]=dep?[{symbol:"tVERY",address:dep.wrappedTestNative,decimals:18,native:true},
+   ...dep.tokens.map(x=>({...x,native:false}))]:[];
+  if(customAsset&&!seeded.some(x=>same(x.address,customAsset.address)))seeded.push(customAsset);
+  return seeded;
+ },[dep,customAsset]);
  const [aSymbol,setA]=useState("tUSD"),[bSymbol,setB]=useState("tBTC");
  const [amountA,setAmountA]=useState("100"),[amountB,setAmountB]=useState("1");
  const [mode,setMode]=useState<"add"|"remove">("add"),[percent,setPercent]=useState(100);
@@ -48,6 +54,29 @@ export function TestnetPools(){
  const slippageBps=useMemo(()=>{
   const n=Number(slippage);return Number.isFinite(n)&&n>=0.1&&n<=5?Math.round(n*100):null;
  },[slippage]);
+ async function loadCreatedToken(){
+  setCustomError("");
+  if(!client||!net||!dep?.tokenCreator){setCustomError("Testnet token creator has not been verified.");return;}
+  try{
+   if(!isAddress(customAddress)||getAddress(customAddress)===zeroAddress)throw new Error("Enter a valid demo token address.");
+   if(await client.getChainId()!==net.chainId||net.chainId===4613)throw new Error("Wrong testnet RPC.");
+   const addr=getAddress(customAddress);
+   const factoryCode=await client.getBytecode({address:dep.tokenCreator});
+   const code=await client.getBytecode({address:addr});
+   if(!factoryCode||factoryCode==="0x"||!code||code==="0x")throw new Error("Verified demo creator or token has no deployed code.");
+   const issuer=await client.readContract({address:dep.tokenCreator,abi:demoCreatorAbi,
+    functionName:"creatorOf",args:[addr]});
+   if(issuer===zeroAddress)throw new Error("Token was not created through the Lidde demo factory.");
+   const [symbol,decimals]=await Promise.all([
+    client.readContract({address:addr,abi:erc20Abi,functionName:"symbol"}),
+    client.readContract({address:addr,abi:erc20Abi,functionName:"decimals"})
+   ]);
+   if(![6,8,18].includes(decimals)||!/^t[A-Za-z0-9]{1,13}$/.test(symbol))
+    throw new Error("Invalid demo token metadata.");
+   const asset:Asset={symbol:"USER:"+symbol+"-"+addr.slice(2,6),address:addr,decimals,native:false};
+   setCustomAsset(asset);setB(asset.symbol);setAck(false);
+  }catch(e){setCustomError(message(e));}
+ }
  const quote=useMemo(()=>{
   if(!a||!b||same(a.address,b.address)||slippageBps===null)return null;
   try{
@@ -205,6 +234,13 @@ export function TestnetPools(){
       <label>Token B<select value={bSymbol} onChange={e=>{setB(e.target.value);setAck(false);}}>
        {assets.map(x=><option key={x.symbol}>{x.symbol}</option>)}</select></label>
      </div>
+     {dep?.tokenCreator&&<div className="testnet-order">
+      <label>Custom unverified demo token contract<input placeholder="0x… from Token Creator" value={customAddress}
+       onChange={e=>setCustomAddress(e.target.value)}/></label>
+      <button type="button" disabled={loading||busy} onClick={()=>void loadCreatedToken()}>Verify and select creator token</button>
+      {customAsset&&<p className="muted-small">Selected {customAsset.symbol}: this token is user-created, unverified and may be minted by its issuer. All values are synthetic.</p>}
+      {customError&&<p role="alert" className="form-error">{customError}</p>}
+     </div>}
      {mode==="add"?<div className="testnet-grid">
       <label>Maximum {aSymbol} amount<input inputMode="decimal" value={amountA} onChange={e=>setAmountA(e.target.value)} /></label>
       <label>Maximum {bSymbol} amount<input inputMode="decimal" value={amountB} onChange={e=>setAmountB(e.target.value)} /></label>
@@ -237,7 +273,7 @@ export function TestnetPools(){
      {directory.map(p=><div className="testnet-quote" key={p.address}>
       <div><strong>{assetLabel(p.token0)} / {assetLabel(p.token1)}</strong>
        <p className="muted-small">{short(p.address)} · LP supply {formatUnits(p.totalSupply,18)}</p></div>
-      <button type="button" onClick={()=>{setA(assetLabel(p.token0));setB(assetLabel(p.token1));setAck(false);}}>Select</button>
+      <button type="button" disabled={!assets.some(a=>same(a.address,p.token0))||!assets.some(a=>same(a.address,p.token1))} onClick={()=>{setA(assetLabel(p.token0));setB(assetLabel(p.token1));setAck(false);}}>Select</button>
      </div>)}
      {!directory.length&&<p>No demo pools found. Create one after claiming test assets.</p>}
      <div className="testnet-wallet-actions">

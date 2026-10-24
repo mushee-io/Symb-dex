@@ -5,6 +5,8 @@
   "router":null,
   "wrappedTestNative":null,
   "faucet":null,
+  "tokenCreator":null,
+  "limitBook":null,
   "tokens":[],
   "feeBps":30,
   "realFundsAllowed":false,

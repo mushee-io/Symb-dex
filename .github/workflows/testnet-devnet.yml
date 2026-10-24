@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "contracts/**"
+      - "scripts/smoke-testnet.mjs"
       - "script/**"
       - "lib/testnet/**"
       - "config/*testnet*"

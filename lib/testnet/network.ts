@@ -8,6 +8,7 @@ export type DemoDeployment={
  chainId:number;factory:`0x${string}`;router:`0x${string}`;
  wrappedTestNative:`0x${string}`;faucet:`0x${string}`;
  tokens:DemoToken[];feeBps:number;realFundsAllowed:false;
+ tokenCreator?:`0x${string}`|null;limitBook?:`0x${string}`|null;
 };
 export type DemoNetwork={
  chainId:number;rpcUrl:string;explorerUrl:string;name:string;

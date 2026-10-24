@@ -6,6 +6,8 @@ import {LiddeRouter} from "../contracts/src/LiddeRouter.sol";
 import {LiddeWrappedVery} from "../contracts/src/LiddeWrappedVery.sol";
 import {LiddeTestToken} from "../contracts/src/testnet/LiddeTestToken.sol";
 import {LiddeTestFaucet} from "../contracts/src/testnet/LiddeTestFaucet.sol";
+import {LiddeDemoTokenFactory} from "../contracts/src/testnet/LiddeDemoTokenFactory.sol";
+import {LiddeDemoLimitBook} from "../contracts/src/testnet/LiddeDemoLimitBook.sol";
 
 interface VmDeploy {
     function envUint(string calldata name) external returns(uint256);
@@ -25,6 +27,8 @@ contract TestnetDeploy {
         address tUSDT,address tLIDDE,address pool
     );
 
+    event AdvancedTestnetDeployed(address indexed tokenCreator,address indexed limitBook);
+
     function run() external {
         uint256 expected = vm.envUint("TESTNET_EXPECTED_CHAIN_ID");
         uint256 signer = vm.envUint("TESTNET_DEPLOYER_PRIVATE_KEY");
@@ -35,6 +39,7 @@ contract TestnetDeploy {
         LiddeFactory factory = new LiddeFactory();
         LiddeWrappedVery wrapper = new LiddeWrappedVery();
         LiddeRouter router = new LiddeRouter(address(factory),address(wrapper));
+        LiddeDemoTokenFactory tokenCreator = new LiddeDemoTokenFactory();
 
         LiddeTestToken tUSD = new LiddeTestToken("Lidde test USD","tUSD",6,1_000_000_000e6);
         LiddeTestToken tUSDC = new LiddeTestToken("Lidde test USDC","tUSDC",6,1_000_000_000e6);
@@ -42,6 +47,11 @@ contract TestnetDeploy {
         LiddeTestToken tBTC = new LiddeTestToken("Lidde test BTC","tBTC",8,21_000_000e8);
         LiddeTestToken tETH = new LiddeTestToken("Lidde test ETH","tETH",18,100_000_000e18);
         LiddeTestToken tLIDDE = new LiddeTestToken("Lidde test governance","tLIDDE",18,100_000_000e18);
+        address[] memory trustedOrderAssets=new address[](6);
+        trustedOrderAssets[0]=address(tUSD);trustedOrderAssets[1]=address(tUSDC);
+        trustedOrderAssets[2]=address(tUSDT);trustedOrderAssets[3]=address(tBTC);
+        trustedOrderAssets[4]=address(tETH);trustedOrderAssets[5]=address(tLIDDE);
+        LiddeDemoLimitBook limitBook = new LiddeDemoLimitBook(trustedOrderAssets);
 
         address[] memory assets = new address[](6);
         assets[0]=address(tUSD);assets[1]=address(tUSDC);assets[2]=address(tUSDT);
@@ -76,6 +86,7 @@ contract TestnetDeploy {
         emit TestnetDeployed(block.chainid,address(factory),address(router),address(wrapper),
             address(faucet),address(tUSD),address(tUSDC),address(tBTC),address(tETH),
             address(tUSDT),address(tLIDDE),pool);
+        emit AdvancedTestnetDeployed(address(tokenCreator),address(limitBook));
         vm.stopBroadcast();
     }
 }

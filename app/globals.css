@@ -260,3 +260,7 @@ button {cursor:pointer}
 .testnet-panel .acknowledge-row{display:flex;align-items:flex-start;gap:9px;line-height:1.55;font-size:13px;color:#dce0ea}
 .testnet-panel .acknowledge-row input{width:auto;margin:4px 0}
 .testnet-panel .testnet-wallet-actions button{font-size:12px}
+
+/* Experimental zero-value ERC20 launch and onchain order flows. */
+.testnet-order{background:#151922;border:1px solid #3c4249;border-radius:12px;padding:16px;margin:12px 0}
+.testnet-order .testnet-quote{overflow-wrap:anywhere}

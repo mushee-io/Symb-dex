@@ -9,6 +9,7 @@ export default function TestnetPage(){
     swaps. This is not VERY Mainnet; the public test network must be provisioned first.</p>
   </div>
   <p><Link href="/testnet/pools" className="primary-link">Create or manage test liquidity ↗</Link></p>
+  <p className="testnet-wallet-actions"><Link href="/testnet/launch" className="secondary-link">Create demo token ↗</Link><Link href="/testnet/orders" className="secondary-link">Test limit orders ↗</Link></p>
   <TestnetTerminal/>
   <p className="subpage-footnote">See <Link href="/swap">the locked mainnet preview</Link> separately.
    Never send real VERY, USDC or other real assets to demo contracts.</p>
