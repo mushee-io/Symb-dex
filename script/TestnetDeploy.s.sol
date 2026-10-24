@@ -6,6 +6,8 @@ import {LiddeRouter} from "../contracts/src/LiddeRouter.sol";
 import {LiddeWrappedVery} from "../contracts/src/LiddeWrappedVery.sol";
 import {LiddeTestToken} from "../contracts/src/testnet/LiddeTestToken.sol";
 import {LiddeTestFaucet} from "../contracts/src/testnet/LiddeTestFaucet.sol";
+import {LiddeDemoTokenFactory} from "../contracts/src/testnet/LiddeDemoTokenFactory.sol";
+import {LiddeDemoLimitBook} from "../contracts/src/testnet/LiddeDemoLimitBook.sol";
 
 interface VmDeploy {
     function envUint(string calldata name) external returns(uint256);
@@ -25,6 +27,8 @@ contract TestnetDeploy {
         address tUSDT,address tLIDDE,address pool
     );
 
+    event AdvancedTestnetDeployed(address indexed tokenCreator,address indexed limitBook);
+
     function run() external {
         uint256 expected = vm.envUint("TESTNET_EXPECTED_CHAIN_ID");
         uint256 signer = vm.envUint("TESTNET_DEPLOYER_PRIVATE_KEY");
@@ -35,6 +39,8 @@ contract TestnetDeploy {
         LiddeFactory factory = new LiddeFactory();
         LiddeWrappedVery wrapper = new LiddeWrappedVery();
         LiddeRouter router = new LiddeRouter(address(factory),address(wrapper));
+        LiddeDemoTokenFactory tokenCreator = new LiddeDemoTokenFactory();
+        LiddeDemoLimitBook limitBook = new LiddeDemoLimitBook();
 
         LiddeTestToken tUSD = new LiddeTestToken("Lidde test USD","tUSD",6,1_000_000_000e6);
         LiddeTestToken tUSDC = new LiddeTestToken("Lidde test USDC","tUSDC",6,1_000_000_000e6);
@@ -76,6 +82,7 @@ contract TestnetDeploy {
         emit TestnetDeployed(block.chainid,address(factory),address(router),address(wrapper),
             address(faucet),address(tUSD),address(tUSDC),address(tBTC),address(tETH),
             address(tUSDT),address(tLIDDE),pool);
+        emit AdvancedTestnetDeployed(address(tokenCreator),address(limitBook));
         vm.stopBroadcast();
     }
 }

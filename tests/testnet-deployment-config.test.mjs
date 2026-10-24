@@ -20,3 +20,12 @@ test("reject missing or duplicated deployments",()=>{
  assert.throws(()=>deploymentAddresses([...example,example[0]]),/Factory/);
  assert.throws(()=>deploymentAddresses(example.map(x=>({...x,contractAddress:address(1)}))),/overlap/);
 });
+
+test("Advanced token factory and limit book are optional, but must deploy together",()=>{
+ const advanced=[...example,{contractName:"LiddeDemoTokenFactory",contractAddress:address(20),transactionType:"CREATE"},
+  {contractName:"LiddeDemoLimitBook",contractAddress:address(21),transactionType:"CREATE"}];
+ const config=deploymentAddresses(advanced);
+ assert.equal(config.tokenCreator.toLowerCase(),address(20));
+ assert.equal(config.limitBook.toLowerCase(),address(21));
+ assert.throws(()=>deploymentAddresses(advanced.slice(0,-1)),/Partial/);
+});

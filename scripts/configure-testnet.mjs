@@ -24,7 +24,7 @@ const getCode=async address=>{
  if(!code||code==="0x")throw new Error("No deployed contract code at "+address);
 };
 for(const address of [discovered.factory,discovered.router,discovered.wrappedTestNative,discovered.faucet,
- ...discovered.tokens.map(x=>x.address)])await getCode(address);
+ ...discovered.tokens.map(x=>x.address),...(discovered.tokenCreator?[discovered.tokenCreator,discovered.limitBook]:[])])await getCode(address);
 const routerAbi=parseAbi(["function factory() view returns (address)","function WETH() view returns (address)"]);
 const pairAbi=parseAbi(["function getPair(address,address) view returns(address)"]);
 const faucetAbi=parseAbi(["function owner() view returns (address)"]);
