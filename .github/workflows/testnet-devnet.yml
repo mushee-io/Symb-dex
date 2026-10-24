@@ -1,0 +1,63 @@
+name: Isolated Devnet Deployment Rehearsal
+on:
+  push:
+    paths:
+      - "contracts/**"
+      - "script/**"
+      - "lib/testnet/**"
+      - "config/*testnet*"
+      - ".github/workflows/testnet-devnet.yml"
+  pull_request:
+    paths:
+      - "contracts/**"
+      - "script/**"
+      - "lib/testnet/**"
+      - "config/*testnet*"
+      - ".github/workflows/testnet-devnet.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  anvil:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: foundry-rs/foundry-toolchain@v1
+      - name: Test Solidity faucet and token flows
+        run: forge test --match-contract LiddeTestnetTest -vv
+      - name: Launch disposable local Anvil with chain 31337
+        run: |
+          anvil --chain-id 31337 --accounts 2 --balance 10000 --host 127.0.0.1 --port 8545 > /tmp/lidde-anvil.log 2>&1 &
+          echo "$!" > /tmp/lidde-anvil.pid
+          for i in $(seq 1 30); do
+            if cast chain-id --rpc-url http://127.0.0.1:8545 >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          test "$(cast chain-id --rpc-url http://127.0.0.1:8545)" = "31337"
+      - name: Broadcast demo contracts and seed pools to LOCAL Anvil only
+        env:
+          TESTNET_EXPECTED_CHAIN_ID: "31337"
+          # Public Anvil default TEST account; never use for anything with real value.
+          TESTNET_DEPLOYER_PRIVATE_KEY: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+        run: |
+          forge script script/TestnetDeploy.s.sol:TestnetDeploy \
+            --rpc-url http://127.0.0.1:8545 --broadcast -vv
+      - name: Validate real deployed contract bytecode and live testnet contracts
+        run: |
+          MANIFEST=broadcast/TestnetDeploy.s.sol/31337/run-latest.json
+          test -f "$MANIFEST"
+          node --input-type=module <<'EOF'
+          import {readFileSync} from "node:fs";
+          const j=JSON.parse(readFileSync("broadcast/TestnetDeploy.s.sol/31337/run-latest.json","utf8"));
+          const names=new Set(j.transactions.filter(t=>t.contractAddress).map(t=>t.contractName));
+          for(const name of ["LiddeFactory","LiddeRouter","LiddeWrappedVery","LiddeTestFaucet","LiddeTestToken"])
+            if(!names.has(name))throw new Error("Local deployment missing: "+name);
+          console.log("Deployed local-only contract types: "+[...names].join(", "));
+          EOF
+      - name: Stop disposable Anvil
+        if: always()
+        run: |
+          if test -f /tmp/lidde-anvil.pid; then kill "$(cat /tmp/lidde-anvil.pid)" || true; fi
