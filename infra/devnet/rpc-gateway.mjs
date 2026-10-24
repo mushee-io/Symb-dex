@@ -5,6 +5,16 @@ const upstream=process.env.UPSTREAM_RPC_URL??"http://anvil:8545";
 const bodyLimit=Number(process.env.RPC_BODY_LIMIT??65536);
 const rate=Number(process.env.RPC_GLOBAL_RATE_PER_MINUTE??500);
 const origin=process.env.RPC_ALLOWED_ORIGIN??"*";
+const expectedId=Number(process.env.RPC_EXPECTED_CHAIN_ID??"31338");
+export const trustedTestChain=id=>Number.isSafeInteger(id)&&id>1000&&id!==4613&&id!==1&&id===expectedId;
+async function verifyUpstreamChain(){
+ const answer=await fetch(upstream,{method:"POST",headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({jsonrpc:"2.0",id:1,method:"eth_chainId",params:[]}),
+  signal:AbortSignal.timeout(5000)});
+ const data=await answer.json();
+ if(!trustedTestChain(Number(BigInt(data.result??"0x0"))))
+  throw new Error("Unsafe RPC upstream chain ID. Reject all traffic.");
+}
 const methods=new Set([
  "eth_chainId","eth_blockNumber","eth_getBlockByNumber","eth_getBlockByHash",
  "eth_getBlockTransactionCountByNumber","eth_getTransactionByHash",
@@ -40,6 +50,10 @@ export const server=createServer(async(req,res)=>{
  catch{res.writeHead(400).end("Invalid JSON-RPC");return;}
  if(!permittedRpc(json)){res.writeHead(403).end("RPC method blocked");return;}
  try{
+  // Check the upstream on every request, especially signed tx submissions.
+  // A mistaken upstream pointing to VERY Mainnet must be rejected even if
+  // the external endpoint URL itself still says "lidde testnet".
+  await verifyUpstreamChain();
   const upstreamResponse=await fetch(upstream,{method:"POST",headers:{"Content-Type":"application/json"},
    body:JSON.stringify(json),signal:AbortSignal.timeout(15000)});
   const body=await upstreamResponse.text();

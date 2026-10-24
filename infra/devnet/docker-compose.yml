@@ -35,6 +35,7 @@ services:
       - RPC_BODY_LIMIT=65536
       - RPC_GLOBAL_RATE_PER_MINUTE=500
       - RPC_ALLOWED_ORIGIN=${LIDDE_ALLOWED_ORIGIN:-*}
+      - RPC_EXPECTED_CHAIN_ID=${LIDDE_TEST_CHAIN_ID:-31338}
     command: ["node","/app/gateway.mjs"]
     depends_on: [anvil]
     restart: unless-stopped
