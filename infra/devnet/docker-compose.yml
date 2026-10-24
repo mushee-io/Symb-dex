@@ -1,0 +1,62 @@
+# Self-hosted VALueless persistent developer network. NOT an official VERY testnet.
+# Never expose anvil:8545 directly; only safe public Ethereum JSON-RPC via gateway.
+services:
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:latest
+    entrypoint: ["anvil"]
+    command:
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8545"
+      - "--chain-id"
+      - "${LIDDE_TEST_CHAIN_ID:-31338}"
+      - "--state"
+      - "/data/state.json"
+      - "--state-interval"
+      - "10"
+      - "--accounts"
+      - "2"
+      - "--balance"
+      - "10000"
+      - "--block-time"
+      - "2"
+    volumes:
+      - anvil-state:/data
+    restart: unless-stopped
+    networks: [private-chain]
+  rpc-gateway:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - ./rpc-gateway.mjs:/app/gateway.mjs:ro
+    environment:
+      - UPSTREAM_RPC_URL=http://anvil:8545
+      - RPC_BODY_LIMIT=65536
+      - RPC_GLOBAL_RATE_PER_MINUTE=500
+      - RPC_ALLOWED_ORIGIN=${LIDDE_ALLOWED_ORIGIN:-*}
+      - RPC_EXPECTED_CHAIN_ID=${LIDDE_TEST_CHAIN_ID:-31338}
+    command: ["node","/app/gateway.mjs"]
+    depends_on: [anvil]
+    restart: unless-stopped
+    networks: [private-chain]
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    environment:
+      - LIDDE_RPC_DOMAIN=${LIDDE_RPC_DOMAIN:?Set real RPC domain before deployment}
+    depends_on: [rpc-gateway]
+    restart: unless-stopped
+    networks: [private-chain]
+volumes:
+  anvil-state:
+  caddy-data:
+  caddy-config:
+networks:
+  private-chain:

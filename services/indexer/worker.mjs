@@ -11,14 +11,15 @@ const EVENT_LIMIT=2500;
 const LOG_POOL_BATCH=20;
 
 export async function indexConfirmedWindow({
-  client,store,factory,deploymentStart,confirmations=12,batchSize=50,
+  client,store,factory,deploymentStart,chainId=4613,confirmations=12,batchSize=50,
   maxReorgDepth=MAX_REORG_DEPTH,
 }) {
   if(!client || !store || !validAddress(factory) || typeof deploymentStart!=="bigint" ||
       deploymentStart<0n || !Number.isInteger(batchSize) || batchSize<1 || batchSize>WINDOW_LIMIT)
     throw new Error("Invalid indexer configuration.");
   factory=getAddress(factory);
-  if(await client.getChainId()!==4613) throw new Error("Refusing to index a non-VERY RPC.");
+  if(!Number.isSafeInteger(chainId) || chainId<=1000 || await client.getChainId()!==chainId)
+    throw new Error("Indexer chain ID mismatch: refuse mixed-chain logs.");
   const factoryCode=await client.getBytecode({address:factory});
   if(!factoryCode || factoryCode==="0x") throw new Error("Configured factory is not deployed.");
   const head=await client.getBlockNumber();

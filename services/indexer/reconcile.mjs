@@ -1,11 +1,11 @@
 import {getAddress} from "viem";
 import {pairReadAbi,validAddress} from "./decoder.mjs";
 
-export async function reconcilePool({client,store,pair,checkpoint}) {
+export async function reconcilePool({client,store,pair,checkpoint,chainId=4613}) {
   if(!client || !store || !validAddress(pair) ||
      !checkpoint || typeof checkpoint.blockNumber!=="bigint")
     throw new Error("Invalid reconciliation request.");
-  if(await client.getChainId()!==4613) throw new Error("Wrong chain for reserve reconciliation.");
+  if(await client.getChainId()!==chainId) throw new Error("Wrong chain for reserve reconciliation.");
   const at=checkpoint.blockNumber;
   const canonical=await client.getBlock({blockNumber:at});
   if(canonical.hash.toLowerCase()!==checkpoint.blockHash.toLowerCase())

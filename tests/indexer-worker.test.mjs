@@ -35,7 +35,7 @@ test("worker indexes bounded confirmed headers and resumes without duplicate blo
 });
 test("worker fails closed on wrong chain and missing contract",async()=>{
  const f=createFake();f.client.getChainId=async()=>1;
- await assert.rejects(indexConfirmedWindow({...f,factory,deploymentStart:0n}),/non-VERY/);
+ await assert.rejects(indexConfirmedWindow({...f,factory,deploymentStart:0n}),/chain ID mismatch/);
  f.client.getChainId=async()=>4613;f.client.getBytecode=async()=>undefined;
  await assert.rejects(indexConfirmedWindow({...f,factory,deploymentStart:0n}),/not deployed/);
 });
