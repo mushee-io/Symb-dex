@@ -164,7 +164,22 @@ The repository now includes testnet LP creation/exit, Neon indexer, restricted R
 
 **M13 does not authorize mainnet trading, real-value payments, real RWAs, real option/loan underwriting or a guaranteed token airdrop.**
 
-## M14–M16 — Later expansion
+## M14 — PLANNED: Public testnet scale, reliability and developer ecosystem (30 stages / 240 tasks)
+
+**[Complete Milestone 14 master plan](../MILESTONE-14.md)** — six phases with detailed 240-task engineering checklists, precise acceptance evidence and explicit stop conditions.
+
+- [ ] Prove a persistent separately identified EVM test chain, public RPC and full explorer with no chain 4613/mainnet confusion.
+- [ ] Operate rate-limited free synthetic asset faucet, protect signer keys, detect abuse and preserve reset/incident history.
+- [ ] Harden real swap/LP lifecycle and mobile onboarding; optimize gas/price math without compromising full LP exit.
+- [ ] Scale Neon canonical indexing, charts, portfolio reconstruction and cohort metrics with bot-vs-user distinction.
+- [ ] Release validated SDK, developer console, mock token creator and safe interoperable demo integrations.
+- [ ] Introduce bounded agent/keeper experiments only after signed, revocable permission and on-chain settlement evidence.
+- [ ] Keep M12/M13 perpetuals, options, lending, automated vaults and all other risky products OFF until their actual reviewed contracts, oracle/risk rules and successful demo receipts exist.
+- [ ] Run reproducible performance, adversarial, recovery and multi-wallet public beta, then hand over evidence-based M15 priorities.
+
+**Current state:** M14 is a future technical specification. M11 persistent external hosting/user flow is not yet verified, and M12/M13 advanced modules remain unbuilt. Mainnet and real funds stay out of scope.
+
+## M15–M16 — Later expansion
 
 - [ ] Use actual tester feedback and signed technical evaluations to plan further advanced features; independent real-money/mainnet deployment decisions are outside M10.
 
