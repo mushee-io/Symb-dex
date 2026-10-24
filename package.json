@@ -20,7 +20,8 @@
     "testnet:verify": "node scripts/configure-testnet.mjs --verify-only",
     "testnet:configure": "node scripts/configure-testnet.mjs",
     "index:testnet": "node scripts/index-testnet.mjs",
-    "reconcile:testnet": "node scripts/reconcile-testnet.mjs"
+    "reconcile:testnet": "node scripts/reconcile-testnet.mjs",
+    "smoke:testnet": "node scripts/smoke-testnet.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.0",
