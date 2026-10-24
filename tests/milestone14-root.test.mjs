@@ -27,7 +27,7 @@ test("root and milestone tracker link M14 but M11 remains operational blocker",(
  assert.ok(roadmap.includes("../MILESTONE-14.md"));
  assert.match(m14,/PLANNED, NOT BUILT/);
  assert.match(m14,/ZERO REAL FUNDS/);
- assert.match(readme,/persistent public testnet/);
+ assert.match(readme,/Still not live to outside users/);
  assert.match(m14,/chain ID 4613/);
 });
 test("testnet and mainnet remain deliberately unconfigured during roadmap planning",()=>{
