@@ -2,9 +2,32 @@
 
 Lidde is a **non-custodial decentralized exchange under development** for VERY Chain.
 
-> **Not live.** Original Solidity AMM source and local Foundry security tests now exist in this repository, but **no AMM, Router or canonical WVERY is deployed**. Trading and liquidity writes remain disabled until independent audit, deployment verification and a separate release decision. Never send funds to an unverified address.
+> **CURRENT BUILD GOAL: PUBLIC TESTNET FOR USERS — NO REAL FUNDS.** Original MIT Solidity and local Foundry tests exist, but a persistent hosted Lidde test network, faucet, working testnet deployments and public test transactions are **not yet live**. The mainnet chain ID 4613 and its release registry remain locked. Do not send real assets to test contracts.
 
-## Milestone 9 — Future public launch (20 stages, 140 detailed tasks)
+## Milestone 10 — CURRENT PRIORITY: Deep Public Testnet (25 Stages / 175 Tasks)
+
+> **TESTNET ONLY — NO MAINNET ASSETS.** Give users a genuine test-chain trading environment with faucet, demo tokens, real contract swaps, pool creation, LP deposits/withdrawals, market charts, points, quests, and experimental advanced DeFi functionality. There is no testnet deployment or funded test user transaction claimed yet.
+
+**[Read the full root Milestone 10 master plan — 25 stages, 175 checkable implementation tasks](MILESTONE-10.md).** Each stage includes engineering requirements, current readiness, proof and failure/stop conditions.
+
+**Important network distinction:** Official VERY documents show `4613` as **mainnet** and do not provide a verified public testnet RPC/explorer. First validate an official testnet with the VERY operators, or host an isolated persistent Lidde EVM devnet with **its own independent chain ID**, labelled *Lidde Test Network* (not official VERY testnet). Use **valueless test assets only** and isolate its deployment registry from the existing locked mainnet configuration.
+
+| Phase | Build priority | User-facing functionality |
+| --- | --- | --- |
+| **A — Network / faucet** | P0 | Separate demo network, Factory/Router, synthetic tokens, rate-limited test gas and asset faucet, wallet switching |
+| **B — Core trading** | P0 | Real demo swaps, routes, market creation, LP mint/burn, portfolio and optional range-pool research |
+| **C — Advanced DeFi** | P1/P2 | Token creator, signed limit orders, DCA keeper, demo LP farms and on-chain test rewards |
+| **D — Testnet community** | P1 | Quests, non-redeemable points, referral attribution and seasonal leaderboards |
+| **E — Analytics and tools** | P0/P1 | Neon indexer, OHLCV charts, explorer, APIs/SDK, mobile UI and opt-in profiles |
+| **F — Public test rollout** | P0 | Security testing, hosted uptime, reset policies, user cohorts and honest usage metrics |
+
+**Phase P0 definition of done:** External tester connects to a *separate* EVM test chain, claims free demo tokens, completes an actual chain swap, creates/adds liquidity, and withdraws LP shares with verifiable demo-chain receipts. No real token transfer, deposit, mainnet gas or withdrawal is required.
+
+**Deferred:** Previously written Milestones 8 and 9 include **future real-funds/mainnet launch planning**. They are kept as historical reference, but they are not the current testnet delivery gates. Advanced modules must each work independently before their UI is described as live.
+
+---
+
+## Milestone 9 — DEFERRED real-value public launch (20 stages, 140 detailed tasks)
 
 > **NOT LIVE · NOT APPROVED.** Milestone 9 is a public-launch plan, **not an authorization to bypass Milestone 8**. Independent audit, canonical WVERY, production liquidity/swap/LP exit receipts, Neon operations, reviewed security findings and a separate M09 signoff remain required.
 
@@ -12,11 +35,11 @@ Lidde is a **non-custodial decentralized exchange under development** for VERY C
 
 The public-launch plan explicitly covers: external security and M08 exit, qualified legal/regulatory advice, domain/DNS and secure deployments, audited contract addresses, token/pool eligibility, live swaps and LP exits, wallet UX, user transaction history, Neon indexing and verified analytics, monitoring and resilience, user docs and support, treasury governance, compliant community communications, gradual release, and a separate Milestone 10 handover.
 
-**UK legal gate:** Cryptoasset financial promotions can include public websites and social media; the FCA's evolving 2026/2027 regime may be relevant where identifiable entities manage DeFi activities. Independent legal counsel must establish Lidde's actual regulatory perimeter, approved communications and jurisdiction restrictions before any targeted consumer marketing. [FCA current guidance](https://www.fca.org.uk/firms/cryptoasset-financial-promotions-and-fiat-crypto-ramp-services).
+**Current scope:** That historical mainnet/public-funds plan is on hold. Right now, the product track is an isolated, valueless **user test network**, not a real-asset or mainnet release.
 
-## MILESTONE 8 — CURRENT PRIORITY: FULL DEEP INTEGRATION CHECKLIST
+## Milestone 8 — DEFERRED mainnet beta planning (historical)
 
-> **ROOT HIGHLIGHT · STATUS: NO-GO FOR MAINNET.** Contracts and local tests exist; **no independent audit, verified canonical WVERY, authorized deployed AMM, funded pool or live transaction proof exists**. Lidde's Factory, Router and WVERY production addresses remain **null**, and wallet writes remain disabled.
+> **MAINNET HISTORICAL PLANNING ONLY · STATUS: NO-GO FOR REAL FUNDS.** Contracts and local tests exist; **no independent audit, verified canonical WVERY, authorized deployed AMM, funded pool or live transaction proof exists**. Lidde's Factory, Router and WVERY production addresses remain **null**, and wallet writes remain disabled.
 
 **[Open the full root Milestone 8 master checklist — 18 stages, 90 itemized tasks, owners, evidence and stop conditions](MILESTONE-08.md).** For implementation detail and audit handoff, also see [M08 deep engineering runbook](docs/MILESTONE-08-EXECUTION.md), [security finding triage](docs/SLITHER-FINDINGS-TRIAGE.md) and [external audit brief](docs/INDEPENDENT-AUDIT-BRIEF.md).
 
@@ -43,7 +66,7 @@ The public-launch plan explicitly covers: external security and M08 exit, qualif
 | **8.17** | Require human independent audit/funding/signing release approval | NO-GO |
 | **8.18** | Produce actual beta closeout and separate Milestone 9 signoff | Not started |
 
-**Execution order:** Official WVERY + independent audit + security remediation → source/ABI freeze and fork/local tests → separately approved, capped deployment and real trade/LP receipts → wallet/Neon/monitoring/metrics → final signed beta release → M09 decision.
+**Mainnet roadmap is deferred.** Its external audit and canonical mainnet WVERY work remain relevant only to a later, separately authorized real-value launch. Milestone 10's current user testing uses independently identified demo-chain contracts and valueless faucet tokens.
 
 **Commands (developer-only; never authorize funding):** `npm test`, `npm run typecheck`, `npm run build`, `forge test -vv`, `npm run beta:preflight`, `npm run beta:gate:ci`.
 
@@ -75,6 +98,9 @@ npm run check:rpc
 Visit http://localhost:3000. **`check:rpc` is optional and uses the public live RPC; it never signs or sends a transaction.**
 
 ## Network
+
+**Historical source configuration below is VERY MAINNET and deliberately disabled. Do NOT use chain ID 4613 for the Lidde testnet.** The testnet network ID, RPC, explorer, faucet and deployed addresses will be filled only after verification and isolated provisioning; see [testnet template](config/networks.testnet.template.json).
+
 
 | Field | Value |
 | --- | --- |
