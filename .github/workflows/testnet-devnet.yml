@@ -59,6 +59,13 @@ jobs:
           EOF
       - name: Install app dependencies for RPC / ABI verification
         run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Print Foundry creation-record inventory for audit
+        run: |
+          node --input-type=module <<'EOF'
+          import {readFileSync} from "node:fs";
+          const x=JSON.parse(readFileSync("broadcast/TestnetDeploy.s.sol/31337/run-latest.json","utf8"));
+          console.log(x.transactions.filter(t=>["CREATE","CREATE2"].includes(t.transactionType)).map(t=>t.contractName).join(", "));
+          EOF
       - name: Verify the actual local deployment addresses and seeded pools (read only)
         env:
           TESTNET_EXPECTED_CHAIN_ID: "31337"

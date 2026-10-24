@@ -5,13 +5,13 @@ const address=i=>"0x"+i.toString(16).padStart(40,"0");
 const example=[
  "LiddeFactory","LiddeWrappedVery","LiddeRouter",
  ...Array(6).fill("LiddeTestToken"),"LiddeTestFaucet"
-].map((contractName,i)=>({contractName,contractAddress:address(i+1)}));
+].map((contractName,i)=>({contractName,contractAddress:address(i+1),transactionType:'CREATE'}));
 test("broadcast-derived config uses deployment order and immutable fake asset metadata",()=>{
  const value=deploymentAddresses(example);
  assert.equal(value.tokens.length,6);
  assert.equal(value.tokens[0].symbol,"tUSD");
  assert.equal(value.tokens[3].decimals,8);
- assert.equal(value.router.toLowerCase(),address(3));
+ assert.equal(value.router.toLowerCase(),address(3));\n const repeated=[...example,{contractName:"LiddeRouter",contractAddress:address(3),transactionType:"CALL"}];\n assert.equal(deploymentAddresses(repeated).router.toLowerCase(),address(3));
 });
 test("reject missing or duplicated deployments",()=>{
  assert.throws(()=>deploymentAddresses(example.slice(1)),/Factory/);
