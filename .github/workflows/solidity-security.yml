@@ -1,0 +1,62 @@
+name: Solidity Security
+
+on:
+  push:
+    paths:
+      - "contracts/**"
+      - "foundry.toml"
+      - ".github/workflows/solidity-security.yml"
+  pull_request:
+    paths:
+      - "contracts/**"
+      - "foundry.toml"
+      - ".github/workflows/solidity-security.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  foundry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      FOUNDRY_PROFILE: ci
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+      - name: Print toolchain
+        run: forge --version
+      - name: Compile all original MIT Solidity
+        run: forge build --sizes
+      - name: Solidity unit / fuzz / adversarial tests
+        run: forge test -vv
+      - name: Inspect pair ABIs
+        run: |
+          forge inspect LiddeFactory abi > /dev/null
+          forge inspect LiddePair abi > /dev/null
+          forge inspect LiddeRouter abi > /dev/null
+      - name: No deployed mainnet contracts
+        run: |
+          node -e 'const d=require("./config/deployments.json"); if(d.factory!==null||d.router!==null||d.wrappedVery!==null||d.releaseApproved||d.auditReviewed) process.exit(1)'
+
+  slither:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install Foundry compiler
+        uses: foundry-rs/foundry-toolchain@v1
+      - name: Static Solidity analysis (high findings block)
+        uses: crytic/slither-action@v0.4.2
+        with:
+          target: "."
+          fail-on: high
+          slither-args: "--filter-paths contracts/test"

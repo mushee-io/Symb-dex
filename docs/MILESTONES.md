@@ -14,12 +14,13 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Obtain and review trusted production token addresses.
 - [x] Confirm M01 CI build is green.
 
-## M02 — AMM architecture and Foundry project
-- [ ] Choose and document audited, license-compatible constant-product AMM base.
-- [ ] Scaffold Foundry contracts and pinned dependency versions.
-- [ ] Implement factory, pairs, router, fee accounting and WVERY adapter.
-- [ ] Write swap, liquidity, fuzz and invariant tests.
-- [ ] Complete internal review; do not deploy to mainnet yet.
+## M02 — AMM architecture and Foundry project (experimental MIT source present)
+- [x] Implement original MIT-licensed constant-product AMM source, avoiding incompatible GPL-licensed dependencies.
+- [x] Add root Foundry configuration with pinned Solidity compiler.
+- [x] Implement factory, pairs, 30 bps LP fees, router and local experimental wrapped-native token.
+- [x] Add Solidity swap, liquidity, fuzz and invariant test suites.
+- [ ] Complete independent security review, determine canonical wrapped VERY and verify deployed ABI/bytecode.
+- [ ] Test finalized AMM on a compatible local/forked VERY execution environment before any mainnet deployment.
 
 ## M03 — Wallet and token flows (implemented, awaiting human chain smoke test)
 - [x] EIP-6963 multi-injected wallet detection, optional WalletConnect and disconnect UI.
@@ -81,10 +82,15 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Frontend market charts, trending pools and dashboards.
 - [ ] Alerting, production monitoring and independent data-integrity audit.
 
-## M07 — Security readiness
-- [ ] Threat model, fuzz/invariants, dependency review, external audit.
-- [ ] Resolve critical findings and publish limitations.
-- [ ] Multisig key governance and incident playbooks.
+## M07 — Security readiness (source tooling delivered; independent audit outstanding)
+- [x] Root MIT LICENSE, Solidity MIT SPDX headers, contract provenance and pinned Foundry configuration.
+- [x] Original pair/router/factory/wrapped-native experimental Solidity source and fuzz/security/invariant suites.
+- [x] Automated Foundry CI and Slither high-severity gate (verify live CI result on PR).
+- [x] Threat model, private SECURITY.md reporting, incident response draft, deployment manifest template.
+- [ ] Full independent external audit of exact frozen deployable code and findings remediation/retest.
+- [ ] Verified canonical VERY wrapper, production bytecode, gas/fork tests and deployment documentation.
+- [ ] Assign actual multisig signers and validate operational incident drills.
+- [ ] Resolve high/critical findings, satisfy independent reviewers and authorize M08 separately.
 
 ## M08 — Capped mainnet beta
 - [ ] Verify contract source and metadata on VeryScan.

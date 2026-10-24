@@ -1,0 +1,22 @@
+{
+  "status": "not-deployed",
+  "chainId": 4613,
+  "sourceCommit": null,
+  "license": "MIT",
+  "compiler": "0.8.26",
+  "evmVersion": "paris",
+  "optimizerRuns": 200,
+  "viaIR": true,
+  "factory": null,
+  "router": null,
+  "wrappedVery": null,
+  "pairBytecodeHash": null,
+  "feeBps": 30,
+  "ownershipModel": "immutable factory and pair with no privileged admin",
+  "verifiedOnVeryScan": false,
+  "reproducedBytecode": false,
+  "independentAuditReport": null,
+  "findingsRetested": false,
+  "reviewersApproved": false,
+  "approvedForMainnet": false
+}
