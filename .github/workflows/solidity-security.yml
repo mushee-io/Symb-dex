@@ -33,7 +33,7 @@ jobs:
       - name: Print toolchain
         run: forge --version
       - name: Compile all original MIT Solidity
-        run: forge build --sizes
+        run: forge build --sizes contracts/src
       - name: Solidity unit / fuzz / adversarial tests
         run: forge test -vv
       - name: Local deployment dry-run (no external RPC, no keys)

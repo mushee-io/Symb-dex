@@ -21,3 +21,7 @@ Run from the repository root:
 Foundry settings: pinned Solidity compiler 0.8.26, Paris EVM target, optimizer 200, via IR, dependency-free solidity tests. The Solidity CI workflow also invokes Slither to block high-impact static-analysis findings.
 
 Notes: no upgradeability, no feeTo protocol fee switch, no flash callbacks, no pause mechanism, no token-tax / rebasing support. The 30 bps fee remains inside pool reserves. Do not deploy or enable user funds without external audit, native-chain integration testing, confirmed canonical wrapped-VERY provenance, token allowlisting and authorized security release.
+
+## M10 Foundry deployment-script size warning
+
+`script/TestnetDeploy.s.sol` embeds creation bytecode for multiple separate test contracts, so its *script runtime* exceeds the usual deployed-contract EIP-170 size. The script itself is run by Foundry's deployment engine and is **never deployed as a live contract**. The actual Factory, Pair, Router, token, wrapper and faucet deployed runtimes are all comfortably below the 24,576-byte EIP-170 limit. Therefore CI checks **real contract size** with `forge build --sizes contracts/src` and separately compiles, broadcasts and exercises the script against local Anvil. Do not treat the deployment script as a production contract or suppress runtime code size limits for deployed contracts.

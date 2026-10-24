@@ -7,7 +7,7 @@
 1. Install Foundry, Node.js 22+, and project packages (`npm install`). Do not use a real-value wallet or mainnet key.
 2. Start **separate temporary chain**: `anvil --chain-id 31337 --host 127.0.0.1 --port 8545`. This network disappears when Anvil terminates and is not suitable for external public testers.
 3. In a separate shell, obtain a DISPOSABLE Anvil-only private key from its startup banner. Set `TESTNET_EXPECTED_CHAIN_ID=31337` and `TESTNET_DEPLOYER_PRIVATE_KEY=<disposable-key>` in your shell/secret manager.
-4. Run: `forge test --match-contract LiddeTestnetTest -vv`.
+4. Run: `forge build --sizes contracts/src` to verify the actual deployable contracts are under EIP-170, followed by `forge test --match-contract LiddeTestnetTest -vv`. The deploy script is not an on-chain contract.
 5. Run: `forge script script/TestnetDeploy.s.sol:TestnetDeploy --rpc-url http://127.0.0.1:8545 --broadcast -vv`.
 6. Inspect the generated Foundry receipts in `broadcast/TestnetDeploy.s.sol/31337/run-latest.json`. Verify Factory, Router, wrapped local gas token, six synthetic ERC-20s, native/token and ERC-20/ERC-20 liquidity, and faucet are deployed. No mainnet chain can pass the deploy script checks.
 7. Run `TESTNET_EXPECTED_CHAIN_ID=31337 npm run testnet:verify` to verify actual RPC chain, bytecode, token symbols/decimals, Factory/Router/wrapper addresses and both seeded pools without writing files.

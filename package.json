@@ -12,7 +12,7 @@
     "index:liquidity": "node scripts/index-liquidity.mjs",
     "index:market": "node scripts/index-market.mjs",
     "reconcile:market": "node scripts/reconcile-market.mjs",
-    "contracts:build": "forge build --sizes",
+    "contracts:build": "forge build --sizes contracts/src",
     "contracts:test": "forge test -vv",
     "inspect:wvery": "node scripts/inspect-wvery.mjs",
     "beta:preflight": "node scripts/beta-preflight.mjs",
