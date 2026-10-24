@@ -44,3 +44,19 @@ jobs:
       - name: No deployed mainnet contracts
         run: |
           node -e 'const d=require("./config/deployments.json"); if(d.factory!==null||d.router!==null||d.wrappedVery!==null||d.releaseApproved||d.auditReviewed) process.exit(1)'
+
+  slither:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install Foundry compiler
+        uses: foundry-rs/foundry-toolchain@v1
+      - name: Static Solidity analysis (high findings block)
+        uses: crytic/slither-action@v0.4.2
+        with:
+          target: "."
+          fail-on: high
+          slither-args: "--filter-paths contracts/test"

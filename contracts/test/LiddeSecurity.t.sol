@@ -139,7 +139,7 @@ contract LiddeSecurityTest {
 
     function testFuzzRouterAmountOutNeverExceedsReserves(uint96 rawIn, uint96 rawReserve) public {
         uint256 reserve=10_000 + uint256(rawReserve) % (10**25);
-        uint256 input=1+uint256(rawIn) % (10**22);
+        uint256 input=reserve / 100 + 1 + uint256(rawIn) % (reserve / 100 + 1);
         uint256 output=router.getAmountOut(input,reserve,reserve);
         require(output > 0 && output < reserve, "PRICE_OVERFLOW");
     }

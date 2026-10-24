@@ -72,6 +72,7 @@ contract LiddeRouter {
         public view returns (uint256[] memory amounts)
     {
         require(path.length >= 2 && path.length <= 3, "INVALID_PATH");
+        require(path.length != 3 || path[0] != path[2], "CYCLIC_PATH");
         amounts = new uint256[](path.length);
         amounts[0] = input;
         for (uint256 i = 0; i + 1 < path.length; ++i) {
