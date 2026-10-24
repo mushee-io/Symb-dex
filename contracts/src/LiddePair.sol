@@ -67,6 +67,7 @@ contract LiddePair is LiddeERC20 {
     }
 
     function _safeTransfer(address token, address to, uint256 amount) private {
+        require(token.code.length > 0, "TOKEN_NOT_CONTRACT");
         (bool success, bytes memory response) =
             token.call(abi.encodeWithSelector(ILiddeERC20.transfer.selector, to, amount));
         require(success && (response.length == 0 || abi.decode(response, (bool))), "TOKEN_TRANSFER_FAILED");

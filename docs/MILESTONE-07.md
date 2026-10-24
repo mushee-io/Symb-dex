@@ -37,3 +37,7 @@ No audit certificate, no safe-funds claim, and no user-deposit authorization are
 ## Automated static-analysis findings
 
 Slither runs in GitHub Actions and blocks high-impact results. Passing that specific gate does NOT mean no medium/low/informational findings remain: all reported findings need human security triage, explicit review outcomes and appropriate remediation before mainnet release. The wrapped-native withdraw sequence was adjusted to emit before the external send, following state-before-interaction discipline. Deployment remains forbidden by the release gate.
+
+## Pre-beta audit hardening and provenance results
+
+See [Slither finding register](SLITHER-FINDINGS-TRIAGE.md), [WVERY provenance investigation](WRAPPED-VERY-REVIEW.md), [independent auditor handoff](INDEPENDENT-AUDIT-BRIEF.md) and [Milestone 8 roadmap](MILESTONE-08.md). Source hardening requires token contract bytecode before raw ERC-20 calls and moves factory pair records ahead of initialization. Local deployment-like smoke tests are deliberately not mainnet broadcasts. The canonical wrapped VERY contract has **not** been established; no address should be added to the live registry.

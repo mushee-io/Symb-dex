@@ -36,6 +36,8 @@ jobs:
         run: forge build --sizes
       - name: Solidity unit / fuzz / adversarial tests
         run: forge test -vv
+      - name: Local deployment dry-run (no external RPC, no keys)
+        run: forge test --match-contract LiddeLocalDeploymentDryRunTest -vv
       - name: Inspect pair ABIs
         run: |
           forge inspect LiddeFactory abi > /dev/null
@@ -58,5 +60,14 @@ jobs:
         uses: crytic/slither-action@v0.4.2
         with:
           target: "."
+          sarif: "slither-results.sarif"
           fail-on: high
           slither-args: "--filter-paths contracts/test"
+      - name: Retain full Slither findings for security triage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slither-findings
+          path: slither-results.sarif
+          if-no-files-found: warn
+          retention-days: 30

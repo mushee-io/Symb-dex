@@ -82,20 +82,26 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Frontend market charts, trending pools and dashboards.
 - [ ] Alerting, production monitoring and independent data-integrity audit.
 
-## M07 — Security readiness (source tooling delivered; independent audit outstanding)
+## M07 — Security readiness (internal hardening and audit handoff; independent audit outstanding)
 - [x] Root MIT LICENSE, Solidity MIT SPDX headers, contract provenance and pinned Foundry configuration.
 - [x] Original pair/router/factory/wrapped-native experimental Solidity source and fuzz/security/invariant suites.
 - [x] Automated Foundry CI and Slither high-severity gate (verify live CI result on PR).
 - [x] Threat model, private SECURITY.md reporting, incident response draft, deployment manifest template.
+- [x] Internal security finding triage, EOA-transfer hardening, wrapped-token probe and controlled local deployment rehearsal.
 - [ ] Full independent external audit of exact frozen deployable code and findings remediation/retest.
 - [ ] Verified canonical VERY wrapper, production bytecode, gas/fork tests and deployment documentation.
 - [ ] Assign actual multisig signers and validate operational incident drills.
 - [ ] Resolve high/critical findings, satisfy independent reviewers and authorize M08 separately.
 
-## M08 — Capped mainnet beta
-- [ ] Verify contract source and metadata on VeryScan.
-- [ ] Seed small, disclosed liquidity with funding approval.
-- [ ] End-to-end swap/add/remove tests, receipts, monitoring.
+## M08 — Capped mainnet beta (not launched)
+- [x] Draft detailed 18-stage [mainnet-beta plan](MILESTONE-08.md), external audit brief, wrapped-token inspection and local deployment-style rehearsal tests.
+- [ ] Complete independent audit of frozen Solidity source and all high-severity remediation.
+- [ ] Confirm chain-operator provenance, bytecode and backing of canonical wrapped VERY.
+- [ ] Verify contract source and complete reproducible deployment manifest on VeryScan.
+- [ ] Authorize bounded funding and establish multisig responsibilities.
+- [ ] Complete fork testing, production incident drills, verified live receipts and Neon reconciliation.
+- [ ] Run capped, disclosed liquidity beta after explicit financial and security signoff.
+- [ ] Complete full add/swap/remove cycle, validate monitoring and decide M09 launch separately.
 
 ## M09 — Public launch
 - [ ] Production interface, accessible documentation and monitoring.

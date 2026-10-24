@@ -18,10 +18,12 @@ contract LiddeFactory {
         require(getPair[token0][token1] == address(0), "PAIR_EXISTS");
         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
         pair = address(new LiddePair{salt: salt}());
-        LiddePair(pair).initialize(token0, token1);
+        // Record the new pair before calling its initializer. Any initializer
+        // failure reverts the entire transaction and therefore also these writes.
         getPair[token0][token1] = pair;
         getPair[token1][token0] = pair;
         allPairs.push(pair);
+        LiddePair(pair).initialize(token0, token1);
         emit PairCreated(token0, token1, pair, allPairs.length);
     }
 }

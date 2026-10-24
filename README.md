@@ -117,3 +117,14 @@ Run from repository root with installed [Foundry](https://getfoundry.sh/):
     forge test -vv
 
 **Experimental Solidity is NOT an audited production protocol.** It uses a fixed 30 bps swap fee with no protocol fee switch or pause. LiddeWrappedVery is a **local wrapped-native asset reference, not a verified official WVERY**. No new deployment address is added to the release registry. Source-code tests, an MIT license and automatic scanning are not substitutes for independent third-party audit.
+
+## Security hardening and Milestone 8 preparation (pre-launch)
+
+- [Read-only wrapped VERY candidate inspector](scripts/inspect-wvery.mjs): verify chain 4613, deployed bytecode, ERC-20 metadata and on-chain native backing with a pinned block. A passing probe **does not prove canonical issuance**. See [wrapped-token investigation](docs/WRAPPED-VERY-REVIEW.md).
+- [Slither triage](docs/SLITHER-FINDINGS-TRIAGE.md): security scanner findings require case-by-case review; a green Slither job is **not an audit**. GitHub CI dependency installation previously reported 14 high and 15 moderate npm advisories requiring review.
+- Solidity hardening: reject low-level ERC-20 transfers sent to non-contract addresses, and record factory pair state before initializer call.
+- [Controlled local deployment test](contracts/test/LiddeLocalDeploymentDryRun.t.sol): multi-actor local bootstrap, liquidity, swap, withdrawal, reserve/supply reconciliation and failed first-mint rollback. **No mainnet broadcast.**
+- [External auditor request brief](docs/INDEPENDENT-AUDIT-BRIEF.md): prepared scope and acceptance criteria; no independent firm engaged or certificate issued.
+- [Milestone 8 detailed beta roadmap](docs/MILESTONE-08.md): 18 tasks with strict signoff, real receipt and funding gates; not live.
+
+For an operator-only candidate probe (never a wallet transaction): `LIDDE_WVERY_CANDIDATE=<address> npm run inspect:wvery`. No candidate is trusted by default. Mainnet `config/deployments.json` remains deliberately disabled.
