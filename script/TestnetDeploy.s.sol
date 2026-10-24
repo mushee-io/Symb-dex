@@ -40,7 +40,6 @@ contract TestnetDeploy {
         LiddeWrappedVery wrapper = new LiddeWrappedVery();
         LiddeRouter router = new LiddeRouter(address(factory),address(wrapper));
         LiddeDemoTokenFactory tokenCreator = new LiddeDemoTokenFactory();
-        LiddeDemoLimitBook limitBook = new LiddeDemoLimitBook();
 
         LiddeTestToken tUSD = new LiddeTestToken("Lidde test USD","tUSD",6,1_000_000_000e6);
         LiddeTestToken tUSDC = new LiddeTestToken("Lidde test USDC","tUSDC",6,1_000_000_000e6);
@@ -48,6 +47,11 @@ contract TestnetDeploy {
         LiddeTestToken tBTC = new LiddeTestToken("Lidde test BTC","tBTC",8,21_000_000e8);
         LiddeTestToken tETH = new LiddeTestToken("Lidde test ETH","tETH",18,100_000_000e18);
         LiddeTestToken tLIDDE = new LiddeTestToken("Lidde test governance","tLIDDE",18,100_000_000e18);
+        address[] memory trustedOrderAssets=new address[](6);
+        trustedOrderAssets[0]=address(tUSD);trustedOrderAssets[1]=address(tUSDC);
+        trustedOrderAssets[2]=address(tUSDT);trustedOrderAssets[3]=address(tBTC);
+        trustedOrderAssets[4]=address(tETH);trustedOrderAssets[5]=address(tLIDDE);
+        LiddeDemoLimitBook limitBook = new LiddeDemoLimitBook(trustedOrderAssets);
 
         address[] memory assets = new address[](6);
         assets[0]=address(tUSD);assets[1]=address(tUSDC);assets[2]=address(tUSDT);

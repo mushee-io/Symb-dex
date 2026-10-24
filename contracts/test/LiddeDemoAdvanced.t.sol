@@ -22,9 +22,11 @@ contract LiddeDemoAdvancedTest {
 
     function setUp() public {
         creator = new LiddeDemoTokenFactory();
-        book = new LiddeDemoLimitBook();
         usd = new LiddeTestToken("Test Dollar","tUSD",6,100_000_000e6);
         btc = new LiddeTestToken("Test Bitcoin","tBTC",8,21_000_000e8);
+        address[] memory allowlist=new address[](2);
+        allowlist[0]=address(usd);allowlist[1]=address(btc);
+        book = new LiddeDemoLimitBook(allowlist);
         usd.mint(ALICE,100000e6);
         btc.mint(BOB,10e8);
         factory=new LiddeFactory();

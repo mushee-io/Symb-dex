@@ -17,6 +17,7 @@ contract LiddeDemoLimitBook {
         bool cancelled;
     }
     uint256 public nextOrderId = 1;
+    mapping(address => bool) public approvedToken;
     mapping(uint256 => Order) public orders;
     uint256 private unlocked = 1;
     event OrderCreated(uint256 indexed id, address indexed maker, address indexed sellToken, address buyToken, uint256 sellAmount, uint256 buyAmount, uint64 expiry);
@@ -24,8 +25,14 @@ contract LiddeDemoLimitBook {
     event OrderCancelled(uint256 indexed id, uint256 returnedToMaker);
     modifier nonReentrant() { require(unlocked == 1, "REENTRANCY"); unlocked = 0; _; unlocked = 1; }
 
-    constructor() {
+    constructor(address[] memory approvedAssets) {
         require(block.chainid > 1000 && block.chainid != 4613, "NOT_ISOLATED_TEST_CHAIN");
+        require(approvedAssets.length >= 2 && approvedAssets.length <= 16, "INVALID_ASSET_COUNT");
+        for (uint256 i = 0; i < approvedAssets.length; i++) {
+            address asset = approvedAssets[i];
+            require(asset != address(0) && asset.code.length > 0 && !approvedToken[asset], "INVALID_ASSET");
+            approvedToken[asset] = true;
+        }
     }
 
     function _balance(address token, address wallet) private view returns (uint256 result) {
@@ -53,6 +60,7 @@ contract LiddeDemoLimitBook {
         address sellToken, address buyToken, uint128 sellAmount, uint128 buyAmount, uint64 expiry
     ) external nonReentrant returns (uint256 id) {
         require(sellToken != buyToken && sellToken != address(0) && buyToken != address(0), "INVALID_MARKET");
+        require(approvedToken[sellToken] && approvedToken[buyToken], "UNREVIEWED_TOKEN");
         require(sellAmount > 0 && buyAmount > 0, "ZERO_ORDER");
         require(block.timestamp < expiry && expiry <= block.timestamp + 30 days, "INVALID_EXPIRY");
         _pull(sellToken, msg.sender, sellAmount);
