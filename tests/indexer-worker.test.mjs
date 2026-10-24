@@ -44,3 +44,26 @@ test("stale RPC parent is detected before checkpoint commit",async()=>{
  await assert.rejects(indexConfirmedWindow({...f,factory,deploymentStart:6n,confirmations:5,batchSize:4}),/discontinuous|canonical/);
  assert.equal(f.commits.length,0);
 });
+
+test("shallow reorg replays from the last matching canonical ancestor",async()=>{
+  const f=createFake(25n);
+  const args={...f,factory,deploymentStart:5n,confirmations:5,batchSize:7};
+  await indexConfirmedWindow(args); // initial chain: indexed through block 11
+  const original=f.client.getBlock;
+  f.client.getBlock=async({blockNumber})=>{
+    if(blockNumber<10n) return original({blockNumber});
+    return {
+      number:blockNumber,
+      hash:h(900n+blockNumber),
+      parentHash:blockNumber===10n?h(10):h(899n+blockNumber),
+      timestamp:1700000000n+blockNumber,
+    };
+  };
+  const next=await indexConfirmedWindow(args);
+  assert.equal(next.status,"indexed");
+  assert.deepEqual([next.from,next.to],[10n,16n]);
+  const commit=f.commits.at(-1);
+  assert.equal(commit.expected.blockNumber,11n);
+  assert.equal(commit.ancestor,9n);
+  assert.deepEqual(commit.headers.map(x=>x.number),[10n,11n,12n,13n,14n,15n,16n]);
+});
