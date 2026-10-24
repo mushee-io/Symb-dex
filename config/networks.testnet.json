@@ -1,0 +1,11 @@
+{
+  "status":"not-configured",
+  "chainId":null,
+  "name":"Lidde Development Test Network (not yet provisioned)",
+  "rpcUrl":null,
+  "explorerUrl":null,
+  "nativeCurrency":{"name":"Test Gas Token","symbol":"tVERY","decimals":18},
+  "isOfficialVeryTestnet":false,
+  "officialVerificationReference":null,
+  "realFundsAllowed":false
+}
