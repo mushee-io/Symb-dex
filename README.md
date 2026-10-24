@@ -12,6 +12,12 @@ A dedicated Neon project named **lidde-testnet** is provisioned with separate fa
 
 **Still not live to outside users:** long-lived public EVM hosting, DNS/HTTPS RPC, deployed public demo contracts, enabled gasless sponsorship and independent external-wallet receipts. The testnet registry remains unconfigured and VERY mainnet chain 4613 is locked. See the [operator deployment checklist](docs/M11-OPERATIONS.md).
 
+## Milestone 12 — PLANNED: Advanced DeFi testnet
+
+**[M12 complete technical specification — 25 stages, 125 tasks](MILESTONE-12.md).** New work after the M11 public-testnet prerequisites: modular Solidity registry, price feeds and collateral; signed order matching, isolated-margin perpetuals and liquidation keepers; bounded DCA/TWAP; separately reviewed experimental options, lending, mock RWA markets and strategy vaults; wallet risk portfolio, SDK/agent permissions, analytics and targeted security testing.
+
+**Not live:** M12 is a roadmap, not merged execution code. All new financial modules start disabled, use synthetic assets, and cannot activate VERY Mainnet chain 4613. Persistent public M11 testnet hosting and external-wallet acceptance still come first.
+
 ## Milestone 11 — Next deep public testnet build (25 stages, 125 tasks)
 
 **[Full checkable Milestone 11 implementation specification](MILESTONE-11.md).** Building on the completed local M10 foundation, M11 will provision the persistent testnet, explorer, free faucet and verified contracts, then complete real external-wallet swap and LP deposit/withdrawal flows. Indexing, routing, charts, quests, APIs, wallet/mobile QA and experimental orders/DCA/farms follow as separate workstreams.
