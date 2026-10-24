@@ -1,46 +1,27 @@
-# Milestone 10.1–10.6 — Testnet deployment and operator guide
+# M10.1–10.6 — Real Testnet Network and Contract Provisioning
 
-**Status:** Source foundations only until deployed to a persistent independent EVM test network. No public VERY testnet RPC/chain ID was verified. VERY Mainnet chain 4613 is NOT a testnet.
+**Current status: source implemented and tested on disposable local Anvil, but NO persistent public EVM test network has been provisioned.** VERY Mainnet chain ID 4613 remains locked. Test tokens represent no cash value.
 
-## Isolated testnet setup
+## To reproduce a local-only end-to-end deployment
 
-1. Provision a persistent EVM chain with a **new distinct chain ID** and funded (valueless) native test gas. For development use local Anvil at `http://127.0.0.1:8545`, default chain 31337. This is **not** persistent public infrastructure.
-2. `anvil --chain-id 31337 --host 127.0.0.1 --port 8545` in a separate terminal.
-3. Use a **disposable development-only account**, never a mainnet key. Set `TESTNET_EXPECTED_CHAIN_ID=31337` and `TESTNET_DEPLOYER_PRIVATE_KEY` outside source.
-4. `forge script script/TestnetDeploy.s.sol:TestnetDeploy --rpc-url http://127.0.0.1:8545 --broadcast` after tests pass. The script refuses chain IDs 1 and 4613 or a mismatched expected ID.
-5. Review actual Foundry broadcast transaction receipts for Factory, Router, wrapped TEST native, faucet and six test tokens. Confirm code and `router.factory()`, `router.WETH()`, and mock token decimals at deployed addresses. Do not guess addresses.
-6. Only then set `config/networks.testnet.json` and `config/deployments.testnet.json` to the verified separate chain metadata and actual addresses (see examples below); mark both configured. Rebuild the app to add the optional testnet wallet chain.
-7. Test external wallet account switching, faucet and swap from a wallet funded with fake native gas; P0 UI should display unavailable until manifest is validated.
+1. Install Foundry, Node.js 22+, and project packages (`npm install`). Do not use a real-value wallet or mainnet key.
+2. Start **separate temporary chain**: `anvil --chain-id 31337 --host 127.0.0.1 --port 8545`. This network disappears when Anvil terminates and is not suitable for external public testers.
+3. In a separate shell, obtain a DISPOSABLE Anvil-only private key from its startup banner. Set `TESTNET_EXPECTED_CHAIN_ID=31337` and `TESTNET_DEPLOYER_PRIVATE_KEY=<disposable-key>` in your shell/secret manager.
+4. Run: `forge test --match-contract LiddeTestnetTest -vv`.
+5. Run: `forge script script/TestnetDeploy.s.sol:TestnetDeploy --rpc-url http://127.0.0.1:8545 --broadcast -vv`.
+6. Inspect the generated Foundry receipts in `broadcast/TestnetDeploy.s.sol/31337/run-latest.json`. Verify Factory, Router, wrapped local gas token, six synthetic ERC-20s, native/token and ERC-20/ERC-20 liquidity, and faucet are deployed. No mainnet chain can pass the deploy script checks.
+7. Run `TESTNET_EXPECTED_CHAIN_ID=31337 npm run testnet:verify` to verify actual RPC chain, bytecode, token symbols/decimals, Factory/Router/wrapper addresses and both seeded pools without writing files.
+8. To enable your frontend **locally**, set `TESTNET_EXPECTED_CHAIN_ID=31337 TESTNET_CONFIG_APPROVE=yes-local-test-only npm run testnet:configure`. This writes only separate testnet JSON registries. It does not change `config/deployments.json`.
+9. Restart `npm run dev` and open `/testnet`. Connect a wallet, switch to local demo chain, sign a test trade, then inspect real testnet balances.
+10. Use `claim()` from a funded test wallet, or the operator's `claimFor(wallet)` to provide test gas for a brand-new account. Optional gasless API sponsorship requires [this operator procedure](M10-FAUCET-OPERATOR.md).
 
-### Configuration example (NOT deployed addresses)
+If using a **persistent** public test EVM network later, replace localhost RPC/explorer with actual verified HTTPS endpoints, use a distinct chain ID, provision an independent explorer, secure test signer and durable faucet service, and publish reset/maintenance notices. Do not claim an isolated Lidde devnet is officially provided by VERY without a verified operator statement.
 
-```json
-{
-  "status":"configured",
-  "chainId":31337,
-  "name":"Lidde Local Development Network",
-  "rpcUrl":"http://127.0.0.1:8545",
-  "explorerUrl":"http://127.0.0.1:8545",
-  "nativeCurrency":{"name":"Test Gas Token","symbol":"tVERY","decimals":18},
-  "isOfficialVeryTestnet":false,
-  "officialVerificationReference":null,
-  "realFundsAllowed":false
-}
-```
+## Security conditions
 
-The second config must have the same chain ID, feeBps=30, a deployed Factory, Router, test wrapped-native and faucet, plus all six demo token entries. A raw RPC URL is not an explorer UI: for persistent public launch provision a genuine explorer and replace the placeholder. Only loopback HTTP is accepted; public RPC/explorer must be HTTPS.
-
-### Faucet security model
-
-The Solidity faucet has 24-hour cooldown, native payout capped to 1 fake unit per claim, per-wallet claim tracking, bounded ERC20 list and owner-only gasless **`claimFor(wallet)`**. A wallet already holding test gas can invoke `claim()` itself. **A wallet with zero gas cannot make an ordinary `claim()` transaction.** The operator may sponsor it using a backend, but that backend needs a real durable rate limiter, owner-only signing key, abuse controls, gas/reserve ceilings and a review before public availability. No signing key is committed and there is currently no public gas-sponsorship API.
-
-### Test swap
-
-The Router, Pair, tokens and initial pool are deployed on the sandbox chain. Approve demo token amount, simulate using correct router/chain, sign with the connected demo wallet, and confirm balances/reserves change. The source includes local tests that exercise the faucet → swap → LP add/remove path.
-
-### Remaining for full public Milestone 10
-- Long-lived hosted RPC, actual explorer frontend, hosted gas-sponsored rate-limited faucet with persistence, owner/operator seed funding.
-- Separate mainnet-locked swap and liquidity UI contexts are being added on dedicated testnet routes.
-- Repeat full external-wallet testing on persistent test network, secure signing environment, real test receipts, chain reset notices.
-
-Mainnet `config/deployments.json` is intentionally untouched, at chain 4613 with every production address null.
+- Source MIT, tested in Foundry, not externally audited. Test only, no real assets.
+- Network must not be VERY Mainnet (4613), Ethereum Mainnet (1) or a mismatched RPC.
+- `LiddeWrappedVery` is a **test wrapper**, not verified as official canonical WVERY.
+- Server-signed faucet, if enabled, uses separate operator secrets and Neon claim limits.
+- Frontend stays unavailable when configuration is incomplete. No fake exchange volumes or receipt links.
+- Never commit `TESTNET_DEPLOYER_PRIVATE_KEY`, faucet sponsor keys or user seed phrases.

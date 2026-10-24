@@ -16,7 +16,9 @@
     "contracts:test": "forge test -vv",
     "inspect:wvery": "node scripts/inspect-wvery.mjs",
     "beta:preflight": "node scripts/beta-preflight.mjs",
-    "beta:gate:ci": "node scripts/beta-preflight.mjs --assert-closed"
+    "beta:gate:ci": "node scripts/beta-preflight.mjs --assert-closed",
+    "testnet:verify": "node scripts/configure-testnet.mjs --verify-only",
+    "testnet:configure": "node scripts/configure-testnet.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.0",
