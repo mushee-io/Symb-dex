@@ -122,6 +122,8 @@ No project web or blockchain mainnet trading is represented as live by this road
 
 ## M10 — CURRENT: Deep Public Testnet (valueless assets only)
 
+**Source delivered for 10.1–10.6:** separate configured-or-disabled network registry, disposable Anvil deployment, synthetic test tokens, capped faucet contracts with optional operator sponsorship, a dedicated testnet wallet and swap execution page, on-chain quote/transaction logic, broadcast verifier and regression tests. **No persistent public devnet or external live test swaps are deployed yet.**
+
 **ROOT MASTER PLAN:** [Milestone 10 — 25 stages / 175 individually checkable tasks](../MILESTONE-10.md). This is the current delivery track, superseding the past M08/M09 mainnet-oriented schedules as active priorities.
 
 - [ ] Verify a genuine VERY testnet (not yet confirmed), or establish a separately identified persistent Lidde EVM developer network with its own chain ID, faucet, RPC and explorer.

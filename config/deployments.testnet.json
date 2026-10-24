@@ -1,0 +1,12 @@
+{
+  "status":"not-configured",
+  "chainId":null,
+  "factory":null,
+  "router":null,
+  "wrappedTestNative":null,
+  "faucet":null,
+  "tokens":[],
+  "feeBps":30,
+  "realFundsAllowed":false,
+  "deploymentSourceCommit":null
+}

@@ -4,6 +4,18 @@ Lidde is a **non-custodial decentralized exchange under development** for VERY C
 
 > **CURRENT BUILD GOAL: PUBLIC TESTNET FOR USERS — NO REAL FUNDS.** Original MIT Solidity and local Foundry tests exist, but a persistent hosted Lidde test network, faucet, working testnet deployments and public test transactions are **not yet live**. The mainnet chain ID 4613 and its release registry remain locked. Do not send real assets to test contracts.
 
+## Milestone 10.1–10.6 — Testnet engineering implemented (NOT PUBLICLY DEPLOYED)
+
+The new source includes:
+- [MIT-licensed synthetic tokens](contracts/src/testnet/LiddeTestToken.sol) with 6/8/18 decimals and mint caps; [test-only faucet contract](contracts/src/testnet/LiddeTestFaucet.sol) with a 24-hour cooldown and operator-sponsored claim.
+- [Mainnet-rejecting Foundry deploy script](script/TestnetDeploy.s.sol) and [Anvil CI workflow](.github/workflows/testnet-devnet.yml). CI deploys to chain 31337, funds the faucet with **fake gas**, seeds tUSD/tBTC and tUSD/wrapped-native pools and verifies actual deployed bytecode.
+- [Dedicated testnet page](/testnet) (route in this app: `app/testnet/page.tsx`) with EVM wallet connection, token balances, real reserve-driven quote, exact token approval, simulated swaps, real test-chain receipt tracking and faucet claim UI.
+- [Server-only gas sponsorship](app/api/testnet/faucet/route.ts) with wallet signatures, disabled-by-default operator key, trusted-proxy IP checks and [Neon claim-limiter migration](db/migrations/010_testnet_faucet.sql). Requires separate operator setup; public gasless claims are **not active yet**.
+- [Read-only actual deployment verifier](scripts/configure-testnet.mjs) to check RPC, addresses, ERC-20 metadata and pools before enabling the separate `config/*testnet.json` registry.
+- [Deployment guide](docs/M10-DEPLOYMENT.md) and [faucet operations guide](docs/M10-FAUCET-OPERATOR.md).
+
+**Live status:** P0 code is in source. A persistent public EVM network, real public explorer/HTTPS RPC, remote contract deployment, faucet sponsorship/Neon credentials and external-wallet transaction receipts are still missing. The testnet UI remains deliberately unavailable until a real verified isolated chain and contracts are configured. **No real assets or mainnet transactions have been used.**
+
 ## Milestone 10 — CURRENT PRIORITY: Deep Public Testnet (25 Stages / 175 Tasks)
 
 > **TESTNET ONLY — NO MAINNET ASSETS.** Give users a genuine test-chain trading environment with faucet, demo tokens, real contract swaps, pool creation, LP deposits/withdrawals, market charts, points, quests, and experimental advanced DeFi functionality. There is no testnet deployment or funded test user transaction claimed yet.
