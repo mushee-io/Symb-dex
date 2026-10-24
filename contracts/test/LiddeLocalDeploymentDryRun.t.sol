@@ -99,7 +99,7 @@ contract LiddeLocalDeploymentDryRunTest {
         require(factory.getPair(address(alpha),address(wrapper)) != address(0), "WRAPPER_POOL_MISSING");
     }
 
-    function testFailedInitialMintCannotRegisterHalfCreatedPool() public {
+    function testInitialMintFailureRollsBackHalfCreatedPool() public {
         vm.prank(ALICE);
         alpha.approve(address(router), 500);
         vm.prank(ALICE);
