@@ -4,6 +4,16 @@ Lidde is a **non-custodial decentralized exchange under development** for VERY C
 
 > **Not live.** Original Solidity AMM source and local Foundry security tests now exist in this repository, but **no AMM, Router or canonical WVERY is deployed**. Trading and liquidity writes remain disabled until independent audit, deployment verification and a separate release decision. Never send funds to an unverified address.
 
+## Milestone 9 — Future public launch (20 stages, 140 detailed tasks)
+
+> **NOT LIVE · NOT APPROVED.** Milestone 9 is a public-launch plan, **not an authorization to bypass Milestone 8**. Independent audit, canonical WVERY, production liquidity/swap/LP exit receipts, Neon operations, reviewed security findings and a separate M09 signoff remain required.
+
+**[Read the full root Milestone 9 master plan: 20 stages, 140 specific tasks, acceptance evidence and stop conditions](MILESTONE-09.md)** · [Operator execution and release runbook](docs/MILESTONE-09-EXECUTION.md).
+
+The public-launch plan explicitly covers: external security and M08 exit, qualified legal/regulatory advice, domain/DNS and secure deployments, audited contract addresses, token/pool eligibility, live swaps and LP exits, wallet UX, user transaction history, Neon indexing and verified analytics, monitoring and resilience, user docs and support, treasury governance, compliant community communications, gradual release, and a separate Milestone 10 handover.
+
+**UK legal gate:** Cryptoasset financial promotions can include public websites and social media; the FCA's evolving 2026/2027 regime may be relevant where identifiable entities manage DeFi activities. Independent legal counsel must establish Lidde's actual regulatory perimeter, approved communications and jurisdiction restrictions before any targeted consumer marketing. [FCA current guidance](https://www.fca.org.uk/firms/cryptoasset-financial-promotions-and-fiat-crypto-ramp-services).
+
 ## MILESTONE 8 — CURRENT PRIORITY: FULL DEEP INTEGRATION CHECKLIST
 
 > **ROOT HIGHLIGHT · STATUS: NO-GO FOR MAINNET.** Contracts and local tests exist; **no independent audit, verified canonical WVERY, authorized deployed AMM, funded pool or live transaction proof exists**. Lidde's Factory, Router and WVERY production addresses remain **null**, and wallet writes remain disabled.

@@ -105,9 +105,20 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Run capped, disclosed liquidity beta after explicit financial and security signoff.
 - [ ] Complete full add/swap/remove cycle, validate monitoring and decide M09 launch separately.
 
-## M09 — Public launch
-- [ ] Production interface, accessible documentation and monitoring.
-- [ ] Publish contract addresses, fees and risks.
+## M09 — Public launch (FUTURE / NOT AUTHORIZED)
+
+**Full root master plan:** [MILESTONE-09.md](../MILESTONE-09.md) contains 20 stages and 140 checkable tasks with acceptance and no-go evidence. [Production handover/operations runbook](MILESTONE-09-EXECUTION.md).
+
+- [ ] Close Milestone 8 with real signed audit, canonical WVERY, authorized pool/swap/LP-exit receipts, deployment proof and incident-readiness signoff.
+- [ ] Obtain professional UK and served-market financial promotions, cryptoasset-activity, sanctions and privacy legal assessment.
+- [ ] Secure official domain, CI/CD, release provenance, contract identity and verified token registry.
+- [ ] Complete production swap, liquidity, wallet, portfolio, Neon indexer and analytics proof with real chain receipts.
+- [ ] Publish verified source/contracts, risk disclosures, terms, docs, official status/support and incident reporting.
+- [ ] Test monitoring, resilience, load, rollback, treasury governance, and lawful community marketing.
+- [ ] Obtain independent separate Milestone 9 public launch approval; stage traffic safely with abort criteria.
+- [ ] Validate post-launch metrics and publish evidence-based Milestone 10 handover.
+
+No project web or blockchain mainnet trading is represented as live by this roadmap; contract deployment remains blocked by the existing review configuration.
 
 ## M10–M16 — Expansion
 - [ ] Rewards and farming, launchpad, advanced routing, limit orders,
