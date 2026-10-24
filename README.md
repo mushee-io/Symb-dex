@@ -4,6 +4,12 @@ Lidde is a **non-custodial decentralized exchange under development** for VERY C
 
 > **CURRENT BUILD GOAL: PUBLIC TESTNET FOR USERS — NO REAL FUNDS.** Original MIT Solidity and local Foundry tests exist, but a persistent hosted Lidde test network, faucet, working testnet deployments and public test transactions are **not yet live**. The mainnet chain ID 4613 and its release registry remain locked. Do not send real assets to test contracts.
 
+## Milestone 11 — Next deep public testnet build (25 stages, 125 tasks)
+
+**[Full checkable Milestone 11 implementation specification](MILESTONE-11.md).** Building on the completed local M10 foundation, M11 will provision the persistent testnet, explorer, free faucet and verified contracts, then complete real external-wallet swap and LP deposit/withdrawal flows. Indexing, routing, charts, quests, APIs, wallet/mobile QA and experimental orders/DCA/farms follow as separate workstreams.
+
+**This is a planned milestone—not a live public network.** Keep the current M10 source status and chain-4613 mainnet protections intact. P0 before broad invitations: chain → faucet → swaps → liquidity exits → verifiable explorer receipts and indexer reconciliation. No real assets, paid tokens or guaranteed airdrops.
+
 ## Milestone 10.1–10.6 — Testnet engineering implemented (NOT PUBLICLY DEPLOYED)
 
 The new source includes:
