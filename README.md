@@ -4,6 +4,41 @@ Lidde is a **non-custodial decentralized exchange under development** for VERY C
 
 > **Not live.** Original Solidity AMM source and local Foundry security tests now exist in this repository, but **no AMM, Router or canonical WVERY is deployed**. Trading and liquidity writes remain disabled until independent audit, deployment verification and a separate release decision. Never send funds to an unverified address.
 
+## MILESTONE 8 — CURRENT PRIORITY: FULL DEEP INTEGRATION CHECKLIST
+
+> **ROOT HIGHLIGHT · STATUS: NO-GO FOR MAINNET.** Contracts and local tests exist; **no independent audit, verified canonical WVERY, authorized deployed AMM, funded pool or live transaction proof exists**. Lidde's Factory, Router and WVERY production addresses remain **null**, and wallet writes remain disabled.
+
+**[Open the full root Milestone 8 master checklist — 18 stages, 90 itemized tasks, owners, evidence and stop conditions](MILESTONE-08.md).** For implementation detail and audit handoff, also see [M08 deep engineering runbook](docs/MILESTONE-08-EXECUTION.md), [security finding triage](docs/SLITHER-FINDINGS-TRIAGE.md) and [external audit brief](docs/INDEPENDENT-AUDIT-BRIEF.md).
+
+**Critical external blockers:** [#9 Independent auditor](https://github.com/mushee-io/lidde-dex/issues/9) · [#10 Official WVERY provenance](https://github.com/mushee-io/lidde-dex/issues/10) · [#11 Slither/npm remediation](https://github.com/mushee-io/lidde-dex/issues/11). Completing documentation or clicking a release flag does not satisfy these gates.
+
+| Stage | Detailed build/release task | Current evidence |
+| --- | --- | --- |
+| **8.1** | Confirm official WVERY, bytecode, backing and native redemption | External verification |
+| **8.2** | Commission and remediate independent audit of frozen Solidity | External auditor |
+| **8.3** | Prove compiler, source hash, pair/router ABI and bytecode identity | Evidence missing |
+| **8.4** | Assign multisig signers, treasury caps and security authority | Not assigned |
+| **8.5** | Verify eligible ERC-20s and publish reviewed token registry | No reviewed list |
+| **8.6** | Test local mint, swaps, LP burn, adversarial inputs and invariants | Local baseline passed |
+| **8.7** | Reproduce VERY EVM integration on a safe pinned fork | Fork proof missing |
+| **8.8** | Deploy audited contracts and small initial LP only after approval | No mainnet deployment |
+| **8.9** | Run authorized native/ERC-20 swap tests with real receipts | No mainnet swaps |
+| **8.10** | Prove partial and full LP redemption on-chain | No mainnet exits |
+| **8.11** | Test wallet signatures, chain switching, errors and approvals | Browser QA pending |
+| **8.12** | Provision Neon, index canonical logs, replay reorgs and reconcile | Source only |
+| **8.13** | Set up capped beta onboarding and transparent risk disclosures | Beta not launched |
+| **8.14** | Implement live alerting, assigned responders and incident drills | No live drills |
+| **8.15** | Verify source and audited contract identity publicly on VeryScan | Undeployed |
+| **8.16** | Report only verified swaps, wallets, reserves and trusted USD TVL | No live metrics |
+| **8.17** | Require human independent audit/funding/signing release approval | NO-GO |
+| **8.18** | Produce actual beta closeout and separate Milestone 9 signoff | Not started |
+
+**Execution order:** Official WVERY + independent audit + security remediation → source/ABI freeze and fork/local tests → separately approved, capped deployment and real trade/LP receipts → wallet/Neon/monitoring/metrics → final signed beta release → M09 decision.
+
+**Commands (developer-only; never authorize funding):** `npm test`, `npm run typecheck`, `npm run build`, `forge test -vv`, `npm run beta:preflight`, `npm run beta:gate:ci`.
+
+---
+
 ## Milestone 1: Foundation
 
 - Official VERY Mainnet configuration (chain ID 4613)
