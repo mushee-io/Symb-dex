@@ -33,3 +33,7 @@ Original Solidity source is MIT-licensed and uses SPDX-License-Identifier: MIT. 
 9. Post-release on-chain incident response and public communications readiness.
 
 No audit certificate, no safe-funds claim, and no user-deposit authorization are asserted by this project.
+
+## Automated static-analysis findings
+
+Slither runs in GitHub Actions and blocks high-impact results. Passing that specific gate does NOT mean no medium/low/informational findings remain: all reported findings need human security triage, explicit review outcomes and appropriate remediation before mainnet release. The wrapped-native withdraw sequence was adjusted to emit before the external send, following state-before-interaction discipline. Deployment remains forbidden by the release gate.

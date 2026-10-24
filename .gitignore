@@ -13,4 +13,5 @@ coverage/
 /out/
 /cache/
 /broadcast/
-/lib/
+# Keep the application /lib/ directory trackable; only ignore Foundry vendor folders.
+/contracts/lib/

@@ -22,8 +22,8 @@ contract LiddeWrappedVery is LiddeERC20 {
     function withdraw(uint256 amount) external {
         require(amount > 0, "ZERO_WITHDRAW");
         _burn(msg.sender, amount);
+        emit Withdrawal(msg.sender, amount);
         (bool success,) = payable(msg.sender).call{value: amount}("");
         require(success, "NATIVE_TRANSFER_FAILED");
-        emit Withdrawal(msg.sender, amount);
     }
 }
