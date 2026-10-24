@@ -137,7 +137,11 @@ No project web or blockchain mainnet trading is represented as live by this road
 
 **Current network status:** No verified public VERY testnet RPC or explorer published. VERY chain 4613 is mainnet, NOT a testnet. Devnet details and demo contract addresses are not yet configured. No real funds required.
 
-## M11 — NEXT: persistent public testnet, advanced exchange UX and user testing
+## M11 — P0 code implemented; external persistent network still outstanding
+
+The repository now includes testnet LP creation/exit, Neon indexer, restricted RPC/Anvil hosting recipe, read-only receipt explorer and fresh-wallet smoke-test CI. An isolated Neon project with faucet/indexer tables has been created. **Not publicly live yet.** [Operator guide](M11-OPERATIONS.md).
+
+### Next work: persistent public testnet and external-wallet testing
 
 **[Root Milestone 11 checklist](../MILESTONE-11.md): 25 stages, 125 detailed engineering tasks.** The first P0 goals are a persistent isolated chain, explorer, signed gas-sponsored demo faucet, live external-wallet swaps, liquidity pool creation and complete LP exits. Then grow real test-chain analytics, routing, portfolio and optional token creator, non-monetary quests, referrals, SDK and separately gated limit-order/DCA/farm experiments. No real funds and no mainnet activation are included.
 

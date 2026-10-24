@@ -4,6 +4,14 @@ Lidde is a **non-custodial decentralized exchange under development** for VERY C
 
 > **CURRENT BUILD GOAL: PUBLIC TESTNET FOR USERS — NO REAL FUNDS.** Original MIT Solidity and local Foundry tests exist, but a persistent hosted Lidde test network, faucet, working testnet deployments and public test transactions are **not yet live**. The mainnet chain ID 4613 and its release registry remain locked. Do not send real assets to test contracts.
 
+## M11 P0 code delivered — external public testnet not yet hosted
+
+**Implemented:** [testnet liquidity creation and full withdrawal](app/testnet/pools/page.tsx), [demo pool reads](lib/testnet/pools.ts), [isolated Neon canonical indexer](scripts/index-testnet.mjs), [reconciliation](scripts/reconcile-testnet.mjs), [testnet explorer](app/testnet/explorer/page.tsx), [restricted RPC gateway and persistent node deployment recipe](infra/devnet/README.md), and [fresh-wallet transaction smoke test](scripts/smoke-testnet.mjs).
+
+A dedicated Neon project named **lidde-testnet** is provisioned with separate faucet and canonical indexer schema. GitHub Actions verifies real Anvil faucet → swaps → new pool → LP exit. No wallet keys or database credentials were committed.
+
+**Still not live to outside users:** long-lived public EVM hosting, DNS/HTTPS RPC, deployed public demo contracts, enabled gasless sponsorship and independent external-wallet receipts. The testnet registry remains unconfigured and VERY mainnet chain 4613 is locked. See the [operator deployment checklist](docs/M11-OPERATIONS.md).
+
 ## Milestone 11 — Next deep public testnet build (25 stages, 125 tasks)
 
 **[Full checkable Milestone 11 implementation specification](MILESTONE-11.md).** Building on the completed local M10 foundation, M11 will provision the persistent testnet, explorer, free faucet and verified contracts, then complete real external-wallet swap and LP deposit/withdrawal flows. Indexing, routing, charts, quests, APIs, wallet/mobile QA and experimental orders/DCA/farms follow as separate workstreams.
