@@ -222,3 +222,34 @@ button {cursor:pointer}
 .lp-details .lp-preview {max-width:850px}
 .lp-portfolio-section {margin-top:50px}
 @media(max-width:680px) {.lp-input-grid{grid-template-columns:1fr}.lp-form{padding:15px}.lp-pool-card{padding:15px;flex-wrap:wrap}.lp-card-right{text-align:left}.lp-preview strong{max-width:100%;text-align:left}.lp-preview>div{flex-direction:column;gap:5px}.lp-approval{align-items:flex-start;flex-direction:column}}
+
+/* M10 — separate user-testnet trading terminal. Preserves existing mainnet preview styles. */
+.testnet-board{max-width:1030px;margin:0 auto}
+.testnet-banner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 20px;border:1px solid #7a8654;background:#20271a;border-radius:14px;margin-bottom:18px;color:#d4ff9d}
+.testnet-banner span{font-size:12px;color:#b5c3a5}
+.testnet-wallet-controls,.testnet-panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:24px;margin-bottom:16px}
+.testnet-wallet-controls,.testnet-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.testnet-wallet-controls p{margin:6px 0 0}
+.testnet-wallet-actions{display:flex;gap:10px;flex-wrap:wrap}
+.testnet-board button:not(.swap-submit){border:1px solid #586344;border-radius:9px;background:#c5ed82;color:#182110;font-weight:700;padding:11px 15px}
+.testnet-board button:disabled{opacity:.45;cursor:not-allowed}
+.testnet-board select,.testnet-board input{width:100%;background:#101217;color:#fff;border:1px solid #43464f;border-radius:10px;padding:11px;margin-top:7px}
+.testnet-wallet-actions select{width:auto;min-width:190px}
+.testnet-board .testnet-connected{font-size:13px;color:var(--accent);font-weight:650}
+.testnet-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.testnet-panel h2{font-size:22px;letter-spacing:-.6px;margin:2px 0 14px}
+.testnet-panel p{font-size:13px;color:#b4b7c2;line-height:1.7}
+.testnet-panel label{display:block;margin:15px 0;font-size:12px;color:#b4b7c2}
+.testnet-panel button{margin-top:8px}
+.testnet-faucet-assets{display:flex;flex-wrap:wrap;gap:8px;margin:25px 0}
+.testnet-faucet-assets span{font-size:12px;background:#2c3038;padding:8px;border-radius:7px}
+.testnet-quote{display:flex;justify-content:space-between;gap:15px;font-size:13px;padding:11px 0;border-top:1px solid #353943}
+.testnet-quote span{color:#a9afbd}
+.testnet-quote strong{text-align:right;word-break:break-all}
+.testnet-wallet-balances{margin-top:5px}
+.testnet-balance-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.testnet-balance-grid>div{background:#101217;border:1px solid #292c34;border-radius:10px;padding:14px;display:grid;gap:8px}
+.testnet-balance-grid small{color:#999fab}
+.testnet-balance-grid strong{font-size:14px;overflow-wrap:anywhere}
+.testnet-receipt{display:block;margin:15px 0;color:var(--accent);overflow-wrap:anywhere}
+@media(max-width:810px){.testnet-grid{grid-template-columns:1fr}.testnet-balance-grid{grid-template-columns:repeat(2,1fr)}}
