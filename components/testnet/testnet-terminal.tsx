@@ -5,9 +5,10 @@ import {
  createPublicClient,http,parseAbi,erc20Abi,parseUnits,formatUnits,
  type Address,type Hash
 } from "viem";
-import {useAccount,useChainId,useConnect,useSwitchChain,useWriteContract} from "wagmi";
+import {useAccount,useChainId,useConnect,useSwitchChain,useWriteContract,useSignMessage} from "wagmi";
 import {demoNetwork,demoDeployment,demoChain,testnetReady,testnetConfigurationIssues} from "@/lib/testnet/network";
 import {getDemoQuote} from "@/lib/testnet/market.mjs";
+import {claimMessage,dayUtc} from "@/lib/testnet/faucet-message.mjs";
 
 const routerAbi=parseAbi([
  "function factory() view returns (address)",
@@ -33,6 +34,7 @@ export function TestnetTerminal(){
  const {connectors,connectAsync,isPending:connecting}=useConnect();
  const {switchChainAsync,isPending:switching}=useSwitchChain();
  const {writeContractAsync}=useWriteContract();
+ const {signMessageAsync}=useSignMessage();
  const [walletChoice,setWalletChoice]=useState("");
  const [from,setFrom]=useState("tUSD");
  const [to,setTo]=useState("tBTC");
@@ -139,6 +141,27 @@ export function TestnetTerminal(){
   }catch(err){setError(readable(err));}
   finally{setWorking(false);}
  }
+ async function requestSponsoredFaucet(){
+  if(!ready||!client||!net||!address||!correctNetwork||working)return;
+  setWorking(true);setError("");setMessage("");setHash(null);
+  try{
+   const day=dayUtc();
+   const signed=await signMessageAsync({account:address,message:claimMessage(address,net.chainId,day)});
+   const response=await fetch("/api/testnet/faucet",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({address,day,signature:signed}),cache:"no-store"
+   });
+   const data=await response.json() as {error?:string;hash?:Hash;status?:string};
+   if(!response.ok)throw new Error(data.error??"Faucet sponsorship unavailable.");
+   if(!data.hash)throw new Error("Faucet did not return a transaction hash.");
+   setHash(data.hash);setMessage("Sponsored faucet claim submitted to the test chain.");
+   const receipt=await client.waitForTransactionReceipt({hash:data.hash,timeout:120_000});
+   if(receipt.status!=="success")throw new Error("Operator-sponsored claim reverted.");
+   setMessage("Free test gas and tokens delivered. You can now trade.");
+   await refreshBalances();
+  }catch(err){setError(readable(err));}
+  finally{setWorking(false);}
+ }
  async function swap(){
   if(!ready||!client||!net||!dep||!address||!a||!b||!amountBig||!correctNetwork||working||tolerance===null)return;
   setWorking(true);setError("");setMessage("");setHash(null);
@@ -237,11 +260,18 @@ export function TestnetTerminal(){
      <h2>Free test token faucet</h2>
      <p>Claim synthetic tokens and a small amount of test gas. No real money or seed phrase required.</p>
      <div className="testnet-faucet-assets">{dep!.tokens.map(t=><span key={t.address}>{t.symbol}</span>)}</div>
-     <button type="button" disabled={!correctNetwork||working} onClick={()=>void claimFaucet()}>
-      {working?"Processing transaction…":"Claim test tokens"}
-     </button>
-     <p className="muted-small">A wallet with zero gas needs an operator-sponsored first claim.
-      Public gas sponsorship is not configured yet. Claims have a 24-hour per-wallet cooldown.</p>
+     <div className="testnet-wallet-actions">
+      <button type="button" disabled={!correctNetwork||working} onClick={()=>void requestSponsoredFaucet()}>
+       {working?"Processing…":"Request free sponsored claim"}
+      </button>
+      <button type="button" disabled={!correctNetwork||working} onClick={()=>void claimFaucet()}>
+       Claim using wallet gas
+      </button>
+     </div>
+     <p className="muted-small">Gas sponsorship works only after the operator provisions the
+      separate Neon anti-abuse database, private signing key and trusted gateway.
+      When unavailable, it fails closed; no real funds or seed phrases are requested.
+      On-chain claims enforce a 24-hour wallet cooldown.</p>
     </section>
     <section className="testnet-panel">
      <h2>Testnet Swap</h2>
