@@ -9,6 +9,7 @@ export function Header(){
    <Link href="/testnet/pools">Test Pools</Link>
    <Link href="/testnet/launch">Token Creator</Link>
    <Link href="/testnet/orders">Test Orders</Link>
+   <Link href="/testnet/markets">Markets</Link>
    <Link href="/swap">Mainnet Preview</Link>
    <Link href="/pools">Pools</Link>
    <Link href="/explore">Explore</Link>
