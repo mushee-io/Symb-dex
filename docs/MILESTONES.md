@@ -145,7 +145,13 @@ The repository now includes testnet LP creation/exit, Neon indexer, restricted R
 
 **[Root Milestone 11 checklist](../MILESTONE-11.md): 25 stages, 125 detailed engineering tasks.** The first P0 goals are a persistent isolated chain, explorer, signed gas-sponsored demo faucet, live external-wallet swaps, liquidity pool creation and complete LP exits. Then grow real test-chain analytics, routing, portfolio and optional token creator, non-monetary quests, referrals, SDK and separately gated limit-order/DCA/farm experiments. No real funds and no mainnet activation are included.
 
-## M12–M16 — Later expansion
+## M12 — PLANNED: Advanced DeFi testnet (25 stages / 125 tasks)
+
+**[Root Milestone 12 technical execution plan](../MILESTONE-12.md).** Begin only after a real M11 test network is accessible and external tester swaps/LP exits reconcile. Separate MIT Solidity contracts for module registry, oracle/collateral safety, signed orders, perp margin and liquidators, recurring spot automation, and optional cash-settled options/lending/simulated RWA/vault strategies. Include unified portfolio, scoped bot SDK, test analytics, security invariants and staged user beta.
+
+**Every new module must pass its own signed testnet transaction and technical acceptance gate before being called live.** Mainnet and real funds remain excluded.
+
+## M13–M16 — Later expansion
 
 - [ ] Use actual tester feedback and signed technical evaluations to plan further advanced features; independent real-money/mainnet deployment decisions are outside M10.
 
