@@ -12,6 +12,23 @@ A dedicated Neon project named **lidde-testnet** is provisioned with separate fa
 
 **Still not live to outside users:** long-lived public EVM hosting, DNS/HTTPS RPC, deployed public demo contracts, enabled gasless sponsorship and independent external-wallet receipts. The testnet registry remains unconfigured and VERY mainnet chain 4613 is locked. See the [operator deployment checklist](docs/M11-OPERATIONS.md).
 
+## Milestone 14 — PLANNED: Full-scale testnet, performance and ecosystem expansion (30 stages, 240 tasks)
+
+> **NOT LIVE OR IMPLEMENTED BY THIS DOCUMENT. TESTNET ONLY.** M14 follows proven M11 external wallet/on-chain access and verified M12/M13 modules; a roadmap is not a deployment receipt or security audit. All real-funds/mainnet work remains disabled.
+
+**[Milestone 14 complete engineering master checklist](MILESTONE-14.md)** — six phases, 30 technical stages and **240 detailed acceptance tasks** with current readiness, owner, actual evidence and explicit failure/stop conditions.
+
+**A: Infrastructure** — Hosted isolated EVM chain, immutable manifests, HTTPS restricted RPC/explorer, sponsored faucet, backups and measured incident monitoring.  
+**B: Trading quality** — Gas/price optimization, liquidity capital experiments, reviewed signed orders/solvers, derivatives stress harness, options/lending risk and test-only market makers.  
+**C: Data and UX** — Reorg-safe Neon event ledgers, honest OHLCV and tester cohorts, unified account/LP portfolio, accessible trading UI and mobile wallets.  
+**D: Ecosystem** — TypeScript SDK, bound/revocable demo agents and automation, optional mock-only cross-chain research, test-token launchpad, third-party adapters and developer console.  
+**E: Growth** — Verifiable quest/referral scoring, anti-sybil fairness, community support, independent user cohorts and honest retention analysis.  
+**F: Safety and release** — Security invariants/review, adversarial testnet drills, node recovery, external wallet receipt scorecard and M15 handover.
+
+**Prerequisite:** The public testnet config is currently **not-configured**, and there are no independently verified public demo-chain transactions or deployed advanced M12/M13 contracts in the current repository evidence. Only implemented, proven individual modules may be described as live. VERY **4613 is mainnet, not testnet**.
+
+---
+
 ## Milestone 13 — FUTURE: Deep cross-module testnet integration (25 stages, 175 detailed tasks)
 
 > **PLANNED · TESTNET ONLY · NO REAL FUNDS.** M13 is the integration phase *after* actual M11 external testnet operation and after implementing and testing the selected M12 advanced contracts. **No M12 derivative, options, lending, RWA or agent module is claimed to be built merely by documenting M13.**
