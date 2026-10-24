@@ -151,7 +151,20 @@ The repository now includes testnet LP creation/exit, Neon indexer, restricted R
 
 **Every new module must pass its own signed testnet transaction and technical acceptance gate before being called live.** Mainnet and real funds remain excluded.
 
-## M13–M16 — Later expansion
+## M13 — PLANNED: deep cross-module testnet integration (25 stages / 175 tasks)
+
+**[Milestone 13 root master plan](../MILESTONE-13.md)** — a separate advanced **testnet-only** engineering phase following actual M11 external network proof and tested M12 contract implementations. It specifies unified account/collateral accounting, margin health, oracle confidence, atomic settlement, perp/liquidation integration, optional options/lending, signed order settlement, solver routing, recurring execution, strategy vaults, delegated agents, mock RWA data, test token creation, wallet/portfolio UX, canonical Neon indexing, analytics, SDK, mobile, quests, adversarial invariants and gated independent beta.
+
+- [ ] Demonstrate public hosted zero-value testnet and outside-wallet LP redemption (M11 P0).
+- [ ] Implement and verify actual contracts from the selected M12 advanced modules; do not promote roadmap text to live status.
+- [ ] Enforce shared-account solvency, oracle freshness, bounded signer delegation and atomic settlement across enabled contracts.
+- [ ] Reconcile every position, vault claim, loan, trade and liquidation to actual test-chain receipts and canonical indexer checkpoints.
+- [ ] Keep incomplete risk-heavy modules OFF by default and require separate code/test/operator acceptance for each.
+- [ ] Run at least two outside-wallet cross-module test journeys, reproduce stress/attack cases, then prepare M14 only from actual proof.
+
+**M13 does not authorize mainnet trading, real-value payments, real RWAs, real option/loan underwriting or a guaranteed token airdrop.**
+
+## M14–M16 — Later expansion
 
 - [ ] Use actual tester feedback and signed technical evaluations to plan further advanced features; independent real-money/mainnet deployment decisions are outside M10.
 
