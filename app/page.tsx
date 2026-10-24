@@ -2,8 +2,11 @@ import Link from "next/link";
 import {demoNetwork,testnetReady} from "@/lib/testnet/network";
 const features=[
  {n:"01",title:"Public testnet",description:"Claim synthetic assets, connect a test wallet and execute actual demo-network swaps after deployment.",href:"/testnet"},
- {n:"02",title:"Liquidity development",description:"Our Solidity pools support deposits, LP shares, swaps and redemptions in isolated Foundry tests.",href:"/pools"},
- {n:"03",title:"Open development",description:"Follow Milestone 10 and help test real transactions without risking mainnet assets.",href:"https://github.com/mushee-io/lidde-dex/blob/main/MILESTONE-10.md"},
+ {n:"02",title:"Liquidity development",description:"Create demo pools, manage LP shares and test complete withdrawals on an isolated chain.",href:"/testnet/pools"},
+ {n:"03",title:"Token launchpad",description:"Create capped synthetic ERC-20s and seed test liquidity with no real assets.",href:"/testnet/launch"},
+ {n:"04",title:"Demo limit orders",description:"On-chain escrow orders with cancellation, expiry and partial fills.",href:"/testnet/orders"},
+ {n:"05",title:"Real test markets",description:"Inspect genuine confirmed testnet events and pool balances.",href:"/testnet/markets"},
+ {n:"06",title:"Network health",description:"Verify actual RPC, deployed contracts, faucet and indexer readiness.",href:"/testnet/status"},
 ];
 export default function HomePage(){
  return <main>
