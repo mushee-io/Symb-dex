@@ -27,11 +27,13 @@ contract LiddeRouter {
     }
 
     function _safeTransfer(address token, address to, uint256 amount) internal {
+        require(token.code.length > 0, "TOKEN_NOT_CONTRACT");
         (bool ok, bytes memory data) = token.call(abi.encodeWithSelector(ILiddeERC20.transfer.selector, to, amount));
         require(ok && (data.length == 0 || abi.decode(data, (bool))), "TOKEN_TRANSFER_FAILED");
     }
 
     function _safeTransferFrom(address token, address from, address to, uint256 amount) internal {
+        require(token.code.length > 0, "TOKEN_NOT_CONTRACT");
         (bool ok, bytes memory data) =
             token.call(abi.encodeWithSelector(ILiddeERC20.transferFrom.selector, from, to, amount));
         require(ok && (data.length == 0 || abi.decode(data, (bool))), "TOKEN_TRANSFER_FROM_FAILED");
