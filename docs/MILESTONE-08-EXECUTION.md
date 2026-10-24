@@ -1,5 +1,7 @@
 # Lidde Milestone 08 — Deep Integration / Mainnet Beta Execution Plan
 
+> **Root highlighted checklist:** [MILESTONE-08.md](../MILESTONE-08.md) lists all 18 stages and 90 checkable technical substeps. Start there for progress status, then use this runbook for implementation details.
+
 **Reviewed:** 24 Oct 2026 · **Network:** VERY chain 4613 · **License:** MIT · **Mainnet launch:** BLOCKED
 **Primary repository:** https://github.com/mushee-io/lidde-dex
 

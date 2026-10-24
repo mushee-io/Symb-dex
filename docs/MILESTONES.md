@@ -94,6 +94,8 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Resolve high/critical findings, satisfy independent reviewers and authorize M08 separately.
 
 ## M08 — Capped mainnet beta (not launched)
+
+**ROOT PRIORITY:** [18-stage, 90-substep M08 master checklist](../MILESTONE-08.md) · [Engineering runbook](MILESTONE-08-EXECUTION.md). Treat all checked development source items separately from mandatory real-world audit, funding, bytecode and mainnet acceptance.
 - [x] Draft detailed 18-stage [mainnet-beta plan](MILESTONE-08.md), external audit brief, wrapped-token inspection and local deployment-style rehearsal tests.
 - [ ] Complete independent audit of frozen Solidity source and all high-severity remediation.
 - [ ] Confirm chain-operator provenance, bytecode and backing of canonical wrapped VERY.
