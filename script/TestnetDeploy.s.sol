@@ -9,6 +9,7 @@ import {LiddeTestFaucet} from "../contracts/src/testnet/LiddeTestFaucet.sol";
 
 interface VmDeploy {
     function envUint(string calldata name) external returns(uint256);
+    function addr(uint256 privateKey) external returns(address);
     function startBroadcast(uint256 privateKey) external;
     function stopBroadcast() external;
 }
@@ -29,6 +30,7 @@ contract TestnetDeploy {
         uint256 signer = vm.envUint("TESTNET_DEPLOYER_PRIVATE_KEY");
         require(expected != 1 && expected != 4613 && expected > 1000 && block.chainid == expected, "REFUSE_MAINNET_OR_MISMATCH");
         require(signer != 0, "MISSING_SIGNER");
+        address deployer=vm.addr(signer);
         vm.startBroadcast(signer);
         LiddeFactory factory = new LiddeFactory();
         LiddeWrappedVery wrapper = new LiddeWrappedVery();
@@ -62,11 +64,13 @@ contract TestnetDeploy {
         require(funded, "TEST_GAS_FUNDING_FAILED");
 
         // Seed one verified tUSD/tBTC pool to make first swaps demonstrably functional.
-        tUSD.mint(msg.sender,100_000e6);
-        tBTC.mint(msg.sender,10e8);
+        tUSD.mint(deployer,100_000e6);
+        tBTC.mint(deployer,10e8);
         tUSD.approve(address(router),100_000e6);
         tBTC.approve(address(router),10e8);
-        router.addLiquidity(address(tUSD),address(tBTC),10_000e6,1e8,1,1,msg.sender,block.timestamp+30 minutes);
+        router.addLiquidity(address(tUSD),address(tBTC),10_000e6,1e8,1,1,deployer,block.timestamp+30 minutes);
+        // A second pool enables the live native test-gas → tUSD swap path.
+        router.addLiquidityETH{value:10 ether}(address(tUSD),10_000e6,1,1,deployer,block.timestamp+30 minutes);
         address pool=factory.getPair(address(tUSD),address(tBTC));
 
         emit TestnetDeployed(block.chainid,address(factory),address(router),address(wrapper),
