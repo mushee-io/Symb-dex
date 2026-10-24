@@ -12,6 +12,24 @@ A dedicated Neon project named **lidde-testnet** is provisioned with separate fa
 
 **Still not live to outside users:** long-lived public EVM hosting, DNS/HTTPS RPC, deployed public demo contracts, enabled gasless sponsorship and independent external-wallet receipts. The testnet registry remains unconfigured and VERY mainnet chain 4613 is locked. See the [operator deployment checklist](docs/M11-OPERATIONS.md).
 
+## Milestone 13 — FUTURE: Deep cross-module testnet integration (25 stages, 175 detailed tasks)
+
+> **PLANNED · TESTNET ONLY · NO REAL FUNDS.** M13 is the integration phase *after* actual M11 external testnet operation and after implementing and testing the selected M12 advanced contracts. **No M12 derivative, options, lending, RWA or agent module is claimed to be built merely by documenting M13.**
+
+**[Full root Milestone 13 technical execution plan](MILESTONE-13.md)** — 25 stages, **175 checkable engineering tasks**, workstream owners, prerequisites, exact chain/accounting evidence, stopping conditions and a real outside-wallet acceptance journey.
+
+| Phase | Planned work | Must be demonstrated |
+| --- | --- | --- |
+| **A — Core accounting** | M12 handover, collateral ledger, shared risk, oracle confidence, atomic settlement | Backed valueless collateral and no double-spend or invalid-risk execution |
+| **B — Financial integration** | Perps, margin/liquidations, options, lending and bounded swap/repay composition | Correct live demo-chain position, liquidation/settlement/repayment receipts |
+| **C — Execution** | EIP-712 orders, solver comparison, DCA/TWAP, vaults and scoped AI agents | Bounded, noncustodial, replay-safe, revocable actual test transactions |
+| **D — Product data** | Mock RWA markets, demo token creator, risk-aware terminal, cross-module indexer and analytics | User balances/history and canonical testnet event parity |
+| **E — Release evidence** | Mobile, proof-based quests, SDK, invariant fuzz/security and independent user beta | Verified chain receipts, stress/incident drills and module-by-module release decisions |
+
+**Active work remains M11's public devnet hosting/external wallet proof.** Mainnet chain ID `4613` is NEVER testnet; `config/deployments.testnet.json` remains unconfigured until a distinct authentic demo chain is deployed, and the mainnet release registry remains locked. M12 and M13 are forward implementation specifications, not operational services.
+
+---
+
 ## Milestone 12 — PLANNED: Advanced DeFi testnet
 
 **[M12 complete technical specification — 25 stages, 125 tasks](MILESTONE-12.md).** New work after the M11 public-testnet prerequisites: modular Solidity registry, price feeds and collateral; signed order matching, isolated-margin perpetuals and liquidation keepers; bounded DCA/TWAP; separately reviewed experimental options, lending, mock RWA markets and strategy vaults; wallet risk portfolio, SDK/agent permissions, analytics and targeted security testing.
