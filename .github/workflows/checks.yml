@@ -21,3 +21,5 @@ jobs:
         run: npm run typecheck
       - name: Production build
         run: npm run build
+      - name: Beta source cannot authorize mainnet release
+        run: npm run beta:gate:ci

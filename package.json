@@ -14,7 +14,9 @@
     "reconcile:market": "node scripts/reconcile-market.mjs",
     "contracts:build": "forge build --sizes",
     "contracts:test": "forge test -vv",
-    "inspect:wvery": "node scripts/inspect-wvery.mjs"
+    "inspect:wvery": "node scripts/inspect-wvery.mjs",
+    "beta:preflight": "node scripts/beta-preflight.mjs",
+    "beta:gate:ci": "node scripts/beta-preflight.mjs --assert-closed"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.0",
