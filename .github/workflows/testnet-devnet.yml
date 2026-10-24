@@ -57,6 +57,14 @@ jobs:
             if(!names.has(name))throw new Error("Local deployment missing: "+name);
           console.log("Deployed local-only contract types: "+[...names].join(", "));
           EOF
+      - name: Install app dependencies for RPC / ABI verification
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Verify the actual local deployment addresses and seeded pools (read only)
+        env:
+          TESTNET_EXPECTED_CHAIN_ID: "31337"
+          TESTNET_RPC_URL: "http://127.0.0.1:8545"
+          TESTNET_EXPLORER_URL: "http://127.0.0.1:8545"
+        run: npm run testnet:verify
       - name: Stop disposable Anvil
         if: always()
         run: |
