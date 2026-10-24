@@ -128,3 +128,7 @@ Run from repository root with installed [Foundry](https://getfoundry.sh/):
 - [Milestone 8 detailed beta roadmap](docs/MILESTONE-08.md): 18 tasks with strict signoff, real receipt and funding gates; not live.
 
 For an operator-only candidate probe (never a wallet transaction): `LIDDE_WVERY_CANDIDATE=<address> npm run inspect:wvery`. No candidate is trusted by default. Mainnet `config/deployments.json` remains deliberately disabled.
+
+## Milestone 8 execution and safety gate
+
+See [the deep 18-stage implementation and external-audit runbook](docs/MILESTONE-08-EXECUTION.md) and [Milestone 8 plan](docs/MILESTONE-08.md). Use `npm run beta:preflight` for a read-only machine-generated blocker report and `npm run beta:gate:ci` to prove release settings are still disabled. Those commands do **not** verify audit independence, confer spending authority, or broadcast transactions. External audit, canonical WVERY attestation and dependency remediation remain tracked in GitHub Issues #9, #10 and #11.

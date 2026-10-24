@@ -1,3 +1,5 @@
+> Deep engineering and evidence-level breakdown: [Milestone 08 Execution Runbook](MILESTONE-08-EXECUTION.md). Run `npm run beta:preflight` for a read-only report or `npm run beta:gate:ci` to assert the repository remains deliberately unlaunched. These tools do not authorize deployment.
+
 # Milestone 08 — Capped VERY Mainnet Beta (Detailed Plan)
 
 **Status: NOT STARTED as a live deployment.** This is a build-and-release specification, not authorization to transfer native VERY, issue trading contracts or onboard liquidity providers.
