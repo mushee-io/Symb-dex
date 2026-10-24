@@ -1,0 +1,24 @@
+{
+  "purpose": "user-testnet-only",
+  "status": "not-configured",
+  "source": "official-very-testnet-if-independently-verified-otherwise-isolated-lidde-devnet",
+  "officialVeryTestnetVerified": false,
+  "chainId": null,
+  "rpcUrl": null,
+  "explorerUrl": null,
+  "faucetUrl": null,
+  "nativeCurrency": {
+    "name": "Test Gas Token",
+    "symbol": "tVERY",
+    "decimals": 18
+  },
+  "contracts": {
+    "factory": null,
+    "router": null,
+    "wrappedTestNative": null,
+    "tokenFaucet": null
+  },
+  "realFundsAllowed": false,
+  "mainnetChainIdForbidden": 4613,
+  "disclaimer": "This is a template. VERY Mainnet 4613 must never be presented as a testnet. Test assets have zero real-world value."
+}

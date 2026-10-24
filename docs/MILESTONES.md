@@ -93,9 +93,9 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Assign actual multisig signers and validate operational incident drills.
 - [ ] Resolve high/critical findings, satisfy independent reviewers and authorize M08 separately.
 
-## M08 — Capped mainnet beta (not launched)
+## M08 — Capped mainnet beta (historical plan, DEFERRED)
 
-**ROOT PRIORITY:** [18-stage, 90-substep M08 master checklist](../MILESTONE-08.md) · [Engineering runbook](MILESTONE-08-EXECUTION.md). Treat all checked development source items separately from mandatory real-world audit, funding, bytecode and mainnet acceptance.
+**DEFERRED MAINNET REFERENCE:** [18-stage, 90-substep M08 master checklist](../MILESTONE-08.md) · [Engineering runbook](MILESTONE-08-EXECUTION.md). Treat all checked development source items separately from mandatory real-world audit, funding, bytecode and mainnet acceptance.
 - [x] Draft detailed 18-stage [mainnet-beta plan](MILESTONE-08.md), external audit brief, wrapped-token inspection and local deployment-style rehearsal tests.
 - [ ] Complete independent audit of frozen Solidity source and all high-severity remediation.
 - [ ] Confirm chain-operator provenance, bytecode and backing of canonical wrapped VERY.
@@ -105,7 +105,7 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 - [ ] Run capped, disclosed liquidity beta after explicit financial and security signoff.
 - [ ] Complete full add/swap/remove cycle, validate monitoring and decide M09 launch separately.
 
-## M09 — Public launch (FUTURE / NOT AUTHORIZED)
+## M09 — Real-value public launch (historical plan, DEFERRED)
 
 **Full root master plan:** [MILESTONE-09.md](../MILESTONE-09.md) contains 20 stages and 140 checkable tasks with acceptance and no-go evidence. [Production handover/operations runbook](MILESTONE-09-EXECUTION.md).
 
@@ -120,8 +120,23 @@ All code is developed milestone-by-milestone. Checkmarks here represent delivere
 
 No project web or blockchain mainnet trading is represented as live by this roadmap; contract deployment remains blocked by the existing review configuration.
 
-## M10–M16 — Expansion
-- [ ] Rewards and farming, launchpad, advanced routing, limit orders,
-      ecosystem integrations, governance and higher-risk DeFi features.
+## M10 — CURRENT: Deep Public Testnet (valueless assets only)
+
+**ROOT MASTER PLAN:** [Milestone 10 — 25 stages / 175 individually checkable tasks](../MILESTONE-10.md). This is the current delivery track, superseding the past M08/M09 mainnet-oriented schedules as active priorities.
+
+- [ ] Verify a genuine VERY testnet (not yet confirmed), or establish a separately identified persistent Lidde EVM developer network with its own chain ID, faucet, RPC and explorer.
+- [ ] Deploy original MIT Factory, Pair, Router and test wrapped-native token **to test environment only**, record exact addresses and deployment block.
+- [ ] Provide free synthetic tVERY/tUSD/tUSDC/tUSDT/tBTC/tETH assets, testnet wallet onboarding and rate-limited faucets.
+- [ ] Make actual demo swaps, route selection, pool creation, deposits, LP ownership and redemptions work with real test-chain receipts.
+- [ ] Enable testnet charts, portfolio, markets, Neon indexing and proof-backed user activity.
+- [ ] Introduce gated token creator, limit orders, DCA keeper, test farms, quests, referrals and leaderboard campaigns one-by-one after individual test evidence.
+- [ ] Provide mobile UI, explorer, documented APIs/SDK, security checks, monitoring and clear network reset announcements.
+- [ ] Run phased public user testing and produce honest chain-backed transaction counts (no real-value TVL or airdrop promises).
+
+**Current network status:** No verified public VERY testnet RPC or explorer published. VERY chain 4613 is mainnet, NOT a testnet. Devnet details and demo contract addresses are not yet configured. No real funds required.
+
+## M11–M16 — Later expansion
+
+- [ ] Use actual tester feedback and signed technical evaluations to plan further advanced features; independent real-money/mainnet deployment decisions are outside M10.
 
 The exchange must not report fabricated trading volume, liquidity or wallet metrics.
