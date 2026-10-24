@@ -253,3 +253,10 @@ button {cursor:pointer}
 .testnet-balance-grid strong{font-size:14px;overflow-wrap:anywhere}
 .testnet-receipt{display:block;margin:15px 0;color:var(--accent);overflow-wrap:anywhere}
 @media(max-width:810px){.testnet-grid{grid-template-columns:1fr}.testnet-balance-grid{grid-template-columns:repeat(2,1fr)}}
+
+.testnet-panel .testnet-grid{gap:12px}
+.testnet-panel .testnet-grid label{min-width:0}
+.testnet-panel .testnet-grid label select,.testnet-panel .testnet-grid label input{width:100%}
+.testnet-panel .acknowledge-row{display:flex;align-items:flex-start;gap:9px;line-height:1.55;font-size:13px;color:#dce0ea}
+.testnet-panel .acknowledge-row input{width:auto;margin:4px 0}
+.testnet-panel .testnet-wallet-actions button{font-size:12px}

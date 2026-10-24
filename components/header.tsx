@@ -6,6 +6,7 @@ export function Header(){
    <span>lidde<span className="brand-dot">.</span></span></Link>
   <nav className="top-nav" aria-label="Main navigation">
    <Link href="/testnet">Testnet</Link>
+   <Link href="/testnet/pools">Test Pools</Link>
    <Link href="/swap">Mainnet Preview</Link>
    <Link href="/pools">Pools</Link>
    <Link href="/explore">Explore</Link>

@@ -8,6 +8,7 @@ export default function TestnetPage(){
    <p>Connect a demo wallet, obtain synthetic tokens and execute verifiable sandbox-chain
     swaps. This is not VERY Mainnet; the public test network must be provisioned first.</p>
   </div>
+  <p><Link href="/testnet/pools" className="primary-link">Create or manage test liquidity ↗</Link></p>
   <TestnetTerminal/>
   <p className="subpage-footnote">See <Link href="/swap">the locked mainnet preview</Link> separately.
    Never send real VERY, USDC or other real assets to demo contracts.</p>
