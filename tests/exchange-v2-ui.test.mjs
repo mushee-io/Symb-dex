@@ -2,19 +2,21 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync,existsSync} from "node:fs";
 const source=(name)=>readFileSync(new URL("../"+name,import.meta.url),"utf8");
-test("public homepage leads to the actual app with an original curved carousel",()=>{
+
+test("public homepage opens the exchange with one isolated cinematic composition",()=>{
  const home=source("app/page.tsx");
- const carousel=source("components/marketing/curved-carousel.tsx");
- const tiles=source("components/marketing/product-preview.tsx");
+ const scene=source("components/marketing/cinematic-home.tsx");
+ const styles=source("app/cinematic-home.css");
  assert.match(home,/Trade Without Limits/);
- assert.match(home,/Built for VERY/);
- assert.match(home,/href="\/app\/swap"/);
- assert.match(home,/CurvedCarousel/);
- assert.equal(tiles.split('{title:"').length-1,10);
- assert.match(carousel,/requestAnimationFrame/);
- assert.match(carousel,/prefers-reduced-motion/);
- assert.match(carousel,/onPointerMove/);
- assert.match(carousel,/IntersectionObserver/);
+ assert.match(home,/CinematicHome/);
+ assert.doesNotMatch(home,/CurvedCarousel|sy-home-after/);
+ assert.match(scene,/Trade Without/);
+ assert.match(scene,/Limits on VERY/);
+ assert.match(scene,/href="\/app\/swap"/);
+ assert.match(scene,/className="background"/);
+ assert.match(scene,/className="demo-card"/);
+ assert.match(styles,/body:has\(\.cinematic-home-viewport\)/);
+ assert.match(styles,/prefers-reduced-motion/);
 });
 test("exchange app exposes all user-visible routes, with no dead-end page files",()=>{
  for(const page of [
@@ -33,7 +35,9 @@ test("visual-only screens do not advertise unverified functionality",()=>{
  assert.match(ui,/No APR figures are simulated/);
  assert.match(ui,/No fabricated/);
  assert.match(source("components/exchange/order-history.tsx"),/No orders to display/);
- assert.match(source("app/page.tsx"),/product previews are illustrations/i);
+ const hero=source("components/marketing/cinematic-home.tsx");
+ assert.match(hero,/Mainnet trading is not live yet/);
+ assert.match(hero,/not a demonstration of live trading/);
  const limit=source("app/app/limit/page.tsx");
  assert.match(limit,/button disabled/);
 });

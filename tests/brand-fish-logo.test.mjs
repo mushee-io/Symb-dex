@@ -11,7 +11,7 @@ test("new Symb double-fish logo is a local SVG brand asset",()=>{
  assert.ok(svg.length>3500);
 });
 test("new fish replaces temporary stars in branding locations",()=>{
- for(const f of ["components/header.tsx","components/layout/app-shell.tsx","components/marketing/product-preview.tsx","app/page.tsx"]){
+ for(const f of ["components/header.tsx","components/layout/app-shell.tsx","components/marketing/product-preview.tsx","components/marketing/cinematic-home.tsx"]){
   assert.match(text(f),/\/brand\/symb-fish\.svg/,f);
  }
  assert.match(text("app/layout.tsx"),/\/icon\.svg/);
