@@ -73,7 +73,7 @@ export async function POST(req:Request) {
   const ipHash=createHash("sha256").update(pepper+"|"+ip).digest("hex");
   const requestId=createHash("sha256").update(demoNetwork.chainId+"|"+recipient+"|"+day+"|"+ipHash).digest("hex");
   const sql=neon(db);
-  const reserved=await sql`SELECT lidde_reserve_faucet_claim(
+  const reserved=await sql`SELECT symb_reserve_faucet_claim(
    ${demoNetwork.chainId},${recipient},${day},${ipHash},${requestId}) AS allowed`;
   if(!reserved[0]?.allowed)return reply("Daily wallet or network claim limit reached.",429);
   // A reservation is intentionally NOT automatically cleared after a write
@@ -83,13 +83,13 @@ export async function POST(req:Request) {
    const simulated=await chainClient.simulateContract({account:ownerAccount,address:demoDeployment.faucet,
     abi:faucetAbi,functionName:"claimFor",args:[recipient]});
    const hash=await sender.writeContract({...simulated.request,chain:demoChain,account:ownerAccount});
-   await sql`UPDATE lidde_test_faucet_claims SET tx_hash=${hash},status='submitted',updated_at=now()
+   await sql`UPDATE symb_test_faucet_claims SET tx_hash=${hash},status='submitted',updated_at=now()
     WHERE chain_id=${demoNetwork.chainId} AND wallet=${recipient.toLowerCase()} AND day_utc=${day}`;
    return NextResponse.json({status:"submitted",chainId:demoNetwork.chainId,
     hash,explorerUrl:demoNetwork.explorerUrl.replace(/\/$/,"")+"/tx/"+hash},{
      status:202,headers:{"Cache-Control":"no-store"}});
   }catch(e){
-   await sql`UPDATE lidde_test_faucet_claims SET status='needs_reconciliation',updated_at=now()
+   await sql`UPDATE symb_test_faucet_claims SET status='needs_reconciliation',updated_at=now()
     WHERE chain_id=${demoNetwork.chainId} AND wallet=${recipient.toLowerCase()} AND day_utc=${day}`;
    console.error("Testnet faucet claim requires operator reconciliation:",e);
    return reply("Claim could not be verified; operator reconciliation required.",503);

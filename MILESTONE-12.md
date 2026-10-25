@@ -1,4 +1,4 @@
-# Lidde DEX — Milestone 12: Advanced DeFi Testnet Execution Roadmap
+# Symb DEX — Milestone 12: Advanced DeFi Testnet Execution Roadmap
 
 > **PLANNED, NOT BUILT. TESTNET ONLY. NO REAL ASSETS OR GUARANTEED REWARDS.** M11 local Solidity/Anvil plus Neon integration and testnet LP functionality are merged, but its persistent external public chain, hosted RPC, publicly funded faucet and independently validated external-wallet transactions were not confirmed when this plan was written. M12 work must not be represented as live functionality until deployment and acceptance evidence exists.
 

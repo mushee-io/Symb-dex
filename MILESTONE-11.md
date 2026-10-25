@@ -1,4 +1,4 @@
-# Lidde DEX — Milestone 11: Deep Public Testnet Engineering
+# Symb DEX — Milestone 11: Deep Public Testnet Engineering
 
 > **TESTNET ONLY — NO REAL FUNDS. M11 is a build plan, not completed functionality.** Milestone 10.1–10.6 has delivered MIT Solidity, demo tokens and faucet, local Anvil deployment, testnet wallet/quotes and transaction source. A persistent public chain, externally accessible RPC/explorer, actual public contract deployment and confirmed independent-user trades are not yet running.
 
@@ -8,7 +8,7 @@
 
 Build a genuine persistent user-testnet experience from a new wallet's first free faucet claim all the way to real token swaps, pool creation, liquidity deposits and complete LP withdrawals. Then add trustworthy analytics and optional advanced DeFi experiments. No real assets, no mainnet activation, no token payout promises and no unrelated regulatory work.
 
-**Network safety:** The published VERY chain ID **4613 is mainnet**. VERY's published network specifications do not supply an official public testnet RPC/explorer. Obtain authenticated official testnet information or launch a clearly identified independent Lidde-operated EVM test chain. Do not mislabel mainnet as testnet. Sources: https://verylabs.io/whitepaper/en/verychain/ and https://wp.verylabs.io/verychain/network-specifications.
+**Network safety:** The published VERY chain ID **4613 is mainnet**. VERY's published network specifications do not supply an official public testnet RPC/explorer. Obtain authenticated official testnet information or launch a clearly identified independent Symb-operated EVM test chain. Do not mislabel mainnet as testnet. Sources: https://verylabs.io/whitepaper/en/verychain/ and https://wp.verylabs.io/verychain/network-specifications.
 
 ## The 25 workstreams — 125 detailed checkable tasks
 
@@ -58,7 +58,7 @@ Build a genuine persistent user-testnet experience from a new wallet's first fre
 
 **Priority:** P0 · **Current state:** Planned unless already specified as Milestone 10 local source.
 
-- [ ] Authenticate any official VERY testnet before use; otherwise run a clearly named independent Lidde EVM test chain
+- [ ] Authenticate any official VERY testnet before use; otherwise run a clearly named independent Symb EVM test chain
 - [ ] Choose separate non-4613 chain ID, genesis, block interval, node software, native fake gas and consensus setup
 - [ ] Provision persistent RPC, HTTPS reverse proxy, long-lived disks, backups and managed node restarts
 - [ ] Verify eth_chainId, genesis hash, gas estimation, chain timestamps, ABI compatibility and external wallet access
@@ -97,7 +97,7 @@ Build a genuine persistent user-testnet experience from a new wallet's first fre
 - [ ] Provision independent Neon demo database and faucet signer, never reuse any real-value keys
 - [ ] Activate signed wallet challenge and owner sponsored claimFor with a durable verified proxy and rate limits
 - [ ] Reserve per-wallet/day, per-IP/day and network/day claim budgets; protect against race conditions and nonce collisions
-- [ ] Refill valueless native gas and synthetic tUSD/tUSDC/tUSDT/tBTC/tETH/tLIDDE reserves with monitoring
+- [ ] Refill valueless native gas and synthetic tUSD/tUSDC/tUSDT/tBTC/tETH/tSYMB reserves with monitoring
 - [ ] Reconcile submitted and unknown transactions, cooldown, failed claims, drained inventory and cross-day replay
 
 **Acceptance evidence:** New zero-gas external wallet receives real demo-chain tokens for free without duplicates.

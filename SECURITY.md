@@ -1,4 +1,4 @@
-# Lidde — Security Policy
+# Symb — Security Policy
 
 **Status: experimental source code, NOT audited, NOT deployed and NOT safe to use with real funds.**
 
