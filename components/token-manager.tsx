@@ -43,7 +43,7 @@ export function TokenManager() {
       <div className="section-title-row"><div><span className="eyebrow">TOKEN REGISTRY</span><h2>Your ERC-20 tokens</h2></div><span className="token-count">{tokens.length} listed</span></div>
       <div className="import-panel">
         <h3>Import a token</h3>
-        <p>Enter a contract address deployed on VERY Mainnet. Lidde reads its contract code and ERC-20 metadata directly from the chain. The token is <strong>not verified, audited or endorsed</strong> merely because it appears here.</p>
+        <p>Enter a contract address deployed on VERY Mainnet. Symb reads its contract code and ERC-20 metadata directly from the chain. The token is <strong>not verified, audited or endorsed</strong> merely because it appears here.</p>
         <form onSubmit={(event) => void submit(event)}>
           <label htmlFor="erc20-address" className="field-label">VERY ERC-20 CONTRACT ADDRESS</label>
           <div className="import-actions">
@@ -63,7 +63,7 @@ export function TokenManager() {
       {isConnected && chainId !== very.id && <p className="inline-notice">Switch your wallet to VERY Mainnet to view on-chain balances. Imports still use VERY Mainnet RPC.</p>}
       <div className="asset-table">
         {tokens.length ? tokens.map((token) => <TokenBalanceRow key={token.address} token={token} onRemove={removeToken}/>)
-          : <div className="no-assets">No independently verified tokens have been added to Lidde yet. Import a contract address to monitor an unverified ERC-20 balance.</div>}
+          : <div className="no-assets">No independently verified tokens have been added to Symb yet. Import a contract address to monitor an unverified ERC-20 balance.</div>}
       </div>
     </section>
   );

@@ -66,7 +66,7 @@ export function TestnetPools(){
    if(!factoryCode||factoryCode==="0x"||!code||code==="0x")throw new Error("Verified demo creator or token has no deployed code.");
    const issuer=await client.readContract({address:dep.tokenCreator,abi:demoCreatorAbi,
     functionName:"creatorOf",args:[addr]});
-   if(issuer===zeroAddress)throw new Error("Token was not created through the Lidde demo factory.");
+   if(issuer===zeroAddress)throw new Error("Token was not created through the Symb demo factory.");
    const [symbol,decimals]=await Promise.all([
     client.readContract({address:addr,abi:erc20Abi,functionName:"symbol"}),
     client.readContract({address:addr,abi:erc20Abi,functionName:"decimals"})

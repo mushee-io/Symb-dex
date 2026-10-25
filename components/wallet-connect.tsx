@@ -85,7 +85,7 @@ export function WalletConnect() {
               Connected with {connector?.name ?? "wallet"}<br />
               <a href={`https://veryscan.io/address/${address}`} target="_blank" rel="noreferrer">{shortAddress(address)} ↗</a>
             </p>}
-            <p className="wallet-caption">Choose an EVM wallet. No private keys or recovery phrases are requested by Lidde.</p>
+            <p className="wallet-caption">Choose an EVM wallet. No private keys or recovery phrases are requested by Symb.</p>
             <div className="wallet-options">
               {walletList.map((item) => (
                 <button key={item.uid} type="button" disabled={connecting} onClick={() => void select(item.uid)}>
