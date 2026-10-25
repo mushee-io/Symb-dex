@@ -1,5 +1,13 @@
 # Symb DEX
 
+## New public homepage and trading application
+
+The public homepage at `/` uses a light, editorial design and an animated curved carousel of **illustrative** product previews. **Launch Symb Dex** opens the dedicated dark exchange at `/app/swap`. Its desktop sidebar and responsive mobile navigation connect Swap, Limit, Liquidity Pools, Mining, Launchpad, Portfolio, Orders and Settings. The exchange uses the existing wallet connector, on-chain balance readers, quote/routing gates and liquidity code where implemented. Never confuse UI previews with live trading capability.
+
+**Current operations:** VERY Mainnet (4613) reads are supported, but mainnet exchange writes are blocked pending verified deployed contracts, security review and explicit release authorization. The independent public Symb testnet is not provisioned; its source remains locally tested only. Mining, crowdpooling and mainnet limit orders display explicit not-yet-available states. No fictional volume, APR, token market price, or successful transaction is displayed.
+
+See [V2 UI architecture, routes, safety and acceptance checklist](docs/EXCHANGE-DESIGN-V2.md). Engineering checks: `npm test`, `npm run typecheck`, `npm run build`.
+
 Symb is a **non-custodial decentralized exchange under development** for VERY Chain.
 
 > **CURRENT BUILD GOAL: PUBLIC TESTNET FOR USERS — NO REAL FUNDS.** Original MIT Solidity and local Foundry tests exist, but a persistent hosted Symb test network, faucet, working testnet deployments and public test transactions are **not yet live**. The mainnet chain ID 4613 and its release registry remain locked. Do not send real assets to test contracts.
