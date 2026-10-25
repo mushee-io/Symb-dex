@@ -11,7 +11,7 @@ async function jsonrpc(method,params=[]){
  const response=await fetch(rpc,{method:"POST",headers:{"Content-Type":"application/json"},
    body:JSON.stringify({jsonrpc:"2.0",id:100,method,params}),signal:AbortSignal.timeout(10000)});
  const body=await response.text();
- let json;try{json=JSON.parse(body)}catch{throw Error(method+": RPC did not return JSON")}
+ let json;try{json=JSON.parse(body)}catch{if(response.status===403)return {response,json:null};throw Error(method+": RPC did not return JSON")}
  return {response,json};
 }
 const chain=await jsonrpc("eth_chainId");
