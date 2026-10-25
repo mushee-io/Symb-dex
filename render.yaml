@@ -1,0 +1,36 @@
+# Opt-in paid public devnet hosting. Do not create these services without reviewing costs.
+# Not an official VERY testnet. Never use VERY mainnet chain ID 4613.
+services:
+  - type: pserv
+    name: symb-devnet-anvil
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./infra/devnet/render-anvil.Dockerfile
+    dockerContext: .
+    disk:
+      name: anvil-state
+      mountPath: /data
+      sizeGB: 5
+  - type: web
+    name: symb-devnet-rpc
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./infra/devnet/render-gateway.Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: UPSTREAM_RPC_HOSTPORT
+        fromService:
+          type: pserv
+          name: symb-devnet-anvil
+          property: hostport
+      - key: RPC_EXPECTED_CHAIN_ID
+        value: "31338"
+      - key: RPC_ALLOWED_ORIGIN
+        value: https://symb-dex.vercel.app
+      - key: RPC_GLOBAL_RATE_PER_MINUTE
+        value: "500"
+      - key: RPC_BODY_LIMIT
+        value: "65536"

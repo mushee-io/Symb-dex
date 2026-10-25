@@ -38,7 +38,11 @@ export function permittedRpc(payload){
 export const server=createServer(async(req,res)=>{
  for(const [k,v] of Object.entries(headers))res.setHeader(k,v);
  if(req.method==="OPTIONS"){res.writeHead(204).end();return;}
- if(req.method==="GET"&&req.url==="/health"){res.writeHead(200).end(JSON.stringify({status:"ready",type:"testnet-rpc-gateway"}));return;}
+ if(req.method==="GET"&&req.url==="/health"){
+  try{await verifyUpstreamChain();res.writeHead(200).end(JSON.stringify({status:"ready",type:"testnet-rpc-gateway"}));}
+  catch{res.writeHead(503).end(JSON.stringify({status:"unavailable",type:"testnet-rpc-gateway"}));}
+  return;
+ }
  if(req.method!=="POST"){res.writeHead(405).end("Method not allowed");return;}
  if(!Number.isFinite(rate)||rate<1){res.writeHead(503).end("Gateway not configured");return;}
  if(Date.now()-windowStart>=60000){windowStart=Date.now();calls=0;}
