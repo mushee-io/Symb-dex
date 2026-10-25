@@ -9,7 +9,7 @@ import {
   TOKEN_LIMIT, STORAGE_KEY, normalizeTokenMetadata, sanitizeImportedTokens, isExplicitlyVerified,
 } from "@/lib/token-validation.mjs";
 
-export type LiddeToken = {
+export type SymbToken = {
   address: Address;
   name: string;
   symbol: string;
@@ -17,23 +17,23 @@ export type LiddeToken = {
   verified: boolean;
 };
 
-function readSaved(): LiddeToken[] {
+function readSaved(): SymbToken[] {
   if (typeof window === "undefined") return [];
   try {
-    return sanitizeImportedTokens(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]")) as LiddeToken[];
+    return sanitizeImportedTokens(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]")) as SymbToken[];
   } catch {
     return [];
   }
 }
 
-function writeSaved(tokens: LiddeToken[]) {
+function writeSaved(tokens: SymbToken[]) {
   // Fail safely if storage is disabled/quota exhausted: never claim persistence.
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tokens));
-  window.dispatchEvent(new Event("lidde:tokens-changed"));
+  window.dispatchEvent(new Event("symb:tokens-changed"));
 }
 
 export function useTokenRegistry() {
-  const [imported, setImported] = useState<LiddeToken[]>([]);
+  const [imported, setImported] = useState<SymbToken[]>([]);
   const client = usePublicClient({ chainId: very.id });
   const [importing, setImporting] = useState(false);
 
@@ -41,14 +41,14 @@ export function useTokenRegistry() {
     const refresh = () => setImported(readSaved());
     refresh();
     window.addEventListener("storage", refresh);
-    window.addEventListener("lidde:tokens-changed", refresh);
+    window.addEventListener("symb:tokens-changed", refresh);
     return () => {
       window.removeEventListener("storage", refresh);
-      window.removeEventListener("lidde:tokens-changed", refresh);
+      window.removeEventListener("symb:tokens-changed", refresh);
     };
   }, []);
 
-  const trusted = useMemo<LiddeToken[]>(() => {
+  const trusted = useMemo<SymbToken[]>(() => {
     if (verifiedList.chainId !== very.id) return [];
     // Importing a token never adds it to this independently reviewed registry.
     const curated: {address: string; name: string; symbol: string; decimals: number; reviewed: boolean}[] = verifiedList.tokens;
@@ -75,7 +75,7 @@ export function useTokenRegistry() {
         client.readContract({ address, abi: erc20Abi, functionName: "symbol" }),
         client.readContract({ address, abi: erc20Abi, functionName: "decimals" }),
       ]);
-      const token = normalizeTokenMetadata(address, name, symbol, decimals) as LiddeToken;
+      const token = normalizeTokenMetadata(address, name, symbol, decimals) as SymbToken;
       const latest = readSaved();
       if (latest.some((saved) => saved.address === token.address)) throw new Error("Already imported in another tab.");
       if (latest.length >= TOKEN_LIMIT) throw new Error("Token list is full.");

@@ -15,7 +15,7 @@ export function useLiquidityPools(page:number) {
   const client=usePublicClient({chainId:very.id});
   const {address}=useAccount();
   const query=useQuery({
-    queryKey:["lidde","liquidity-pools",factory,page,address],
+    queryKey:["symb","liquidity-pools",factory,page,address],
     enabled: Boolean(client && factory),
     queryFn: ()=>getPoolPage(client!,factory as Address,page,12,address),
     retry:1,staleTime:10_000,refetchInterval:30_000,
@@ -26,7 +26,7 @@ export function useLiquidityPair(tokenA:Address|undefined,tokenB:Address|undefin
   const client=usePublicClient({chainId:very.id});
   const {address}=useAccount();
   const query=useQuery({
-    queryKey:["lidde","liquidity-pair",factory,tokenA,tokenB,address],
+    queryKey:["symb","liquidity-pair",factory,tokenA,tokenB,address],
     enabled:Boolean(client && factory && tokenA && tokenB && tokenA!==tokenB),
     queryFn:()=>getPoolByTokens(client!,factory as Address,tokenA!,tokenB!,address),
     retry:1,staleTime:8_000,refetchInterval:20_000,

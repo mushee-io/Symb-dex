@@ -10,9 +10,9 @@ import { liquidityRouterAbi,liquidityPairAbi } from "@/lib/liquidity/abi";
 import { getPoolByTokens,getPoolSnapshot } from "@/lib/liquidity/discovery";
 import { assertLiquidityWrite,buildAddCall,buildRemoveCall,quoteLimits,deadlineFrom } from "@/lib/liquidity/policy.mjs";
 import {previewAdd,previewRemove,percentageOfBalance} from "@/lib/liquidity/math.mjs";
-import type { LiddeToken } from "@/hooks/use-token-registry";
+import type { SymbToken } from "@/hooks/use-token-registry";
 
-type Asset=LiddeToken & {native?:boolean};
+type Asset=SymbToken & {native?:boolean};
 type Phase="idle"|"validating"|"awaiting-signature"|"pending"|"confirmed"|"unknown"|"failed";
 const deployment=deployments as {
   chainId:number;status:string;releaseApproved:boolean;auditReviewed:boolean;
@@ -134,7 +134,7 @@ export function useLiquidityExecution() {
       const allowance=await ctx.client.readContract({
         address:pool.address,abi:liquidityPairAbi,functionName:"allowance",args:[ctx.address,ctx.router]
       });
-      if (allowance<amountLp) throw new Error("Approve LP tokens for the Lidde router before withdrawing.");
+      if (allowance<amountLp) throw new Error("Approve LP tokens for the Symb router before withdrawing.");
       const [min0,min1]=quoteLimits(result.amount0,result.amount1,slippageBps);
       const call=buildRemoveCall({token0:pool.token0,token1:pool.token1,liquidity:amountLp,
         min0,min1,wrappedVery:ctx.wrappedVery,account:ctx.address,deadline:deadlineFrom(deadlineMinutes)});

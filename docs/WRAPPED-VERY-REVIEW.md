@@ -22,7 +22,7 @@ A token can have symbol WVERY without offering native wrapping/redemption. Token
 Run in an operator environment with outbound access to the configured RPC:
 
 ```bash
-LIDDE_WVERY_CANDIDATE=0x9c928F9cD5F7AAa5d933B63d7E2f511223A9fC98 npm run inspect:wvery
+SYMB_WVERY_CANDIDATE=0x9c928F9cD5F7AAa5d933B63d7E2f511223A9fC98 npm run inspect:wvery
 ```
 
 The probe checks chain ID, existence of deployed bytecode at a single block, ERC-20 name, symbol, decimals, positive totalSupply and that native VERY balance covers reported supply. If any required evidence is missing or an RPC call fails, it reports failure. No wallet, seed phrase, signature, token allowance, gas or transaction submission is involved.
@@ -33,7 +33,7 @@ The probe checks chain ID, existence of deployed bytecode at a single block, ERC
 
 1. A project-maintainer/VERY Foundation documented address announcement, ideally referenced from official domain and versioned release.
 2. Matching deployed contract bytecode, verified source and ownership/upgradeability assessment.
-3. Deposit/withdraw function compatibility with the frozen LiddeRouter and local controlled tests against a fork.
+3. Deposit/withdraw function compatibility with the frozen SymbRouter and local controlled tests against a fork.
 4. Native reserve backing and external redemption behaviour under adverse recipients.
 5. Review of administrative powers, emergency pause / mint privileges and legal/operational risk.
 6. Independent security approval and archived evidence before adding to any production deployment manifest.
