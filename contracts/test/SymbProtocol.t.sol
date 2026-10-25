@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {LiddeFactory} from "../src/LiddeFactory.sol";
-import {LiddeRouter} from "../src/LiddeRouter.sol";
-import {LiddePair} from "../src/LiddePair.sol";
-import {LiddeWrappedVery} from "../src/LiddeWrappedVery.sol";
+import {SymbFactory} from "../src/SymbFactory.sol";
+import {SymbRouter} from "../src/SymbRouter.sol";
+import {SymbPair} from "../src/SymbPair.sol";
+import {SymbWrappedVery} from "../src/SymbWrappedVery.sol";
 import {MockToken} from "./MockToken.sol";
 
 interface Vm {
@@ -13,11 +13,11 @@ interface Vm {
     function prank(address msgSender) external;
 }
 
-contract LiddeProtocolTest {
+contract SymbProtocolTest {
     Vm constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
-    LiddeFactory public factory;
-    LiddeRouter public router;
-    LiddeWrappedVery public wrapper;
+    SymbFactory public factory;
+    SymbRouter public router;
+    SymbWrappedVery public wrapper;
     MockToken public alpha;
     MockToken public beta;
     uint256 internal constant SEED = 1_000 ether;
@@ -25,9 +25,9 @@ contract LiddeProtocolTest {
     receive() external payable {}
 
     function setUp() public {
-        factory = new LiddeFactory();
-        wrapper = new LiddeWrappedVery();
-        router = new LiddeRouter(address(factory), address(wrapper));
+        factory = new SymbFactory();
+        wrapper = new SymbWrappedVery();
+        router = new SymbRouter(address(factory), address(wrapper));
         alpha = new MockToken("Alpha", "ALPHA");
         beta = new MockToken("Beta", "BETA");
         alpha.mint(address(this), 2_000_000 ether);
@@ -37,9 +37,9 @@ contract LiddeProtocolTest {
         vm.deal(address(this), 100_000 ether);
     }
 
-    function _seedPair() internal returns (LiddePair pair) {
+    function _seedPair() internal returns (SymbPair pair) {
         router.addLiquidity(address(alpha), address(beta), SEED, SEED, SEED, SEED, address(this), block.timestamp);
-        pair = LiddePair(factory.getPair(address(alpha), address(beta)));
+        pair = SymbPair(factory.getPair(address(alpha), address(beta)));
     }
 
     function testFactoryPairSymmetryAndNoDuplicate() public {
@@ -50,11 +50,11 @@ contract LiddeProtocolTest {
             factory.createPair.selector, address(beta), address(alpha)
         ));
         require(!succeeded, "DUPLICATE_ALLOWED");
-        require(LiddePair(created).factory() == address(factory), "INVALID_FACTORY");
+        require(SymbPair(created).factory() == address(factory), "INVALID_FACTORY");
     }
 
     function testInitialLiquidityAndReserves() public {
-        LiddePair pair = _seedPair();
+        SymbPair pair = _seedPair();
         (uint112 r0, uint112 r1,) = pair.getReserves();
         require(r0 == SEED && r1 == SEED, "RESERVE_MISMATCH");
         require(pair.totalSupply() == SEED, "LP_SUPPLY");
@@ -63,7 +63,7 @@ contract LiddeProtocolTest {
     }
 
     function testSwapAndFeeAdjustedInvariant() public {
-        LiddePair pair = _seedPair();
+        SymbPair pair = _seedPair();
         address[] memory path = new address[](2);
         path[0] = address(alpha); path[1] = address(beta);
         uint256 balanceBefore = beta.balanceOf(address(this));
@@ -77,7 +77,7 @@ contract LiddeProtocolTest {
     }
 
     function testRemoveLiquidityReturnsBothAssets() public {
-        LiddePair pair = _seedPair();
+        SymbPair pair = _seedPair();
         pair.approve(address(router), type(uint256).max);
         uint256 aBefore = alpha.balanceOf(address(this));
         uint256 bBefore = beta.balanceOf(address(this));
@@ -91,7 +91,7 @@ contract LiddeProtocolTest {
     }
 
     function testNoUnfundedSwap() public {
-        LiddePair pair = _seedPair();
+        SymbPair pair = _seedPair();
         (bool succeeded,) = address(pair).call(abi.encodeWithSelector(
             pair.swap.selector, uint256(0), uint256(10 ether), address(this)
         ));
@@ -119,7 +119,7 @@ contract LiddeProtocolTest {
         );
         require(usedToken == 6 ether && usedNative == 3 ether && minted > 0, "NATIVE_LP");
         address pairAddress = factory.getPair(address(alpha), address(wrapper));
-        LiddePair pair = LiddePair(pairAddress);
+        SymbPair pair = SymbPair(pairAddress);
         pair.approve(address(router), type(uint256).max);
         uint256 previousNative = address(this).balance;
         (,uint256 returnedNative) = router.removeLiquidityETH(
@@ -143,7 +143,7 @@ contract LiddeProtocolTest {
     }
 
     function testFuzzSwapNeverDecreasesConstantProduct(uint96 raw) public {
-        LiddePair pair = _seedPair();
+        SymbPair pair = _seedPair();
         uint256 input = 1e12 + uint256(raw) % (50 ether);
         address[] memory path = new address[](2);
         path[0] = address(alpha); path[1] = address(beta);
@@ -153,7 +153,7 @@ contract LiddeProtocolTest {
     }
 
     function testFuzzLPWithdrawalCannotExceedReserves(uint96 raw) public {
-        LiddePair pair = _seedPair();
+        SymbPair pair = _seedPair();
         uint256 owned = pair.balanceOf(address(this));
         uint256 shares = 1e15 + uint256(raw) % (owned / 2);
         pair.approve(address(router), shares);

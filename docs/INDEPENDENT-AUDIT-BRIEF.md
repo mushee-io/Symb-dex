@@ -1,15 +1,15 @@
-# External audit request — Lidde on VERY Mainnet (DRAFT)
+# External audit request — Symb on VERY Mainnet (DRAFT)
 
 ## Requested engagement
 
-Commission an **independent third-party smart contract audit** of the final frozen Lidde AMM and native-wrapping dependencies. The maintainer must authorize the auditor, commercial terms, budget and disclosure policy. Writing this brief or internally reviewing the code does **not** constitute an independent audit.
+Commission an **independent third-party smart contract audit** of the final frozen Symb AMM and native-wrapping dependencies. The maintainer must authorize the auditor, commercial terms, budget and disclosure policy. Writing this brief or internally reviewing the code does **not** constitute an independent audit.
 
 ## Scope
 - Immutable Factory and pair creation / CREATE2 provenance, token ordering and duplicate pool prevention.
-- LiddePair constant-product invariant with 30 bps fee, reserves, minimum LP lock, price manipulation, donation/sync behaviour, mint/burn and reentrancy.
-- LiddeRouter direct and two-hop swaps, approvals, deadline/slippage, recipient flows, wrapping/unwrapping and native refunds.
-- LiddeERC20 LP allowances, transfers, approval front-running, initial LP to zero address.
-- LiddeWrappedVery **local-only fixture**; verify and replace or explicitly authorize the separately documented canonical token contract.
+- SymbPair constant-product invariant with 30 bps fee, reserves, minimum LP lock, price manipulation, donation/sync behaviour, mint/burn and reentrancy.
+- SymbRouter direct and two-hop swaps, approvals, deadline/slippage, recipient flows, wrapping/unwrapping and native refunds.
+- SymbERC20 LP allowances, transfers, approval front-running, initial LP to zero address.
+- SymbWrappedVery **local-only fixture**; verify and replace or explicitly authorize the separately documented canonical token contract.
 - Frontend ABI and routing consistency, wallet signer integration and trusted-token list.
 - Deployment artefacts and very-chain EVM idiosyncrasies.
 
