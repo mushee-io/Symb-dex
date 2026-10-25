@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {LiddeFactory} from "../contracts/src/LiddeFactory.sol";
-import {LiddeRouter} from "../contracts/src/LiddeRouter.sol";
-import {LiddeWrappedVery} from "../contracts/src/LiddeWrappedVery.sol";
-import {LiddeTestToken} from "../contracts/src/testnet/LiddeTestToken.sol";
-import {LiddeTestFaucet} from "../contracts/src/testnet/LiddeTestFaucet.sol";
-import {LiddeDemoTokenFactory} from "../contracts/src/testnet/LiddeDemoTokenFactory.sol";
-import {LiddeDemoLimitBook} from "../contracts/src/testnet/LiddeDemoLimitBook.sol";
+import {LiddeFactory} from "contracts/src/LiddeFactory.sol";
+import {LiddeRouter} from "contracts/src/LiddeRouter.sol";
+import {LiddeWrappedVery} from "contracts/src/LiddeWrappedVery.sol";
+import {LiddeTestToken} from "contracts/src/testnet/LiddeTestToken.sol";
+import {LiddeTestFaucet} from "contracts/src/testnet/LiddeTestFaucet.sol";
+import {LiddeDemoTokenFactory} from "contracts/src/testnet/LiddeDemoTokenFactory.sol";
+import {LiddeDemoLimitBook} from "contracts/src/testnet/LiddeDemoLimitBook.sol";
 
 interface VmDeploy {
     function envUint(string calldata name) external returns(uint256);
