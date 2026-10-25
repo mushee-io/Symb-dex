@@ -1,6 +1,7 @@
 "use client";
 import {useState} from "react";
 import Link from "next/link";
+import {OrderHistory} from "@/components/exchange/order-history";
 export default function Limit(){
  const [amount,setAmount]=useState("");
  const [price,setPrice]=useState("");
