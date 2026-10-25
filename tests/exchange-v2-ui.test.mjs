@@ -10,7 +10,7 @@ test("public homepage leads to the actual app with an original curved carousel",
  assert.match(home,/Built for VERY/);
  assert.match(home,/href="\/app\/swap"/);
  assert.match(home,/CurvedCarousel/);
- assert.equal((tiles.match(/title:"/g)||[]).length,10);
+ assert.equal(tiles.split('{title:"').length-1,10);
  assert.match(carousel,/requestAnimationFrame/);
  assert.match(carousel,/prefers-reduced-motion/);
  assert.match(carousel,/onPointerMove/);
