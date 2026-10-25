@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {LiddeFactory} from "../src/LiddeFactory.sol";
-import {LiddeRouter} from "../src/LiddeRouter.sol";
-import {LiddePair} from "../src/LiddePair.sol";
-import {LiddeWrappedVery} from "../src/LiddeWrappedVery.sol";
+import {SymbFactory} from "../src/SymbFactory.sol";
+import {SymbRouter} from "../src/SymbRouter.sol";
+import {SymbPair} from "../src/SymbPair.sol";
+import {SymbWrappedVery} from "../src/SymbWrappedVery.sol";
 import {MockToken} from "./MockToken.sol";
 
 interface VmLocal {
@@ -14,20 +14,20 @@ interface VmLocal {
 
 /// @notice Controlled deployment-like tests on Foundry's LOCAL ephemeral EVM.
 /// @dev No broadcast, external RPC, private key, real VERY or public liquidity.
-contract LiddeLocalDeploymentDryRunTest {
+contract SymbLocalDeploymentDryRunTest {
     VmLocal private constant vm = VmLocal(address(uint160(uint256(keccak256("hevm cheat code")))));
     address private constant ALICE = address(0xA11CE);
     address private constant BOB = address(0xB0B);
-    LiddeFactory private factory;
-    LiddeRouter private router;
-    LiddeWrappedVery private wrapper;
+    SymbFactory private factory;
+    SymbRouter private router;
+    SymbWrappedVery private wrapper;
     MockToken private alpha;
     MockToken private beta;
 
     function setUp() public {
-        factory = new LiddeFactory();
-        wrapper = new LiddeWrappedVery();
-        router = new LiddeRouter(address(factory), address(wrapper));
+        factory = new SymbFactory();
+        wrapper = new SymbWrappedVery();
+        router = new SymbRouter(address(factory), address(wrapper));
         alpha = new MockToken("Local Alpha", "LALPHA");
         beta = new MockToken("Local Beta", "LBETA");
         alpha.mint(ALICE, 10_000 ether);
@@ -51,7 +51,7 @@ contract LiddeLocalDeploymentDryRunTest {
                 2_000 ether, 2_000 ether, ALICE, block.timestamp);
         require(addedA == 2_000 ether && addedB == 2_000 ether && lp > 0, "INITIAL_MINT_FAILED");
         address pairAddr = factory.getPair(address(alpha), address(beta));
-        LiddePair pair = LiddePair(pairAddr);
+        SymbPair pair = SymbPair(pairAddr);
         require(pairAddr != address(0) && pair.totalSupply() == lp + pair.MINIMUM_LIQUIDITY(), "UNVERIFIED_PAIR");
         require(pair.token0() < pair.token1(), "BAD_PAIR_ORDER");
 

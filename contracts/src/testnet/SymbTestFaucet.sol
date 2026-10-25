@@ -8,7 +8,7 @@ interface ITestAsset {
 /// @notice Rate-limited faucet for valueless devnet assets, including native test gas.
 /// @dev Users with ZERO gas require an operator-sponsored claimFor, not claim() transaction.
 ///      The operator must independently implement rate limits and budget controls.
-contract LiddeTestFaucet {
+contract SymbTestFaucet {
     address public owner;
     uint64 public immutable cooldown;
     uint256 public immutable nativeAmount;

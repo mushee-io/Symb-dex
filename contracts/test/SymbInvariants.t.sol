@@ -1,20 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {LiddeFactory} from "../src/LiddeFactory.sol";
-import {LiddeRouter} from "../src/LiddeRouter.sol";
-import {LiddePair} from "../src/LiddePair.sol";
-import {LiddeWrappedVery} from "../src/LiddeWrappedVery.sol";
+import {SymbFactory} from "../src/SymbFactory.sol";
+import {SymbRouter} from "../src/SymbRouter.sol";
+import {SymbPair} from "../src/SymbPair.sol";
+import {SymbWrappedVery} from "../src/SymbWrappedVery.sol";
 import {MockToken} from "./MockToken.sol";
 
 /// @dev Stateful handler for randomized swaps, LP minting and withdrawals.
-contract LiddeInvariantHandler {
-    LiddeRouter internal immutable router;
-    LiddePair internal immutable pair;
+contract SymbInvariantHandler {
+    SymbRouter internal immutable router;
+    SymbPair internal immutable pair;
     MockToken internal immutable tokenA;
     MockToken internal immutable tokenB;
 
-    constructor(LiddeRouter r, LiddePair p, MockToken a, MockToken b) {
+    constructor(SymbRouter r, SymbPair p, MockToken a, MockToken b) {
         router = r; pair = p; tokenA = a; tokenB = b;
         a.approve(address(r), type(uint256).max);
         b.approve(address(r), type(uint256).max);
@@ -55,18 +55,18 @@ contract LiddeInvariantHandler {
     }
 }
 
-contract LiddeInvariantsTest {
-    LiddeFactory factory;
-    LiddePair pair;
-    LiddeRouter router;
+contract SymbInvariantsTest {
+    SymbFactory factory;
+    SymbPair pair;
+    SymbRouter router;
     MockToken a;
     MockToken b;
     address[] private targets;
 
     function setUp() public {
-        factory = new LiddeFactory();
-        LiddeWrappedVery wvery = new LiddeWrappedVery();
-        router = new LiddeRouter(address(factory), address(wvery));
+        factory = new SymbFactory();
+        SymbWrappedVery wvery = new SymbWrappedVery();
+        router = new SymbRouter(address(factory), address(wvery));
         a = new MockToken("Alpha", "A");
         b = new MockToken("Beta", "B");
         a.mint(address(this), 1000 ether);
@@ -74,8 +74,8 @@ contract LiddeInvariantsTest {
         a.approve(address(router), type(uint256).max);
         b.approve(address(router), type(uint256).max);
         router.addLiquidity(address(a), address(b), 1000 ether, 1000 ether, 1, 1, address(this), block.timestamp);
-        pair = LiddePair(factory.getPair(address(a), address(b)));
-        LiddeInvariantHandler handler = new LiddeInvariantHandler(router, pair, a, b);
+        pair = SymbPair(factory.getPair(address(a), address(b)));
+        SymbInvariantHandler handler = new SymbInvariantHandler(router, pair, a, b);
         targets.push(address(handler));
     }
 

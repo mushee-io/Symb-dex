@@ -4,7 +4,7 @@ pragma solidity 0.8.26;
 /// @notice Non-custodial-at-rest wallet custody until signed deposit; demo ERC20 order escrow
 ///         and atomic test-only peer fills. No off-chain phantom fills or keeper dependency.
 /// @dev WARNING: unaudited experimental test contracts. All underlying assets must be FAKE.
-contract LiddeDemoLimitBook {
+contract SymbDemoLimitBook {
     struct Order {
         address maker;
         address sellToken;
