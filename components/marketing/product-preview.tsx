@@ -15,7 +15,7 @@ export const productPreviews:ProductPreviewData[]=[
 function MockBars(){return <div className="mini-bars">{[27,41,33,57,49,69,48,73,62,88,68,93].map((height,i)=><i key={i} style={{height:height+"%"}}/>)}</div>}
 export function ProductPreview({data}:{data:ProductPreviewData}){
  return <div className="product-mini">
-  <div className="product-mini-top"><span className="product-mini-logo">✳</span><strong>SYMB</strong><span>•••</span></div>
+  <div className="product-mini-top"><span className="product-mini-logo"><img src="/brand/symb-fish.svg" width="20" height="14" alt="" /></span><strong>SYMB</strong><span>•••</span></div>
   <div className="product-mini-tag">{data.tag} <span>↗</span></div>
   <div className="product-mini-content">
    {data.kind==="swap"&&<div className="mini-swap"><div>YOU PAY <strong>VERY <span>▾</span></strong><b>0.00</b></div><span className="mini-center">↓</span><div>YOU RECEIVE<strong>TOKEN <span>▾</span></strong><b>—</b></div></div>}

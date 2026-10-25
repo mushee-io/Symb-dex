@@ -8,6 +8,7 @@ import {SiteChrome} from "@/components/layout/site-chrome";
 export const metadata:Metadata={
  title:{default:"Symb Dex — Trade Without Limits",template:"%s | Symb Dex"},
  description:"Symb Dex is building the trading and liquidity layer for VERY. Explore swap, liquidity and onchain markets. Mainnet execution remains disabled while contracts and security reviews are pending.",
+ icons:{icon:"/icon.svg",shortcut:"/icon.svg",apple:"/icon.svg"},
  robots:{index:false,follow:false},
 };
 export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){
