@@ -1,25 +1,19 @@
 import type {Metadata} from "next";
 import "./globals.css";
 import "./home.css";
-import {Header} from "@/components/header";
+import "./exchange.css";
 import {AppProviders} from "@/components/providers";
+import {SiteChrome} from "@/components/layout/site-chrome";
 
 export const metadata:Metadata={
-  title:{default:"Symb Dex — The market. Your move.",template:"%s | Symb Dex"},
-  description:"Explore decentralized swaps, liquidity, token creation and demo orders with Symb Dex. An isolated public testnet is in development. No real-value trading is live.",
-  robots:{index:false,follow:false},
+ title:{default:"Symb Dex — Trade Without Limits",template:"%s | Symb Dex"},
+ description:"Symb Dex is building the trading and liquidity layer for VERY. Explore swap, liquidity and onchain markets. Mainnet execution remains disabled while contracts and security reviews are pending.",
+ robots:{index:false,follow:false},
 };
-
 export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){
-  return <html lang="en"><body>
-    <AppProviders>
-      <Header/>
-      {children}
-      <footer className="footer">
-        <span>© 2026 Symb Dex. All rights reserved.</span>
-        <span>Public testnet in development · No real-value trading</span>
-        <a href="https://github.com/mushee-io/Symb-dex" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-      </footer>
-    </AppProviders>
-  </body></html>;
+ return <html lang="en"><head>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet"/>
+ </head><body><AppProviders><SiteChrome>{children}</SiteChrome></AppProviders></body></html>;
 }

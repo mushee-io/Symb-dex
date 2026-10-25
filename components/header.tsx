@@ -1,22 +1,21 @@
+"use client";
+import {useState} from "react";
 import Link from "next/link";
 import {WalletConnect} from "@/components/wallet-connect";
-
 export function Header(){
-  return <header className="site-header">
-    <div className="header-inner">
-      <Link href="/" className="brand" aria-label="Symb Dex homepage">
-        <span className="brand-mark">↗</span>
-        <span>Symb<span className="brand-dot"> Dex</span></span>
-      </Link>
-      <nav className="top-nav" aria-label="Main navigation">
-        <Link href="/">Home</Link>
-        <Link href="/testnet">Trade</Link>
-        <Link href="/testnet/markets">Markets</Link>
-        <Link href="/testnet/pools">Pools</Link>
-        <Link href="/testnet/launch">Launch</Link>
-        <Link href="/testnet/status">Status</Link>
-      </nav>
-      <WalletConnect/>
-    </div>
-  </header>;
+ const [open,setOpen]=useState(false);
+ return <header className="marketing-header">
+  <div className="marketing-header-inner">
+   <Link href="/" className="marketing-wordmark" aria-label="Symb Dex homepage"><span className="marketing-glyph">✳</span> SYMB <b>DEX</b></Link>
+   <button className="marketing-menu-button" type="button" aria-expanded={open} aria-controls="marketing-navigation" onClick={()=>setOpen(v=>!v)}>{open?"Close":"Menu"} <span aria-hidden="true">{open?"×":"☰"}</span></button>
+   <nav id="marketing-navigation" className={"marketing-links"+(open?" is-open":"")} aria-label="Public navigation">
+    <Link href="/app/swap" onClick={()=>setOpen(false)}>Trade</Link>
+    <Link href="/app/pools" onClick={()=>setOpen(false)}>Liquidity</Link>
+    <Link href="/app/mining" onClick={()=>setOpen(false)}>Earn</Link>
+    <Link href="/app/launchpad" onClick={()=>setOpen(false)}>Explore</Link>
+    <a href="https://github.com/mushee-io/Symb-dex" target="_blank" rel="noopener noreferrer">Developers ↗</a>
+   </nav>
+   <div className="marketing-header-actions"><WalletConnect/><Link href="/app/swap" className="marketing-launch">Launch App <span>↗</span></Link></div>
+  </div>
+ </header>;
 }
