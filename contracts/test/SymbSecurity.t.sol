@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {LiddeFactory} from "../src/LiddeFactory.sol";
-import {LiddeRouter} from "../src/LiddeRouter.sol";
-import {LiddePair} from "../src/LiddePair.sol";
-import {LiddeWrappedVery} from "../src/LiddeWrappedVery.sol";
+import {SymbFactory} from "../src/SymbFactory.sol";
+import {SymbRouter} from "../src/SymbRouter.sol";
+import {SymbPair} from "../src/SymbPair.sol";
+import {SymbWrappedVery} from "../src/SymbWrappedVery.sol";
 import {MockToken} from "./MockToken.sol";
 
 /// @notice A deliberately hostile ERC-20 used to probe pair callback reentrancy.
@@ -57,17 +57,17 @@ contract ReentryProbeToken {
     }
 }
 
-contract LiddeSecurityTest {
-    LiddeFactory factory;
-    LiddeRouter router;
-    LiddeWrappedVery wvery;
+contract SymbSecurityTest {
+    SymbFactory factory;
+    SymbRouter router;
+    SymbWrappedVery wvery;
     MockToken alpha;
     ReentryProbeToken hostile;
 
     function setUp() public {
-        factory = new LiddeFactory();
-        wvery = new LiddeWrappedVery();
-        router = new LiddeRouter(address(factory), address(wvery));
+        factory = new SymbFactory();
+        wvery = new SymbWrappedVery();
+        router = new SymbRouter(address(factory), address(wvery));
         alpha = new MockToken("Alpha", "A");
         hostile = new ReentryProbeToken();
         alpha.mint(address(this), 1_000_000 ether);
@@ -126,7 +126,7 @@ contract LiddeSecurityTest {
             address(this),block.timestamp
         ));
         require(!success, "UNAPPROVED_LP_BURN");
-        require(LiddePair(pair).balanceOf(address(this)) > 0, "LP_STOLEN");
+        require(SymbPair(pair).balanceOf(address(this)) > 0, "LP_STOLEN");
     }
 
     function testNoUnauthorizedPairInitialization() public {

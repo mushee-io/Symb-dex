@@ -1,4 +1,4 @@
-// Export NONSECRET verified chain fingerprints for Lidde Fun. No fake addresses.
+// Export NONSECRET verified chain fingerprints for Symb Fun. No fake addresses.
 import {readFile} from "node:fs/promises";
 import {createPublicClient,http,keccak256,getAddress,parseAbi} from "viem";
 import {validateTestnet} from "../lib/testnet/config.mjs";
@@ -8,7 +8,7 @@ if(!validateTestnet({network,deployments}).ready)throw Error("Actual configured 
 if(!network.rpcUrl?.startsWith("https://")||!network.explorerUrl?.startsWith("https://"))
  throw Error("Public TLS RPC and explorer must be reachable.");
 const validAddress=x=>typeof x==="string"&&/^0x[0-9a-fA-F]{40}$/.test(x)&&!/^0x0{40}$/i.test(x);
-const creator=deployments.tokenCreator,vault=process.env.LIDDE_FUN_QUEST_VAULT_ADDRESS;
+const creator=deployments.tokenCreator,vault=process.env.SYMB_FUN_QUEST_VAULT_ADDRESS;
 if(!validAddress(creator)||!validAddress(vault))throw Error("Both TokenCreator and QuestEscrow must be deployed.");
 const client=createPublicClient({transport:http(network.rpcUrl,{timeout:15000,retryCount:0})});
 if(await client.getChainId()!==network.chainId)throw Error("Wrong public RPC chain.");
@@ -30,7 +30,7 @@ const [actualFactory,actualWrapped]=await Promise.all([
 if(actualFactory.toLowerCase()!==deployments.factory.toLowerCase()||
  actualWrapped.toLowerCase()!==deployments.wrappedTestNative.toLowerCase())
  throw Error("Router wiring disagrees with deployment manifest.");
-const endpoint=process.env.LIDDE_DEX_MARKETS_API_URL??"";
+const endpoint=process.env.SYMB_DEX_MARKETS_API_URL??"";
 if(!endpoint.startsWith("https://"))throw Error("Real HTTPS markets indexer endpoint required.");
 const response=await fetch(endpoint,{signal:AbortSignal.timeout(12000)});
 if(!response.ok)throw Error("DEX markets API is not live.");
@@ -44,21 +44,21 @@ const indexedBlock=await client.getBlock({blockNumber:at});
 if(indexedBlock.hash.toLowerCase()!==snapshot.canonicalBlockHash.toLowerCase())
  throw Error("Indexed block is not canonical.");
 const vars={
- LIDDE_FUN_TESTNET_CHAIN_ID:network.chainId,
- LIDDE_FUN_RPC_URL:network.rpcUrl,
- LIDDE_FUN_EXPLORER_URL:network.explorerUrl,
- LIDDE_FUN_GENESIS_HASH:genesis.hash,
- LIDDE_FUN_FACTORY_ADDRESS:deployments.factory,
- LIDDE_FUN_FACTORY_CODE_HASH:factoryHash,
- LIDDE_FUN_ROUTER_ADDRESS:deployments.router,
- LIDDE_FUN_ROUTER_CODE_HASH:routerHash,
- LIDDE_FUN_WRAPPED_NATIVE_ADDRESS:deployments.wrappedTestNative,
- LIDDE_FUN_TOKEN_CREATOR_ADDRESS:creator,
- LIDDE_FUN_TOKEN_CREATOR_CODE_HASH:creatorHash,
- LIDDE_FUN_QUEST_VAULT_ADDRESS:vault,
- LIDDE_FUN_QUEST_VAULT_CODE_HASH:vaultHash,
- LIDDE_DEX_MARKETS_API_URL:endpoint,
- LIDDE_FUN_WRITES_ENABLED:"false",LIDDE_FUN_EMERGENCY_STOP:"true"
+ SYMB_FUN_TESTNET_CHAIN_ID:network.chainId,
+ SYMB_FUN_RPC_URL:network.rpcUrl,
+ SYMB_FUN_EXPLORER_URL:network.explorerUrl,
+ SYMB_FUN_GENESIS_HASH:genesis.hash,
+ SYMB_FUN_FACTORY_ADDRESS:deployments.factory,
+ SYMB_FUN_FACTORY_CODE_HASH:factoryHash,
+ SYMB_FUN_ROUTER_ADDRESS:deployments.router,
+ SYMB_FUN_ROUTER_CODE_HASH:routerHash,
+ SYMB_FUN_WRAPPED_NATIVE_ADDRESS:deployments.wrappedTestNative,
+ SYMB_FUN_TOKEN_CREATOR_ADDRESS:creator,
+ SYMB_FUN_TOKEN_CREATOR_CODE_HASH:creatorHash,
+ SYMB_FUN_QUEST_VAULT_ADDRESS:vault,
+ SYMB_FUN_QUEST_VAULT_CODE_HASH:vaultHash,
+ SYMB_DEX_MARKETS_API_URL:endpoint,
+ SYMB_FUN_WRITES_ENABLED:"false",SYMB_FUN_EMERGENCY_STOP:"true"
 };
 for(const [key,val] of Object.entries(vars))console.log(key+"="+val);
 console.error("Verified chain/Factory/Router/creator/QuestEscrow and canonical index. Signing remains disabled.");

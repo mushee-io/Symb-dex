@@ -1,4 +1,4 @@
-# LIDDE DEX — MILESTONE 8 MASTER CHECKLIST
+# SYMB DEX — MILESTONE 8 MASTER CHECKLIST
 
 > **ROOT HIGHLIGHT — VERY MAINNET · CHAIN 4613 · MIT LICENSE · NOT LIVE / RELEASE BLOCKED**
 >
@@ -59,8 +59,8 @@
 
 **Phase D: Verification, analytics, independent release authority and handover**
 
-- **8.15 Public contract verification and disclosure:** No official Lidde deployment.
-- **8.16 Provenance-based beta volume, wallets and TVL:** No confirmed Lidde production metrics.
+- **8.15 Public contract verification and disclosure:** No official Symb deployment.
+- **8.16 Provenance-based beta volume, wallets and TVL:** No confirmed Symb production metrics.
 - **8.17 Independent final security go/no-go signoff:** No go-live authorization granted.
 - **8.18 Beta closeout and Milestone 9 handover:** No beta data; M09 not authorized.
 
@@ -263,7 +263,7 @@
 ### 8.15 — Public contract verification and disclosure
 
 **Responsible:** Protocol / independent reviewer  
-**Actual status:** No official Lidde deployment.
+**Actual status:** No official Symb deployment.
 
 - [ ] Publish Factory, Router, wrapper and verified pool addresses with on-chain explorer source links.
 - [ ] Reproduce deployed bytecode from frozen commit and audit manifest at chain 4613.
@@ -277,7 +277,7 @@
 ### 8.16 — Provenance-based beta volume, wallets and TVL
 
 **Responsible:** Data QA  
-**Actual status:** No confirmed Lidde production metrics.
+**Actual status:** No confirmed Symb production metrics.
 
 - [ ] Count actual confirmed swaps, LP deposits/withdrawals and active wallets from chain logs.
 - [ ] Calculate volume per pool and separate multi-hop route volume from unique user orders.
@@ -339,7 +339,7 @@ forge test -vv
 npm run beta:preflight
 npm run beta:gate:ci
 # Read-only wrapper candidate probe, NOT official chain attestation:
-LIDDE_WVERY_CANDIDATE=<reviewed-address> npm run inspect:wvery
+SYMB_WVERY_CANDIDATE=<reviewed-address> npm run inspect:wvery
 ```
 
 **These checks are not a third-party audit and do not permit deployment, token approval, or spending funds.**

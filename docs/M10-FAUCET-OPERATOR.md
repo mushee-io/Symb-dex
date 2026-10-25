@@ -10,7 +10,7 @@ It is **disabled by default**. Before enabling on a protected testnet environmen
 4. Set **server-only**, secret-managed `TESTNET_FAUCET_DATABASE_URL`, `TESTNET_FAUCET_OPERATOR_PRIVATE_KEY` (never reuse a real-value signing key) and `TESTNET_FAUCET_IP_PEPPER` (random, >=32 characters).
 5. Deploy behind a trusted Vercel network proxy that sets `x-vercel-forwarded-for` itself. Requests without that header are rejected rather than accepting client-supplied IP addresses. Confirm provider behaviour before enabling.
 6. Set `TESTNET_FAUCET_SPONSOR_ENABLED=true` only after operator authorizes a test-gas budget, checks abuse controls and verifies the chain.
-7. Browser signs fixed `Lidde testnet faucet claim` message bound to chain, wallet and current UTC day. No user gas for this signature. Backend recovers/verifies signer before reserving a claim.
+7. Browser signs fixed `Symb testnet faucet claim` message bound to chain, wallet and current UTC day. No user gas for this signature. Backend recovers/verifies signer before reserving a claim.
 8. Database function serializes claim reservations per chain/day and caps 3 per trusted IP and 250 overall daily, plus unique wallet per UTC day. Contract separately enforces 24-hour wallet cooldown.
 9. If tx broadcast outcome is uncertain, a claim stays **reserved** for human reconciliation. Never automatically delete claim rows and re-send, which risks duplicate payouts.
 10. Monitor owner balance, on-chain faucet balances, total pending reservations, RPC latency, nonce concurrency, malicious wallets and trusted-proxy reliability. A production-scale operator should serialize nonce submission through a real queue/nonce manager; disable sponsorship if multiple server instances can submit concurrently from one key.

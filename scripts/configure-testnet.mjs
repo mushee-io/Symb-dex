@@ -55,7 +55,7 @@ for(const pair of [["tUSD","tBTC"],["tUSD","tVERY"]]){
 const sourceCommit=execFileSync("git",["rev-parse","HEAD"],{encoding:"utf8"}).trim();
 const network={
  status:"configured",chainId:expected,
- name:process.env.TESTNET_NETWORK_NAME??"Lidde Isolated Development Network",
+ name:process.env.TESTNET_NETWORK_NAME??"Symb Isolated Development Network",
  rpcUrl:rpc,explorerUrl:explorer,
  nativeCurrency:{name:"Test Gas Token",symbol:"tVERY",decimals:18},
  isOfficialVeryTestnet:false,officialVerificationReference:null,realFundsAllowed:false,

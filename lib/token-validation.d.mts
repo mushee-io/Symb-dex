@@ -1,5 +1,5 @@
 import type { Address } from "viem";
-export interface LiddeImportedToken {
+export interface SymbImportedToken {
   address: Address;
   name: string;
   symbol: string;
@@ -8,6 +8,6 @@ export interface LiddeImportedToken {
 }
 export const TOKEN_LIMIT: number;
 export const STORAGE_KEY: string;
-export function normalizeTokenMetadata(address: string, name: unknown, symbol: unknown, decimals: unknown): LiddeImportedToken;
-export function sanitizeImportedTokens(value: unknown): LiddeImportedToken[];
+export function normalizeTokenMetadata(address: string, name: unknown, symbol: unknown, decimals: unknown): SymbImportedToken;
+export function sanitizeImportedTokens(value: unknown): SymbImportedToken[];
 export function isExplicitlyVerified(address: string, verifiedTokens: readonly {address: string; reviewed: boolean}[]): boolean;

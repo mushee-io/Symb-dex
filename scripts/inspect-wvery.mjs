@@ -4,9 +4,9 @@ import {readFile} from "node:fs/promises";
 import {assessWrapper} from "../lib/wrapper-assessment.mjs";
 
 const chain=JSON.parse(await readFile(new URL("../config/very-mainnet.json",import.meta.url),"utf8"));
-const candidate=process.env.LIDDE_WVERY_CANDIDATE;
+const candidate=process.env.SYMB_WVERY_CANDIDATE;
 if(!isAddress(candidate??"") || getAddress(candidate)===zeroAddress) {
-  console.error("Provide LIDDE_WVERY_CANDIDATE=<exact contract address>; no default is trusted.");
+  console.error("Provide SYMB_WVERY_CANDIDATE=<exact contract address>; no default is trusted.");
   process.exitCode=1;
 } else {
   try {
@@ -15,7 +15,7 @@ if(!isAddress(candidate??"") || getAddress(candidate)===zeroAddress) {
     const address=getAddress(candidate);
     const atBlock=await client.getBlockNumber();
     const code=await client.getBytecode({address,blockNumber:atBlock});
-    if(!code || code==="0x") throw new Error("Address has no deployed smart-contract code; do not configure for Lidde.");
+    if(!code || code==="0x") throw new Error("Address has no deployed smart-contract code; do not configure for Symb.");
     const [name,symbol,decimals,supply,nativeBalance]=await Promise.all([
       client.readContract({address,abi:erc20Abi,functionName:"name",blockNumber:atBlock}),
       client.readContract({address,abi:erc20Abi,functionName:"symbol",blockNumber:atBlock}),

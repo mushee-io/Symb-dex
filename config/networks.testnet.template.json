@@ -1,7 +1,7 @@
 {
   "purpose": "user-testnet-only",
   "status": "not-configured",
-  "source": "official-very-testnet-if-independently-verified-otherwise-isolated-lidde-devnet",
+  "source": "official-very-testnet-if-independently-verified-otherwise-isolated-symb-devnet",
   "officialVeryTestnetVerified": false,
   "chainId": null,
   "rpcUrl": null,

@@ -37,12 +37,12 @@ jobs:
       - name: Solidity unit / fuzz / adversarial tests
         run: forge test -vv
       - name: Local deployment dry-run (no external RPC, no keys)
-        run: forge test --match-contract LiddeLocalDeploymentDryRunTest -vv
+        run: forge test --match-contract SymbLocalDeploymentDryRunTest -vv
       - name: Inspect pair ABIs
         run: |
-          forge inspect LiddeFactory abi > /dev/null
-          forge inspect LiddePair abi > /dev/null
-          forge inspect LiddeRouter abi > /dev/null
+          forge inspect SymbFactory abi > /dev/null
+          forge inspect SymbPair abi > /dev/null
+          forge inspect SymbRouter abi > /dev/null
       - name: No deployed mainnet contracts
         run: |
           node -e 'const d=require("./config/deployments.json"); if(d.factory!==null||d.router!==null||d.wrappedVery!==null||d.releaseApproved||d.auditReviewed) process.exit(1)'

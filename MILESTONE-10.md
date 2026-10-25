@@ -1,16 +1,16 @@
-# LIDDE DEX — MILESTONE 10: DEEP PUBLIC TESTNET MASTER PLAN
+# SYMB DEX — MILESTONE 10: DEEP PUBLIC TESTNET MASTER PLAN
 
 > **CURRENT PRODUCT DIRECTION: TESTNET FOR USERS — NO REAL FUNDS, NO MAINNET DEPLOYMENT.**
 >
 > Every exchange operation should execute against actual test-network contracts and produce real **test-chain** receipts, not animated demo UI or fake transactions. Test token amounts have no cash value, test-volume figures are not real financial volume, and testnet points are not promised tokens or payouts.
 
-**Repository:** [mushee-io/lidde-dex](https://github.com/mushee-io/lidde-dex). **Root:** [README.md](README.md). **Existing Solidity:** [contracts/src](contracts/src). **Prior network planning:** [MILESTONE-08.md](MILESTONE-08.md) and [MILESTONE-09.md](MILESTONE-09.md) are future/mainnet-oriented historical planning documents and **do not define the current user-testnet sprint**.
+**Repository:** [mushee-io/symb-dex](https://github.com/mushee-io/lidde-dex). **Root:** [README.md](README.md). **Existing Solidity:** [contracts/src](contracts/src). **Prior network planning:** [MILESTONE-08.md](MILESTONE-08.md) and [MILESTONE-09.md](MILESTONE-09.md) are future/mainnet-oriented historical planning documents and **do not define the current user-testnet sprint**.
 
 ## Testnet network requirement — IMPORTANT
 
 VERY's public documentation (as checked 24 October 2026) establishes **VERY Mainnet** chain ID `4613`, RPC `https://rpc.verylabs.io` and explorer `https://veryscan.io`. A published network-specification page lists public testnet RPC and explorer as `null`, and no official VERY testnet endpoint could be independently verified. We must **not** use chain ID 4613 to pretend that transactions are on testnet, nor use real VERY to fund the public testing programme.
 
-**Primary deployment path:** obtain official VERY testnet details from chain operators if available; **otherwise** provision a *persistent separate EVM Lidde development/test network* with its own chain ID, native test gas, RPC, explorer, faucet and independently labelled branding. This is Lidde-operated testing infrastructure, not an official VERY testnet. A local ephemeral Anvil instance alone does not provide persistent public network access; use persistent nodes and reliable storage for invited testers. Both frontend, SDK, deploy tooling and indexer must require the verified test chain ID.
+**Primary deployment path:** obtain official VERY testnet details from chain operators if available; **otherwise** provision a *persistent separate EVM Symb development/test network* with its own chain ID, native test gas, RPC, explorer, faucet and independently labelled branding. This is Symb-operated testing infrastructure, not an official VERY testnet. A local ephemeral Anvil instance alone does not provide persistent public network access; use persistent nodes and reliable storage for invited testers. Both frontend, SDK, deploy tooling and indexer must require the verified test chain ID.
 
 Official source references:
 - https://verylabs.io/whitepaper/en/verychain/
@@ -33,7 +33,7 @@ Official source references:
 
 | Number | Workstream | Source vs deployment status |
 |---|---|---|
-| **10.1** | Choose and verify Lidde's persistent test network | Official VERY testnet endpoint is not verified; don't reuse mainnet 4613. |
+| **10.1** | Choose and verify Symb's persistent test network | Official VERY testnet endpoint is not verified; don't reuse mainnet 4613. |
 | **10.2** | Deploy separate Solidity Factory, Pair, Router and wrapped test token | Contracts already exist locally; no public test network deployment. |
 | **10.3** | Issue full suite of synthetic testing tokens | All test assets must be generated on isolated testing network. |
 | **10.4** | Build the testnet gas and asset faucet | Public faucet service does not yet exist. |
@@ -75,13 +75,13 @@ Official source references:
 
 ## Full checkable implementation specification
 
-### 10.1 — Choose and verify Lidde's persistent test network
+### 10.1 — Choose and verify Symb's persistent test network
 
 **Owner:** Network engineering  
 **Current status:** Official VERY testnet endpoint is not verified; don't reuse mainnet 4613.
 
 - [ ] Check official VERY documentation and operator announcements for an authentic testnet chain ID, RPC, explorer, gas token and faucet.
-- [ ] If no public VERY testnet is confirmed, launch a persistent isolated EVM devnet with its OWN chain ID, RPC, explorer, faucet and block storage; document that it is a Lidde developer network, not an official VERY testnet.
+- [ ] If no public VERY testnet is confirmed, launch a persistent isolated EVM devnet with its OWN chain ID, RPC, explorer, faucet and block storage; document that it is a Symb developer network, not an official VERY testnet.
 - [ ] Define deterministic configuration: network id, native mock token, RPC read/write endpoints, finality policy, timestamp and compatible EVM opcode target.
 - [ ] Confirm wallet `eth_chainId` response and Explorer chain genesis before any contract deployment; reject chain ID 4613 in testnet deployment tooling.
 - [ ] Design independent development, integration and public test environments and stable upgrade/reset policy, with separated signing accounts.
@@ -145,7 +145,7 @@ Official source references:
 **Current status:** Existing wallet code must be isolated to testnet registry.
 
 - [ ] Support EIP-6963 browser-injected wallets plus optional WalletConnect mobile sessions.
-- [ ] Offer `Add Lidde Testnet` or `Switch Network` only with independently verified testnet chain details.
+- [ ] Offer `Add Symb Testnet` or `Switch Network` only with independently verified testnet chain details.
 - [ ] Read chain ID and account before every approval or signing operation; never reuse mainnet 4613 as testnet.
 - [ ] Display faucet balances, token decimals, native gas, account history and wallet provider clearly.
 - [ ] Implement session persistence, account switching, rejected signatures, wrong-network errors and safe disconnect.
@@ -374,7 +374,7 @@ Official source references:
 - [ ] Make every significant UI write link to its transaction hash; no invented or repeated receipts.
 - [ ] Offer pool history, factory pair creation, contract address search and wallet activity views.
 - [ ] Provide RPC diagnostics and read-only block verification for testers and developers.
-- [ ] Explicitly distinguish Lidde-operated devnet explorer from an official VERY explorer if not provided by the chain operator.
+- [ ] Explicitly distinguish Symb-operated devnet explorer from an official VERY explorer if not provided by the chain operator.
 
 **Acceptance evidence:** Searchable real test-chain blocks/transactions and exact wallet receipt links.  
 **Stop condition:** Misleading 'VERY official testnet explorer' branding without provenance.
@@ -477,7 +477,7 @@ Official source references:
 
 ## First-user testing path
 
-1. Visit official Lidde *testnet-labelled* app, confirm network identity (never chain 4613 as testnet).
+1. Visit official Symb *testnet-labelled* app, confirm network identity (never chain 4613 as testnet).
 2. Connect own wallet, add the independently configured sandbox EVM network.
 3. Claim gas and demonstration tokens from the faucet.
 4. Swap mock tokens; observe a real chain transaction hash and reserves update.
@@ -512,7 +512,7 @@ config/
   networks.testnet.template.json
   deployments.testnet.json
 contracts/src/testnet/
-  LiddeTestToken.sol
+  SymbTestToken.sol
   FaucetVault.sol
   TestFarm.sol
   TestRewardToken.sol
@@ -541,6 +541,6 @@ tests/testnet/
 
 ## Known current state
 
-Lidde already has MIT Solidity Factory/Pair/Router source, local Foundry security tests, wallet/swap/liquidity/LP interfaces and a Neon event-indexing scaffold. Existing app/config uses mainnet 4613 as its default **disabled** deployment registry. The new testnet architecture, distinct RPC/chain, faucet, mocked tokens, hosted explorer, testnet deployments, persistent indexer and advanced trading modules have not been built or deployed simply by publishing this document.
+Symb already has MIT Solidity Factory/Pair/Router source, local Foundry security tests, wallet/swap/liquidity/LP interfaces and a Neon event-indexing scaffold. Existing app/config uses mainnet 4613 as its default **disabled** deployment registry. The new testnet architecture, distinct RPC/chain, faucet, mocked tokens, hosted explorer, testnet deployments, persistent indexer and advanced trading modules have not been built or deployed simply by publishing this document.
 
 **Milestone 10 is COMPLETE only when external testers carry out genuine test-chain transactions and position redemption with independently inspectable receipts**, using no real funds.

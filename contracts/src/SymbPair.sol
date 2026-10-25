@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {LiddeERC20} from "./LiddeERC20.sol";
-import {ILiddeERC20} from "./interfaces/ILidde.sol";
+import {SymbERC20} from "./SymbERC20.sol";
+import {ISymbERC20} from "./interfaces/ISymb.sol";
 
 /// @notice Experimental, original MIT-licensed V2-style constant-product liquidity pair.
 /// @dev 30 bps swap fee stays in reserves for LPs; no flash callback, no admin, no protocol fee.
 ///      UNSAFE FOR PRODUCTION until independent audit / end-to-end integration review.
-contract LiddePair is LiddeERC20 {
+contract SymbPair is SymbERC20 {
     uint256 public constant MINIMUM_LIQUIDITY = 1000;
     uint256 private constant FEE_DENOMINATOR = 1000;
     uint256 private constant FEE_NUMERATOR = 3;
@@ -35,7 +35,7 @@ contract LiddePair is LiddeERC20 {
         unlocked = 1;
     }
 
-    constructor() LiddeERC20("Lidde Liquidity Provider", "LIDDE-LP") {
+    constructor() SymbERC20("Symb Liquidity Provider", "SYMB-LP") {
         factory = msg.sender;
     }
 
@@ -63,13 +63,13 @@ contract LiddePair is LiddeERC20 {
     }
 
     function _balance(address token) private view returns (uint256) {
-        return ILiddeERC20(token).balanceOf(address(this));
+        return ISymbERC20(token).balanceOf(address(this));
     }
 
     function _safeTransfer(address token, address to, uint256 amount) private {
         require(token.code.length > 0, "TOKEN_NOT_CONTRACT");
         (bool success, bytes memory response) =
-            token.call(abi.encodeWithSelector(ILiddeERC20.transfer.selector, to, amount));
+            token.call(abi.encodeWithSelector(ISymbERC20.transfer.selector, to, amount));
         require(success && (response.length == 0 || abi.decode(response, (bool))), "TOKEN_TRANSFER_FAILED");
     }
 

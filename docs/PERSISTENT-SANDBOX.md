@@ -1,4 +1,4 @@
-# Persistent valueless Lidde sandbox deployment
+# Persistent valueless Symb sandbox deployment
 
 **Source is ready. This repository has NOT deployed a persistent public RPC, chain, explorer or the contracts.** No external VM, domain or credentials have been supplied to the deployment.
 
@@ -10,11 +10,11 @@ This is a centralized, single-operator, valueless EVM *developer test chain*, no
 
 ## Required operator resources
 
-Provide a Linux Docker host that stays online, a public DNS hostname under your control, inbound ports 80/443, protected test-only deployer and attestor keys, and deploy authorization for the actual website (Vercel or another trusted host). Existing Neon database lidde-testnet already contains the indexer schema but is not connected to a live worker.
+Provide a Linux Docker host that stays online, a public DNS hostname under your control, inbound ports 80/443, protected test-only deployer and attestor keys, and deploy authorization for the actual website (Vercel or another trusted host). Existing Neon database symb-testnet already contains the indexer schema but is not connected to a live worker.
 
 ## Procedure
 
-1. Clone mushee-io/lidde-dex onto the VM, review the exact commit, install Docker Engine and Docker Compose v2.
+1. Clone mushee-io/symb-dex onto the VM, review the exact commit, install Docker Engine and Docker Compose v2.
 2. Copy infra/sandbox.env.example to a private infra/.env. Replace its example SANDBOX_CHAIN_ID, RPC_HOSTNAME and RPC_ALLOWED_ORIGINS with actual values. Never commit infra/.env.
 3. Validate with: docker compose --env-file infra/.env -f infra/docker-compose.sandbox.yml config --quiet
 4. Start: docker compose --env-file infra/.env -f infra/docker-compose.sandbox.yml up --build -d anvil gateway caddy
@@ -23,10 +23,10 @@ Provide a Linux Docker host that stays online, a public DNS hostname under your 
 7. Deploy DEX with existing Foundry script TestnetDeploy.s.sol:TestnetDeploy, after verifying TESTNET_EXPECTED_CHAIN_ID and TESTNET_DEPLOYER_PRIVATE_KEY. Save independent creation transaction receipts and actual contract codehashes.
 8. Set TESTNET_RPC_URL and the actual HTTPS explorer URL. Run npm run testnet:verify and the existing scripts/configure-testnet.mjs --verify-only, then use its explicit writing approval. The RPC gateway is **not** a blockchain explorer; the built-in DEX explorer must separately be deployed as a working HTTPS site.
 9. Set the dedicated Neon TESTNET_DATABASE_URL and Factory deployment starting block in private infra/.env. Start the optional indexer: docker compose --env-file infra/.env -f infra/docker-compose.sandbox.yml --profile indexer up --build -d indexer. Monitor worker logs, cursor block and reserve reconciliation. The indexer needs a real configured chain manifest, and will correctly refuse to start before one exists.
-10. Deploy the QuestEscrow contract on the **same** sandbox via the Lidde Fun Foundry source, record address and runtime keccak256 hash and provision a dedicated protected test-only EIP-712 attestor.
+10. Deploy the QuestEscrow contract on the **same** sandbox via the Symb Fun Foundry source, record address and runtime keccak256 hash and provision a dedicated protected test-only EIP-712 attestor.
 11. Publish the DEX Next.js explorer and API with configured network and database connection. Require that /api/testnet/markets has status indexed and canonicalBlockHash matches the RPC.
-12. Run node scripts/export-fun-manifest.mjs with genuine QuestEscrow address and indexer API URL. It outputs only verified non-secret fields for Lidde Fun, with writes still disabled. Add the separate Neon QUEST_DATABASE_URL, QUEST_PUBLIC_ORIGIN and attestor secret in the frontend's protected server settings.
-13. Publish Lidde Fun via an authorized deployment account. Independently run at least two external wallets through faucet, token creation, swaps, LP mint/full exit, quest creation/funding/claim and XP import. Capture transaction hashes and audit any failures before changing the default emergency-stop flags.
+12. Run node scripts/export-fun-manifest.mjs with genuine QuestEscrow address and indexer API URL. It outputs only verified non-secret fields for Symb Fun, with writes still disabled. Add the separate Neon QUEST_DATABASE_URL, QUEST_PUBLIC_ORIGIN and attestor secret in the frontend's protected server settings.
+13. Publish Symb Fun via an authorized deployment account. Independently run at least two external wallets through faucet, token creation, swaps, LP mint/full exit, quest creation/funding/claim and XP import. Capture transaction hashes and audit any failures before changing the default emergency-stop flags.
 
 ## Known blockers as of 25 October 2026
 
@@ -34,7 +34,7 @@ Provide a Linux Docker host that stays online, a public DNS hostname under your 
 - No actual RPC/DNS/explorer origin is available. Example hostname values are placeholders.
 - The DEX network and deployed-contract manifests remain marked not-configured until verifiable receipts exist.
 - No public testnet indexer is running.
-- Vercel project creation for Lidde Fun returns HTTP 403 for the connected team, requiring project-creation rights. This repository cannot bypass that authorization.
+- Vercel project creation for Symb Fun returns HTTP 403 for the connected team, requiring project-creation rights. This repository cannot bypass that authorization.
 - No independent public-wallet acceptance receipts or external contract audit exist.
 
 The node is intended for **valueless testing only** and its centralization, failure/reorg semantics and public RPC safety must be independently assessed before inviting real outside users.

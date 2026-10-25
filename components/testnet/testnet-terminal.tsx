@@ -252,7 +252,7 @@ export function TestnetTerminal(){
      </select>
      <button type="button" onClick={()=>void connect()} disabled={connecting}>{connecting?"Connecting…":"Connect wallet"}</button>
     </div>:!correctNetwork?
-     <button type="button" onClick={()=>void switchNetwork()} disabled={switching}>Switch to Lidde Testnet</button>:
+     <button type="button" onClick={()=>void switchNetwork()} disabled={switching}>Switch to Symb Testnet</button>:
      <span className="testnet-connected">Connected to testnet ✓</span>}
    </div>
    <div className="testnet-grid">

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {LiddeFactory} from "contracts/src/LiddeFactory.sol";
-import {LiddeRouter} from "contracts/src/LiddeRouter.sol";
-import {LiddeWrappedVery} from "contracts/src/LiddeWrappedVery.sol";
-import {LiddeTestToken} from "contracts/src/testnet/LiddeTestToken.sol";
-import {LiddeTestFaucet} from "contracts/src/testnet/LiddeTestFaucet.sol";
-import {LiddeDemoTokenFactory} from "contracts/src/testnet/LiddeDemoTokenFactory.sol";
-import {LiddeDemoLimitBook} from "contracts/src/testnet/LiddeDemoLimitBook.sol";
+import {SymbFactory} from "contracts/src/SymbFactory.sol";
+import {SymbRouter} from "contracts/src/SymbRouter.sol";
+import {SymbWrappedVery} from "contracts/src/SymbWrappedVery.sol";
+import {SymbTestToken} from "contracts/src/testnet/SymbTestToken.sol";
+import {SymbTestFaucet} from "contracts/src/testnet/SymbTestFaucet.sol";
+import {SymbDemoTokenFactory} from "contracts/src/testnet/SymbDemoTokenFactory.sol";
+import {SymbDemoLimitBook} from "contracts/src/testnet/SymbDemoLimitBook.sol";
 
 interface VmDeploy {
     function envUint(string calldata name) external returns(uint256);
@@ -24,7 +24,7 @@ contract TestnetDeploy {
     event TestnetDeployed(
         uint256 indexed chainId,address factory,address router,address wrapped,
         address faucet,address tUSD,address tUSDC,address tBTC,address tETH,
-        address tUSDT,address tLIDDE,address pool
+        address tUSDT,address tSYMB,address pool
     );
 
     event AdvancedTestnetDeployed(address indexed tokenCreator,address indexed limitBook);
@@ -36,30 +36,30 @@ contract TestnetDeploy {
         require(signer != 0, "MISSING_SIGNER");
         address deployer=vm.addr(signer);
         vm.startBroadcast(signer);
-        LiddeFactory factory = new LiddeFactory();
-        LiddeWrappedVery wrapper = new LiddeWrappedVery();
-        LiddeRouter router = new LiddeRouter(address(factory),address(wrapper));
-        LiddeDemoTokenFactory tokenCreator = new LiddeDemoTokenFactory();
+        SymbFactory factory = new SymbFactory();
+        SymbWrappedVery wrapper = new SymbWrappedVery();
+        SymbRouter router = new SymbRouter(address(factory),address(wrapper));
+        SymbDemoTokenFactory tokenCreator = new SymbDemoTokenFactory();
 
-        LiddeTestToken tUSD = new LiddeTestToken("Lidde test USD","tUSD",6,1_000_000_000e6);
-        LiddeTestToken tUSDC = new LiddeTestToken("Lidde test USDC","tUSDC",6,1_000_000_000e6);
-        LiddeTestToken tUSDT = new LiddeTestToken("Lidde test USDT","tUSDT",6,1_000_000_000e6);
-        LiddeTestToken tBTC = new LiddeTestToken("Lidde test BTC","tBTC",8,21_000_000e8);
-        LiddeTestToken tETH = new LiddeTestToken("Lidde test ETH","tETH",18,100_000_000e18);
-        LiddeTestToken tLIDDE = new LiddeTestToken("Lidde test governance","tLIDDE",18,100_000_000e18);
+        SymbTestToken tUSD = new SymbTestToken("Symb test USD","tUSD",6,1_000_000_000e6);
+        SymbTestToken tUSDC = new SymbTestToken("Symb test USDC","tUSDC",6,1_000_000_000e6);
+        SymbTestToken tUSDT = new SymbTestToken("Symb test USDT","tUSDT",6,1_000_000_000e6);
+        SymbTestToken tBTC = new SymbTestToken("Symb test BTC","tBTC",8,21_000_000e8);
+        SymbTestToken tETH = new SymbTestToken("Symb test ETH","tETH",18,100_000_000e18);
+        SymbTestToken tSYMB = new SymbTestToken("Symb test governance","tSYMB",18,100_000_000e18);
         address[] memory trustedOrderAssets=new address[](6);
         trustedOrderAssets[0]=address(tUSD);trustedOrderAssets[1]=address(tUSDC);
         trustedOrderAssets[2]=address(tUSDT);trustedOrderAssets[3]=address(tBTC);
-        trustedOrderAssets[4]=address(tETH);trustedOrderAssets[5]=address(tLIDDE);
-        LiddeDemoLimitBook limitBook = new LiddeDemoLimitBook(trustedOrderAssets);
+        trustedOrderAssets[4]=address(tETH);trustedOrderAssets[5]=address(tSYMB);
+        SymbDemoLimitBook limitBook = new SymbDemoLimitBook(trustedOrderAssets);
 
         address[] memory assets = new address[](6);
         assets[0]=address(tUSD);assets[1]=address(tUSDC);assets[2]=address(tUSDT);
-        assets[3]=address(tBTC);assets[4]=address(tETH);assets[5]=address(tLIDDE);
+        assets[3]=address(tBTC);assets[4]=address(tETH);assets[5]=address(tSYMB);
         uint256[] memory amounts=new uint256[](6);
         amounts[0]=1_000e6;amounts[1]=1_000e6;amounts[2]=1_000e6;
         amounts[3]=1e7;amounts[4]=1e18;amounts[5]=100e18;
-        LiddeTestFaucet faucet=new LiddeTestFaucet(assets,amounts,0.01 ether,1 days);
+        SymbTestFaucet faucet=new SymbTestFaucet(assets,amounts,0.01 ether,1 days);
 
         // Nonredeemable, valueless demo inventories; initial amount is 1000x claim size.
         tUSD.mint(address(faucet),1_000_000e6);
@@ -67,7 +67,7 @@ contract TestnetDeploy {
         tUSDT.mint(address(faucet),1_000_000e6);
         tBTC.mint(address(faucet),100e8);
         tETH.mint(address(faucet),1000e18);
-        tLIDDE.mint(address(faucet),100_000e18);
+        tSYMB.mint(address(faucet),100_000e18);
 
         // Fund faucet native TEST GAS only; must come from this separate EVM test chain.
         (bool funded,) = payable(address(faucet)).call{value:10 ether}("");
@@ -85,7 +85,7 @@ contract TestnetDeploy {
 
         emit TestnetDeployed(block.chainid,address(factory),address(router),address(wrapper),
             address(faucet),address(tUSD),address(tUSDC),address(tBTC),address(tETH),
-            address(tUSDT),address(tLIDDE),pool);
+            address(tUSDT),address(tSYMB),pool);
         emit AdvancedTestnetDeployed(address(tokenCreator),address(limitBook));
         vm.stopBroadcast();
     }

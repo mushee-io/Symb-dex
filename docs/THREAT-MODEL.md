@@ -1,4 +1,4 @@
-# Lidde protocol threat model — M07 preliminary, not an external audit
+# Symb protocol threat model — M07 preliminary, not an external audit
 
 ## Assets / invariants
 - Pair reserves must match ERC-20 balance after each successful mint/burn/swap/sync.

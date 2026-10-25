@@ -9,7 +9,7 @@ import { very } from "@/lib/very";
 import { routerAbi } from "@/lib/swap/abi.mjs";
 import { findBestQuote, type MarketClient } from "@/lib/swap/market.mjs";
 import { executionGate, buildSwapCall, type SwapDeployment, type SwapDirection } from "@/lib/swap/execution-policy.mjs";
-import type { LiddeToken } from "@/hooks/use-token-registry";
+import type { SymbToken } from "@/hooks/use-token-registry";
 import type { DisplayQuote } from "@/hooks/use-swap-quote";
 
 const deployment = deployments as SwapDeployment;
@@ -31,7 +31,7 @@ export function useSwapExecution() {
   async function execute({
     token, direction, quote, slippageBps, deadlineMinutes,
   }: {
-    token: LiddeToken; direction: SwapDirection; quote: DisplayQuote;
+    token: SymbToken; direction: SwapDirection; quote: DisplayQuote;
     slippageBps: number; deadlineMinutes: number;
   }) {
     if (phase === "validating" || phase === "awaiting-signature" || phase === "pending") return;

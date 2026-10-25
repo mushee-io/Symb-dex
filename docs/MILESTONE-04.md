@@ -2,7 +2,7 @@
 
 ## Scope
 
-This is a functional foundation for real swaps once M02 contracts are deployed and independently verified. No swap transactions have occurred and the swap button remains disabled while `config/deployments.json` has null addresses, null fee and release flags false. **Do not market Lidde as a working live DEX yet.**
+This is a functional foundation for real swaps once M02 contracts are deployed and independently verified. No swap transactions have occurred and the swap button remains disabled while `config/deployments.json` has null addresses, null fee and release flags false. **Do not market Symb as a working live DEX yet.**
 
 ### M04.1 — Chain and contract discovery
 - V2-style `getPair(tokenIn, tokenOut)` from configured factory.

@@ -28,11 +28,11 @@ jobs:
           persist-credentials: false
       - uses: foundry-rs/foundry-toolchain@v1
       - name: Test Solidity faucet and token flows
-        run: forge test --match-contract LiddeTestnetTest -vv
+        run: forge test --match-contract SymbTestnetTest -vv
       - name: Launch disposable local Anvil with chain 31337
         run: |
-          anvil --chain-id 31337 --accounts 2 --balance 10000 --host 127.0.0.1 --port 8545 > /tmp/lidde-anvil.log 2>&1 &
-          echo "$!" > /tmp/lidde-anvil.pid
+          anvil --chain-id 31337 --accounts 2 --balance 10000 --host 127.0.0.1 --port 8545 > /tmp/symb-anvil.log 2>&1 &
+          echo "$!" > /tmp/symb-anvil.pid
           for i in $(seq 1 30); do
             if cast chain-id --rpc-url http://127.0.0.1:8545 >/dev/null 2>&1; then break; fi
             sleep 1
@@ -54,7 +54,7 @@ jobs:
           import {readFileSync} from "node:fs";
           const j=JSON.parse(readFileSync("broadcast/TestnetDeploy.s.sol/31337/run-latest.json","utf8"));
           const names=new Set(j.transactions.filter(t=>t.contractAddress).map(t=>t.contractName));
-          for(const name of ["LiddeFactory","LiddeRouter","LiddeWrappedVery","LiddeTestFaucet","LiddeTestToken"])
+          for(const name of ["SymbFactory","SymbRouter","SymbWrappedVery","SymbTestFaucet","SymbTestToken"])
             if(!names.has(name))throw new Error("Local deployment missing: "+name);
           console.log("Deployed local-only contract types: "+[...names].join(", "));
           EOF
@@ -82,4 +82,4 @@ jobs:
       - name: Stop disposable Anvil
         if: always()
         run: |
-          if test -f /tmp/lidde-anvil.pid; then kill "$(cat /tmp/lidde-anvil.pid)" || true; fi
+          if test -f /tmp/symb-anvil.pid; then kill "$(cat /tmp/symb-anvil.pid)" || true; fi

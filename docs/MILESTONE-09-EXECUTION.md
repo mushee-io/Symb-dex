@@ -1,4 +1,4 @@
-# Lidde M09 — Public Launch Operations and Handover Runbook
+# Symb M09 — Public Launch Operations and Handover Runbook
 
 **Status: development plan only.** Public release has NOT been authorized. This runbook complements [the root 20-stage / 140-task checklist](../MILESTONE-09.md). Milestone 8 is the current dependency and must be independently completed first.
 
@@ -18,7 +18,7 @@
 
 A prelaunch meeting must compare the exact source SHA, auditor's final scope, immutable bytecode, pair metadata, official native wrapper, full LP redemption evidence and signed M08 closeout record. Record the independent reviewer decision as an attributable document, not an editable field.
 
-Confirm an operational legal entity or accountable operator. Obtain advice from qualified counsel for the target jurisdictions, marketing channels, AML/sanctions and privacy. In the United Kingdom, FCA financial promotions rules may apply even to websites available from outside the UK, and the 2026 regime anticipates wider cryptoasset permissions from 25 October 2027. The particular Lidde legal obligations are **not determined by this software plan**.
+Confirm an operational legal entity or accountable operator. Obtain advice from qualified counsel for the target jurisdictions, marketing channels, AML/sanctions and privacy. In the United Kingdom, FCA financial promotions rules may apply even to websites available from outside the UK, and the 2026 regime anticipates wider cryptoasset permissions from 25 October 2027. The particular Symb legal obligations are **not determined by this software plan**.
 
 Launch preparation can continue with deterministic unit tests, privacy review, source verification, legal documentation and simulations. None of those independently authorizes creating or funding a public pool.
 

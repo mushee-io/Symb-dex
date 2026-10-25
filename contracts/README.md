@@ -1,16 +1,16 @@
-# Lidde Solidity — Original MIT reference implementation
+# Symb Solidity — Original MIT reference implementation
 
 All original Solidity source in contracts/src and tests in contracts/test carry SPDX-License-Identifier: MIT. A standard MIT LICENSE is located in the repository root.
 
-These are experimental contracts written for Lidde. They are NOT externally audited, reviewed versions of Uniswap, nor authorized production deployments. No GPL-licensed implementation source is vendored here.
+These are experimental contracts written for Symb. They are NOT externally audited, reviewed versions of Uniswap, nor authorized production deployments. No GPL-licensed implementation source is vendored here.
 
 | Contract | Purpose |
 | --- | --- |
-| LiddeFactory.sol | Permissionless CREATE2 pair creation, no owner or admin |
-| LiddePair.sol | Constant-product pools, 0.30% trading fee, LP shares, 1000 minimum locked LP |
-| LiddeRouter.sol | Swap, add/remove liquidity; native VERY selectors share conventional ETH ABI names |
-| LiddeWrappedVery.sol | Local wrapped-native token reference, NOT an official canonical WVERY |
-| LiddeERC20.sol | ERC-20 underlying LP and wrapped token accounting |
+| SymbFactory.sol | Permissionless CREATE2 pair creation, no owner or admin |
+| SymbPair.sol | Constant-product pools, 0.30% trading fee, LP shares, 1000 minimum locked LP |
+| SymbRouter.sol | Swap, add/remove liquidity; native VERY selectors share conventional ETH ABI names |
+| SymbWrappedVery.sol | Local wrapped-native token reference, NOT an official canonical WVERY |
+| SymbERC20.sol | ERC-20 underlying LP and wrapped token accounting |
 
 Run from the repository root:
 

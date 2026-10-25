@@ -1,10 +1,10 @@
-# LIDDE DEX — MILESTONE 14: FULL-SCALE TESTNET, PERFORMANCE & ECOSYSTEM EXPANSION
+# SYMB DEX — MILESTONE 14: FULL-SCALE TESTNET, PERFORMANCE & ECOSYSTEM EXPANSION
 
 > **DETAILED ENGINEERING ROADMAP — PLANNED, NOT BUILT. TESTNET ONLY. ZERO REAL FUNDS.** M11's persistent hosted public chain has not been verified in the current repository; M12 advanced financial contracts and M13 cross-module integrations are plans, not deployed products. **Do not present M14 as a working exchange or invent volumes, user counts, receipts, yields or successful security audits.**
 
 ## Objective and boundary
 
-Milestone 14 is an operational-quality and adoption-validation phase. Upgrade the valueless Lidde test network into a robust, observable, scalable and developer-friendly exchange test environment; optimize spot/LP, verify whichever advanced financial modules genuinely exist, enable independent wallet users and maintain evidence-backed reporting.
+Milestone 14 is an operational-quality and adoption-validation phase. Upgrade the valueless Symb test network into a robust, observable, scalable and developer-friendly exchange test environment; optimize spot/LP, verify whichever advanced financial modules genuinely exist, enable independent wallet users and maintain evidence-backed reporting.
 
 - No VERY Mainnet chain ID 4613 as testnet, no real-value tokens, bridge deposits, regulated real assets, token sale or forced user spending.
 - Existing implemented foundations: MIT Solidity Factory/Pair/Router, local Foundry/Anvil faucet/swap/LP smoke, isolated Neon testnet schema and source for wallet, LP and minimal receipt explorer.
@@ -148,7 +148,7 @@ Milestone 14 is an operational-quality and adoption-validation phase. Upgrade th
 **Current readiness:** Solidity faucet + disabled sponsorship source and Neon tables exist; public operator not running.
 
 - [ ] Enable zero-gas first claim only after verified test-only signer, separate Neon URL, trusted-proxy IP details and chain-id-bound wallet challenge.
-- [ ] Refill limited native fake gas, tUSD/tUSDC/tUSDT/tBTC/tETH/tLIDDE and approved scenario assets using test-chain-only mint rights.
+- [ ] Refill limited native fake gas, tUSD/tUSDC/tUSDT/tBTC/tETH/tSYMB and approved scenario assets using test-chain-only mint rights.
 - [ ] Enforce on-chain wallet cooldown plus database daily wallet/IP/network quota with atomic reservations and duplicate detection.
 - [ ] Serialize sponsorship nonces across multiple API replicas, bound sponsor gas per day and disable service on unexpected nonce drift.
 - [ ] Reconcile submitted, pending, confirmed, reverted and unknown-transaction claims before any retry; never blindly issue twice.
@@ -457,7 +457,7 @@ Milestone 14 is an operational-quality and adoption-validation phase. Upgrade th
 
 - [ ] Deliver test-only token templates with configurable symbol, decimals, capped synthetic supply, mint permissions and clear owner disclosure.
 - [ ] Integrate one-click verified token deploy, Factory pool creation, first LP add, test trading and owner LP exit with real receipts.
-- [ ] Distinguish Lidde reviewed seed assets, user-created unreviewed assets, developer adversarial fixtures and retired UI markets.
+- [ ] Distinguish Symb reviewed seed assets, user-created unreviewed assets, developer adversarial fixtures and retired UI markets.
 - [ ] Offer creator dashboard with actual token holders, transfers, supply, pool reserves, LP shares and test-chain swap history.
 - [ ] Add rate limits and community reports for ticker impersonation, malicious callbacks, misleading metadata and spam creation.
 - [ ] Measure deployment and liquidity creation gas on the public testchain, and display exact token addresses/ABIs in the explorer.
@@ -686,7 +686,7 @@ docs/M14-RELEASE-EVIDENCE.md # only fill with actual receipts and verified obser
 
 ## Detailed operational test-user journey
 
-1. **Onboard:** Open verified official Lidde testnet hostname, inspect distinct chain and zero-value notice, connect user-held wallet.
+1. **Onboard:** Open verified official Symb testnet hostname, inspect distinct chain and zero-value notice, connect user-held wallet.
 2. **Get assets:** Sign faucet claim without paying actual money, receive native test gas plus synthetic tokens. Verify receipt and quotas.
 3. **Spot execution:** Approve exact spend, execute swap, inspect pool reserve changes and token balance deltas in trusted explorer.
 4. **Provide LP:** Create or use demo pool, deposit tokens, check LP mint and locked minimum, then withdraw part and all redeemable LP.

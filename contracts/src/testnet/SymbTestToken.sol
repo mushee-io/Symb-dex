@@ -3,7 +3,7 @@ pragma solidity 0.8.26;
 
 /// @notice Supply-capped synthetic ERC20; has NO cash value and cannot represent real assets.
 /// @dev Independent implementation because the production LP token fixes decimals at 18.
-contract LiddeTestToken {
+contract SymbTestToken {
     string public name;
     string public symbol;
     uint8 public immutable decimals;

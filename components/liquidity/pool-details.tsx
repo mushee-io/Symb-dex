@@ -17,7 +17,7 @@ export function PoolDetails({pair}:{pair:string}){
   const configured=isPoolReadConfigured(deployments);
   const valid=isAddress(pair);
   const query=useQuery({
-    queryKey:["lidde","lp-detail",pair,address,factory],
+    queryKey:["symb","lp-detail",pair,address,factory],
     enabled:Boolean(client && configured && factory && valid),
     queryFn:()=>getPoolSnapshot(client!,getAddress(factory!),getAddress(pair),address),
     staleTime:10_000,refetchInterval:25_000,retry:1,
@@ -29,7 +29,7 @@ export function PoolDetails({pair}:{pair:string}){
   const token1=query.data && assets.find(t=>t.address.toLowerCase()===query.data!.token1.toLowerCase());
   return <section className="lp-details">
     {!valid && <p className="form-error">Invalid pair address.</p>}
-    {!configured && <p className="inline-notice">Lidde factory is not configured; no pair details or liquidity writes are available.</p>}
+    {!configured && <p className="inline-notice">Symb factory is not configured; no pair details or liquidity writes are available.</p>}
     {configured && query.isPending && <p>Reading pool from VERY Mainnet…</p>}
     {query.error && <p className="form-error" role="alert">{query.error instanceof Error?query.error.message:"Unable to validate pair."}</p>}
     {query.data && <div className="lp-preview">
@@ -41,7 +41,7 @@ export function PoolDetails({pair}:{pair:string}){
       <div><span>Snapshot block</span><strong>{query.data.atBlock.toString()}</strong></div>
     </div>}
     {query.data && (!token0 || !token1) && <div className="inline-notice">
-      This pool includes an asset that is not on Lidde's independently reviewed token list. Deposits and withdrawals via this interface are disabled. <a href={`https://veryscan.io/address/${pair}`} target="_blank" rel="noreferrer">Inspect the pair on VeryScan ↗</a>
+      This pool includes an asset that is not on Symb's independently reviewed token list. Deposits and withdrawals via this interface are disabled. <a href={`https://veryscan.io/address/${pair}`} target="_blank" rel="noreferrer">Inspect the pair on VeryScan ↗</a>
     </div>}
     {query.data && token0 && token1 && <LiquidityForm fixedPair={{token0:query.data.token0,token1:query.data.token1}}/>}
     <p><Link href="/pools" className="secondary-link">← Browse pools</Link></p>

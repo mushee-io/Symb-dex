@@ -1,4 +1,4 @@
--- Lidde M10 testnet faucet: permanent, server-only claims. Apply ONLY to a
+-- Symb Dex M10 testnet faucet (historical physical SQL identifiers kept for data safety): permanent, server-only claims. Apply ONLY to a
 -- separate testnet Neon DB, not real-value production funds.
 CREATE TABLE IF NOT EXISTS lidde_test_faucet_claims (
   chain_id bigint NOT NULL CHECK (chain_id > 1000 AND chain_id <> 4613),

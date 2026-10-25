@@ -7,11 +7,11 @@ import { readFile } from "node:fs/promises";
 const deployment=JSON.parse(await readFile(new URL("../config/deployments.json",import.meta.url),"utf8"));
 const net=JSON.parse(await readFile(new URL("../config/very-mainnet.json",import.meta.url),"utf8"));
 const factory=deployment.factory;
-const start=process.env.LIDDE_INDEXER_START_BLOCK;
+const start=process.env.SYMB_INDEXER_START_BLOCK;
 if (!isAddress(factory??"") || getAddress(factory)===zeroAddress ||
     deployment.chainId!==4613 || !process.env.DATABASE_URL ||
     !start || !/^\d+$/.test(start)) {
-  console.error("Set DATABASE_URL, LIDDE_INDEXER_START_BLOCK and a verified factory in deployments.json.");
+  console.error("Set DATABASE_URL, SYMB_INDEXER_START_BLOCK and a verified factory in deployments.json.");
   process.exit(1);
 }
 const sql=neon(process.env.DATABASE_URL);

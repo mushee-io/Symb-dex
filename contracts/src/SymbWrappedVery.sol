@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {LiddeERC20} from "./LiddeERC20.sol";
+import {SymbERC20} from "./SymbERC20.sol";
 
 /// @notice Original local wrapped-native-currency implementation for development.
 /// @dev NOT a verified canonical WVERY address. Do not deploy or configure mainnet without review.
-contract LiddeWrappedVery is LiddeERC20 {
+contract SymbWrappedVery is SymbERC20 {
     event Deposit(address indexed account, uint256 amount);
     event Withdrawal(address indexed account, uint256 amount);
 
-    constructor() LiddeERC20("Lidde Wrapped VERY", "L-WVERY") {}
+    constructor() SymbERC20("Symb Wrapped VERY", "L-WVERY") {}
 
     receive() external payable { deposit(); }
 

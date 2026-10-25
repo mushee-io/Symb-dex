@@ -1,8 +1,8 @@
-# LIDDE DEX — MILESTONE 9 PUBLIC LAUNCH MASTER PLAN
+# SYMB DEX — MILESTONE 9 PUBLIC LAUNCH MASTER PLAN
 
 > **FUTURE PHASE · NOT AUTHORIZED FOR PUBLIC LAUNCH · VERY CHAIN ID 4613 · MIT LICENSE**
 >
-> Lidde currently has an experimental Solidity AMM and locally tested application source, **not a production-launched DEX**. No independent final audit, canonically verified WVERY contract, production AMM deployment, approved initial liquidity or completed Milestone 8 evidence has been established. Milestone 9 must NOT circumvent the Milestone 8 release gates.
+> Symb currently has an experimental Solidity AMM and locally tested application source, **not a production-launched DEX**. No independent final audit, canonically verified WVERY contract, production AMM deployment, approved initial liquidity or completed Milestone 8 evidence has been established. Milestone 9 must NOT circumvent the Milestone 8 release gates.
 
 **Source of truth:** [Milestone 8 current-priority checklist](MILESTONE-08.md), [M08 execution runbook](docs/MILESTONE-08-EXECUTION.md), [M09 full implementation runbook](docs/MILESTONE-09-EXECUTION.md), [main roadmap](docs/MILESTONES.md), and the [experimentally implemented contracts](contracts/src).
 
@@ -92,7 +92,7 @@
 **Gate:** Reproducible tagged production build and secure domain release  
 **Present status:** Not production-verified; dependent on M08 handover unless explicitly stated.
 
-- [ ] Select and verify Lidde's official domain, register DNS with MFA, registrar lock and recovery contacts; do not invent or assume the launch URL.
+- [ ] Select and verify Symb's official domain, register DNS with MFA, registrar lock and recovery contacts; do not invent or assume the launch URL.
 - [ ] Separate staging and production Vercel/project environments, environment variables, RBAC and deploy permissions.
 - [ ] Configure TLS/HTTPS, CSP/security headers, dependency locking, restricted CORS as appropriate, safe redirects and image/url input validation.
 - [ ] Pin build dependencies and GitHub Actions permissions; enforce code-owner approvals, branch protection and CI contract/app test gates.
@@ -109,13 +109,13 @@
 **Gate:** Actual verified addresses matching frozen audited bytecode  
 **Present status:** Not production-verified; dependent on M08 handover unless explicitly stated.
 
-- [ ] Pin and publish Lidde Factory, Router, officially verified wrapped VERY, and reviewed pair contract addresses with chain ID and verification block.
+- [ ] Pin and publish Symb Factory, Router, officially verified wrapped VERY, and reviewed pair contract addresses with chain ID and verification block.
 - [ ] Compare deployed codehash, constructor args and compiler settings against externally audited, reproducible artifacts.
 - [ ] Read `router.factory()`, `router.WETH()` and `factory.getPair(tokenA,tokenB)` directly from chain with immutable code provenance.
 - [ ] Ensure the UI does not accept arbitrary router/Factory/Pool addresses from user input, external metadata or a mutable unreviewed API.
 - [ ] Publish the exact 30 bps trading fee per hop and explain fee retention in reserves rather than an invented separate LP claim.
 - [ ] Define an address/codehash change policy: freeze writes immediately pending independent review and new public notice.
-- [ ] Confirm direct on-chain interaction remains possible even when Lidde's frontend is unavailable; disclose immutable/no-pause limitations.
+- [ ] Confirm direct on-chain interaction remains possible even when Symb's frontend is unavailable; disclose immutable/no-pause limitations.
 
 **Acceptance evidence:** VeryScan-verified source, immutable audited commit, read-only on-chain matching proofs.  
 **Stop / release blocker:** Any unverified contract, ABI/config or codehash mismatch.
@@ -248,9 +248,9 @@
 - [ ] Operate contract codehash checks, reserve surveillance, anomalous price impacts, abnormal withdrawals, tx error and RPC health monitors.
 - [ ] Configure paging, severity tiers, explicit responder roles and public communication channels that operators can actually access.
 - [ ] Conduct simulated compromised deployer, malicious token, wallet phishing, outdated frontend and indexer reorg incident drills.
-- [ ] Practice disabling Lidde-owned UI write actions and rollback; clearly state this does not pause immutable contracts.
+- [ ] Practice disabling Symb-owned UI write actions and rollback; clearly state this does not pause immutable contracts.
 - [ ] Maintain SECURITY.md private vulnerability intake, reproducible PoC triage and remediation/retest process.
-- [ ] Set a public status channel and postmortem policy that distinguishes blockchain outages from Lidde-managed frontend/data issues.
+- [ ] Set a public status channel and postmortem policy that distinguishes blockchain outages from Symb-managed frontend/data issues.
 - [ ] Close all actionable high/critical security, supply-chain and audit findings before public promotion.
 
 **Acceptance evidence:** Incident drills, alert history, independent security signoff and active response rota.  
@@ -425,4 +425,4 @@ npm run beta:gate:ci
 - [FCA: cryptoasset regime policy overview (2026)](https://www.fca.org.uk/publications/policy-statements/cryptoasset-regime) — expanding regulatory scope (including identifiable DeFi controllers case-by-case) and transition preparations for 25 October 2027.
 - [FCA: marketing to UK consumers](https://www.fca.org.uk/firms/cryptoassets/marketing-uk-consumers) — financial promotions channels and communications rules.
 
-**This planning document is not legal advice; counsel must determine whether and how the specific Lidde activities can be offered or promoted in each target market.**
+**This planning document is not legal advice; counsel must determine whether and how the specific Symb activities can be offered or promoted in each target market.**

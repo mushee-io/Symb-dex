@@ -6,7 +6,7 @@ import { useAccount, useChainId, useReadContract, useWaitForTransactionReceipt, 
 import { very } from "@/lib/very";
 import deployments from "@/config/deployments.json";
 import { allowedRouter, canApprove } from "@/lib/approval-policy.mjs";
-import { useTokenRegistry, type LiddeToken } from "@/hooks/use-token-registry";
+import { useTokenRegistry, type SymbToken } from "@/hooks/use-token-registry";
 
 const deployment = deployments as {
   chainId: number; status: string; releaseApproved: boolean; auditReviewed: boolean;
@@ -14,7 +14,7 @@ const deployment = deployments as {
 };
 const router = allowedRouter(deployment);
 
-function AllowanceRow({ token }: { token: LiddeToken }) {
+function AllowanceRow({ token }: { token: SymbToken }) {
   const { address } = useAccount();
   const chainId = useChainId();
   const enabled = canApprove({
@@ -83,7 +83,7 @@ export function AllowanceManager() {
   const { tokens } = useTokenRegistry();
   const { isConnected } = useAccount();
   return <section className="registry-section">
-    {!router && <div className="inline-notice"><strong>Approvals disabled.</strong> Lidde has no independently reviewed production router configured. No approval transaction can be signed from this screen.</div>}
+    {!router && <div className="inline-notice"><strong>Approvals disabled.</strong> Symb has no independently reviewed production router configured. No approval transaction can be signed from this screen.</div>}
     {!isConnected && <p className="inline-notice">Connect a wallet to inspect token allowances after router verification.</p>}
     <div className="asset-table">
       {tokens.length ? tokens.map((token) => <AllowanceRow key={token.address} token={token} />)

@@ -1,6 +1,6 @@
 # Security policy and release gates
 
-**Development software, not a live exchange.** Lidde does not hold users' private keys. Never paste or commit a seed phrase, private key, RPC credential or production secret. `NEXT_PUBLIC_*` variables are public in the client bundle.
+**Development software, not a live exchange.** Symb does not hold users' private keys. Never paste or commit a seed phrase, private key, RPC credential or production secret. `NEXT_PUBLIC_*` variables are public in the client bundle.
 
 Milestone 1 intentionally supports only injected-wallet connection, chain switching and native balance reads. Trading buttons do not send transactions. User balances come from the connected wallet provider, never from a fabricated database.
 

@@ -1,4 +1,4 @@
-{$LIDDE_RPC_DOMAIN} {
+{$SYMB_RPC_DOMAIN} {
     encode zstd gzip
     reverse_proxy rpc-gateway:3000
     header {

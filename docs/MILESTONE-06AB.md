@@ -1,4 +1,4 @@
-# Lidde Milestone 6A and 6B — Canonical chain indexer and durable market database
+# Symb Milestone 6A and 6B — Canonical chain indexer and durable market database
 
 **Status: source implementation only.** The AMM from M02 remains undeployed and the factory address in `config/deployments.json` is null. No real mainnet events, swaps, candles, volumes or TVL are claimed. No Neon migration has been applied to the user's projects by this implementation.
 
@@ -55,10 +55,10 @@ Then set these variables **only in the operator's environment**, never in browse
 
 ```bash
 DATABASE_URL=postgresql://your-private-connection
-LIDDE_INDEXER_START_BLOCK=<verified-factory-deployment-block>
-LIDDE_INDEXER_BATCH_SIZE=50
-LIDDE_INDEXER_CONFIRMATIONS=12
-LIDDE_INDEXER_MAX_WINDOWS=1
+SYMB_INDEXER_START_BLOCK=<verified-factory-deployment-block>
+SYMB_INDEXER_BATCH_SIZE=50
+SYMB_INDEXER_CONFIRMATIONS=12
+SYMB_INDEXER_MAX_WINDOWS=1
 ```
 
 For actual shell use, replace the bracketed start-block placeholder with an integer; never commit a DATABASE_URL.

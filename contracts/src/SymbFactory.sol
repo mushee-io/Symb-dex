@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {LiddePair} from "./LiddePair.sol";
+import {SymbPair} from "./SymbPair.sol";
 
 /// @notice Permissionless, fee-immutable factory. No privileged admin keys.
-contract LiddeFactory {
+contract SymbFactory {
     mapping(address => mapping(address => address)) public getPair;
     address[] public allPairs;
 
@@ -17,13 +17,13 @@ contract LiddeFactory {
         (address token0, address token1) = a < b ? (a, b) : (b, a);
         require(getPair[token0][token1] == address(0), "PAIR_EXISTS");
         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
-        pair = address(new LiddePair{salt: salt}());
+        pair = address(new SymbPair{salt: salt}());
         // Record the new pair before calling its initializer. Any initializer
         // failure reverts the entire transaction and therefore also these writes.
         getPair[token0][token1] = pair;
         getPair[token1][token0] = pair;
         allPairs.push(pair);
-        LiddePair(pair).initialize(token0, token1);
+        SymbPair(pair).initialize(token0, token1);
         emit PairCreated(token0, token1, pair, allPairs.length);
     }
 }

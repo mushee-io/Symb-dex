@@ -3,7 +3,7 @@
 **Current date: 24 October 2026. STATUS: SOURCE READY FOR OPERATOR TESTING, NOT PUBLICLY LIVE.** Test assets have zero real value. VERY chain ID 4613 is mainnet and must NEVER be used for this test environment.
 
 ## Deployed resources
-- A separate Neon project named **lidde-testnet** (EU-West/London) exists. Its schema includes testnet faucet claims, canonical blocks, factory-created pairs, events, swaps, Mint/Burn actions, Sync reserves, LP transfers, checkpoints and reconciliations.
+- A separate Neon project named **symb-testnet** (EU-West/London) exists. Its schema includes testnet faucet claims, canonical blocks, factory-created pairs, events, swaps, Mint/Burn actions, Sync reserves, LP transfers, checkpoints and reconciliations.
 - No database passwords or signer keys are in GitHub.
 - CI runs the full demo chain locally on disposable Anvil; successful CI receipts are NOT persistent/public-chain receipts.
 
@@ -13,10 +13,10 @@
 3. Record real genesis hash, RPC chain ID and confirmed blocks. Test persistence through node restart; back up the Docker state volume. Publish a transparent reset policy.
 4. Use a disposable test-only signer funded with valueless gas to broadcast script/TestnetDeploy.s.sol. Obtain real Factory/Router/wrapper/faucet/token and pair receipts.
 5. Run npm run testnet:verify against the actual verified RPC, then npm run testnet:configure with explicit approval. This generates separate testnet registries without altering locked mainnet config.
-6. Deploy Lidde's frontend with these real testnet contract addresses; use the built-in minimal read-only transaction viewer at /testnet/explorer. A complete indexed public explorer is still further infrastructure work.
+6. Deploy Symb's frontend with these real testnet contract addresses; use the built-in minimal read-only transaction viewer at /testnet/explorer. A complete indexed public explorer is still further infrastructure work.
 
 ## Neon indexer
-1. Use the separately provisioned lidde-testnet project credentials only in server-side secrets named TESTNET_DATABASE_URL. Never expose them in NEXT_PUBLIC variables.
+1. Use the separately provisioned symb-testnet project credentials only in server-side secrets named TESTNET_DATABASE_URL. Never expose them in NEXT_PUBLIC variables.
 2. The testnet schema is in db/migrations/011_testnet_indexer.sql and faucet claims schema in db/migrations/010_testnet_faucet.sql. Both are already installed in the dedicated project.
 3. Set TESTNET_INDEXER_START_BLOCK from the actual Factory deployment receipt (not guessed). Run npm run index:testnet continuously through a single serialized scheduler.
 4. Run npm run reconcile:testnet against the same RPC/Neon project and compare actual pair getReserves to indexed confirmed Sync state.

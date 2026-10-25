@@ -1,12 +1,12 @@
-# Lidde DEX
+# Symb DEX
 
-Lidde is a **non-custodial decentralized exchange under development** for VERY Chain.
+Symb is a **non-custodial decentralized exchange under development** for VERY Chain.
 
-> **CURRENT BUILD GOAL: PUBLIC TESTNET FOR USERS — NO REAL FUNDS.** Original MIT Solidity and local Foundry tests exist, but a persistent hosted Lidde test network, faucet, working testnet deployments and public test transactions are **not yet live**. The mainnet chain ID 4613 and its release registry remain locked. Do not send real assets to test contracts.
+> **CURRENT BUILD GOAL: PUBLIC TESTNET FOR USERS — NO REAL FUNDS.** Original MIT Solidity and local Foundry tests exist, but a persistent hosted Symb test network, faucet, working testnet deployments and public test transactions are **not yet live**. The mainnet chain ID 4613 and its release registry remain locked. Do not send real assets to test contracts.
 
 ## New demo testnet modules: token creator + escrow limit orders (source + Anvil testing)
 
-**Built in test-only Solidity and wallet interfaces:** an isolated [demo token factory](contracts/src/testnet/LiddeDemoTokenFactory.sol) that issues capped, initially owned fake-value ERC20s; an [on-chain demo order book](contracts/src/testnet/LiddeDemoLimitBook.sol) with escrow, partial fills, expiry, cancellation and refunds; a [user token launch page](app/testnet/launch/page.tsx), a [demo limit order page](app/testnet/orders/page.tsx), and support for creator-origin tokens in the [test liquidity UI](app/testnet/pools/page.tsx).
+**Built in test-only Solidity and wallet interfaces:** an isolated [demo token factory](contracts/src/testnet/SymbDemoTokenFactory.sol) that issues capped, initially owned fake-value ERC20s; an [on-chain demo order book](contracts/src/testnet/SymbDemoLimitBook.sol) with escrow, partial fills, expiry, cancellation and refunds; a [user token launch page](app/testnet/launch/page.tsx), a [demo limit order page](app/testnet/orders/page.tsx), and support for creator-origin tokens in the [test liquidity UI](app/testnet/pools/page.tsx).
 
 The [isolated local deployment script](script/TestnetDeploy.s.sol), verified [broadcast-derived config parser](lib/testnet/deployment-config.mjs), [testnet registry](config/deployments.testnet.json) and [on-chain smoke script](scripts/smoke-testnet.mjs) now include the two advanced demonstration contracts. The local smoke suite creates a fresh valueless test token, creates/withdraws its LP pool and performs a partial-filled and cancelled escrow order with real **disposable Anvil** transactions.
 
@@ -18,7 +18,7 @@ The [isolated local deployment script](script/TestnetDeploy.s.sol), verified [br
 
 **Implemented:** [testnet liquidity creation and full withdrawal](app/testnet/pools/page.tsx), [demo pool reads](lib/testnet/pools.ts), [isolated Neon canonical indexer](scripts/index-testnet.mjs), [reconciliation](scripts/reconcile-testnet.mjs), [testnet explorer](app/testnet/explorer/page.tsx), [restricted RPC gateway and persistent node deployment recipe](infra/devnet/README.md), and [fresh-wallet transaction smoke test](scripts/smoke-testnet.mjs).
 
-A dedicated Neon project named **lidde-testnet** is provisioned with separate faucet and canonical indexer schema. GitHub Actions verifies real Anvil faucet → swaps → new pool → LP exit. No wallet keys or database credentials were committed.
+A dedicated Neon project named **symb-testnet** is provisioned with separate faucet and canonical indexer schema. GitHub Actions verifies real Anvil faucet → swaps → new pool → LP exit. No wallet keys or database credentials were committed.
 
 **Still not live to outside users:** long-lived public EVM hosting, DNS/HTTPS RPC, deployed public demo contracts, enabled gasless sponsorship and independent external-wallet receipts. The testnet registry remains unconfigured and VERY mainnet chain 4613 is locked. See the [operator deployment checklist](docs/M11-OPERATIONS.md).
 
@@ -72,7 +72,7 @@ A dedicated Neon project named **lidde-testnet** is provisioned with separate fa
 ## Milestone 10.1–10.6 — Testnet engineering implemented (NOT PUBLICLY DEPLOYED)
 
 The new source includes:
-- [MIT-licensed synthetic tokens](contracts/src/testnet/LiddeTestToken.sol) with 6/8/18 decimals and mint caps; [test-only faucet contract](contracts/src/testnet/LiddeTestFaucet.sol) with a 24-hour cooldown and operator-sponsored claim.
+- [MIT-licensed synthetic tokens](contracts/src/testnet/SymbTestToken.sol) with 6/8/18 decimals and mint caps; [test-only faucet contract](contracts/src/testnet/SymbTestFaucet.sol) with a 24-hour cooldown and operator-sponsored claim.
 - [Mainnet-rejecting Foundry deploy script](script/TestnetDeploy.s.sol) and [Anvil CI workflow](.github/workflows/testnet-devnet.yml). CI deploys to chain 31337, funds the faucet with **fake gas**, seeds tUSD/tBTC and tUSD/wrapped-native pools and verifies actual deployed bytecode.
 - [Dedicated testnet page](/testnet) (route in this app: `app/testnet/page.tsx`) with EVM wallet connection, token balances, real reserve-driven quote, exact token approval, simulated swaps, real test-chain receipt tracking and faucet claim UI.
 - [Server-only gas sponsorship](app/api/testnet/faucet/route.ts) with wallet signatures, disabled-by-default operator key, trusted-proxy IP checks and [Neon claim-limiter migration](db/migrations/010_testnet_faucet.sql). Requires separate operator setup; public gasless claims are **not active yet**.
@@ -87,7 +87,7 @@ The new source includes:
 
 **[Read the full root Milestone 10 master plan — 25 stages, 175 checkable implementation tasks](MILESTONE-10.md).** Each stage includes engineering requirements, current readiness, proof and failure/stop conditions.
 
-**Important network distinction:** Official VERY documents show `4613` as **mainnet** and do not provide a verified public testnet RPC/explorer. First validate an official testnet with the VERY operators, or host an isolated persistent Lidde EVM devnet with **its own independent chain ID**, labelled *Lidde Test Network* (not official VERY testnet). Use **valueless test assets only** and isolate its deployment registry from the existing locked mainnet configuration.
+**Important network distinction:** Official VERY documents show `4613` as **mainnet** and do not provide a verified public testnet RPC/explorer. First validate an official testnet with the VERY operators, or host an isolated persistent Symb EVM devnet with **its own independent chain ID**, labelled *Symb Test Network* (not official VERY testnet). Use **valueless test assets only** and isolate its deployment registry from the existing locked mainnet configuration.
 
 | Phase | Build priority | User-facing functionality |
 | --- | --- | --- |
@@ -116,7 +116,7 @@ The public-launch plan explicitly covers: external security and M08 exit, qualif
 
 ## Milestone 8 — DEFERRED mainnet beta planning (historical)
 
-> **MAINNET HISTORICAL PLANNING ONLY · STATUS: NO-GO FOR REAL FUNDS.** Contracts and local tests exist; **no independent audit, verified canonical WVERY, authorized deployed AMM, funded pool or live transaction proof exists**. Lidde's Factory, Router and WVERY production addresses remain **null**, and wallet writes remain disabled.
+> **MAINNET HISTORICAL PLANNING ONLY · STATUS: NO-GO FOR REAL FUNDS.** Contracts and local tests exist; **no independent audit, verified canonical WVERY, authorized deployed AMM, funded pool or live transaction proof exists**. Symb's Factory, Router and WVERY production addresses remain **null**, and wallet writes remain disabled.
 
 **[Open the full root Milestone 8 master checklist — 18 stages, 90 itemized tasks, owners, evidence and stop conditions](MILESTONE-08.md).** For implementation detail and audit handoff, also see [M08 deep engineering runbook](docs/MILESTONE-08-EXECUTION.md), [security finding triage](docs/SLITHER-FINDINGS-TRIAGE.md) and [external audit brief](docs/INDEPENDENT-AUDIT-BRIEF.md).
 
@@ -176,7 +176,7 @@ Visit http://localhost:3000. **`check:rpc` is optional and uses the public live 
 
 ## Network
 
-**Historical source configuration below is VERY MAINNET and deliberately disabled. Do NOT use chain ID 4613 for the Lidde testnet.** The testnet network ID, RPC, explorer, faucet and deployed addresses will be filled only after verification and isolated provisioning; see [testnet template](config/networks.testnet.template.json).
+**Historical source configuration below is VERY MAINNET and deliberately disabled. Do NOT use chain ID 4613 for the Symb testnet.** The testnet network ID, RPC, explorer, faucet and deployed addresses will be filled only after verification and isolated provisioning; see [testnet template](config/networks.testnet.template.json).
 
 
 | Field | Value |
@@ -195,7 +195,7 @@ See [docs/MILESTONES.md](docs/MILESTONES.md), [docs/NETWORK.md](docs/NETWORK.md)
 
 No private key, mnemonic, live contract address, token address, or claimed liquidity value is bundled with this application. Liquidity and swaps will be enabled only after verified deployments and a security signoff.
 
-**License:** [MIT](LICENSE) for original Lidde code. All new Solidity contracts carry SPDX-License-Identifier: MIT; third-party dependencies retain their own licenses.
+**License:** [MIT](LICENSE) for original Symb code. All new Solidity contracts carry SPDX-License-Identifier: MIT; third-party dependencies retain their own licenses.
 
 ## Milestone 3 — Wallets, tokens and approvals
 
@@ -224,7 +224,7 @@ This work adds:
 - A transaction pipeline that revalidates latest pool reserves, enforces the original minimum output, checks allowance/balances and gas, simulates the contract call, signs through the connected wallet, and checks the receipt.
 - Read-only and fail-closed behaviour if no approved factory, router, WVERY, fee and reviewed ERC-20 addresses exist. **No trading can occur against the current empty deployment registry.**
 
-**Important:** Milestone 2 has not deployed any AMM or canonical wrapped VERY for Lidde. Execution is untested on live contracts and cannot be treated as production-ready merely because the UI compiles. See [docs/MILESTONE-04.md](docs/MILESTONE-04.md).
+**Important:** Milestone 2 has not deployed any AMM or canonical wrapped VERY for Symb. Execution is untested on live contracts and cannot be treated as production-ready merely because the UI compiles. See [docs/MILESTONE-04.md](docs/MILESTONE-04.md).
 
 ## Milestone 5 — Liquidity pools and LP portfolio
 
@@ -264,18 +264,18 @@ Run from repository root with installed [Foundry](https://getfoundry.sh/):
     forge build --sizes
     forge test -vv
 
-**Experimental Solidity is NOT an audited production protocol.** It uses a fixed 30 bps swap fee with no protocol fee switch or pause. LiddeWrappedVery is a **local wrapped-native asset reference, not a verified official WVERY**. No new deployment address is added to the release registry. Source-code tests, an MIT license and automatic scanning are not substitutes for independent third-party audit.
+**Experimental Solidity is NOT an audited production protocol.** It uses a fixed 30 bps swap fee with no protocol fee switch or pause. SymbWrappedVery is a **local wrapped-native asset reference, not a verified official WVERY**. No new deployment address is added to the release registry. Source-code tests, an MIT license and automatic scanning are not substitutes for independent third-party audit.
 
 ## Security hardening and Milestone 8 preparation (pre-launch)
 
 - [Read-only wrapped VERY candidate inspector](scripts/inspect-wvery.mjs): verify chain 4613, deployed bytecode, ERC-20 metadata and on-chain native backing with a pinned block. A passing probe **does not prove canonical issuance**. See [wrapped-token investigation](docs/WRAPPED-VERY-REVIEW.md).
 - [Slither triage](docs/SLITHER-FINDINGS-TRIAGE.md): security scanner findings require case-by-case review; a green Slither job is **not an audit**. GitHub CI dependency installation previously reported 14 high and 15 moderate npm advisories requiring review.
 - Solidity hardening: reject low-level ERC-20 transfers sent to non-contract addresses, and record factory pair state before initializer call.
-- [Controlled local deployment test](contracts/test/LiddeLocalDeploymentDryRun.t.sol): multi-actor local bootstrap, liquidity, swap, withdrawal, reserve/supply reconciliation and failed first-mint rollback. **No mainnet broadcast.**
+- [Controlled local deployment test](contracts/test/SymbLocalDeploymentDryRun.t.sol): multi-actor local bootstrap, liquidity, swap, withdrawal, reserve/supply reconciliation and failed first-mint rollback. **No mainnet broadcast.**
 - [External auditor request brief](docs/INDEPENDENT-AUDIT-BRIEF.md): prepared scope and acceptance criteria; no independent firm engaged or certificate issued.
 - [Milestone 8 detailed beta roadmap](docs/MILESTONE-08.md): 18 tasks with strict signoff, real receipt and funding gates; not live.
 
-For an operator-only candidate probe (never a wallet transaction): `LIDDE_WVERY_CANDIDATE=<address> npm run inspect:wvery`. No candidate is trusted by default. Mainnet `config/deployments.json` remains deliberately disabled.
+For an operator-only candidate probe (never a wallet transaction): `SYMB_WVERY_CANDIDATE=<address> npm run inspect:wvery`. No candidate is trusted by default. Mainnet `config/deployments.json` remains deliberately disabled.
 
 ## Milestone 8 execution and safety gate
 

@@ -3,9 +3,9 @@
 import { formatUnits, erc20Abi, type Address } from "viem";
 import { useAccount, useChainId, useReadContract } from "wagmi";
 import { very } from "@/lib/very";
-import type { LiddeToken } from "@/hooks/use-token-registry";
+import type { SymbToken } from "@/hooks/use-token-registry";
 
-export function TokenBalanceRow({ token, onRemove }: { token: LiddeToken; onRemove?: (address: Address) => void }) {
+export function TokenBalanceRow({ token, onRemove }: { token: SymbToken; onRemove?: (address: Address) => void }) {
   const { address } = useAccount();
   const chainId = useChainId();
   const enabled = Boolean(address && chainId === very.id);

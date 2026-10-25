@@ -35,7 +35,7 @@ export function PoolDirectory({portfolio=false}:{portfolio?:boolean}) {
       {!portfolio && <Link className="primary-link" href="/pools/create">Create a pool ↗</Link>}
     </div>
     {!configured && <div className="inline-notice">
-      No verified Lidde factory address is configured. Pool discovery remains unavailable until Milestone 2 deployment.
+      No verified Symb factory address is configured. Pool discovery remains unavailable until Milestone 2 deployment.
     </div>}
     {configured && <div className="lp-filter-row">
       <input type="search" aria-label="Filter listed pools" placeholder="Filter displayed pools or pair address"

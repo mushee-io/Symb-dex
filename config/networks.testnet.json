@@ -1,7 +1,7 @@
 {
   "status":"not-configured",
   "chainId":null,
-  "name":"Lidde Development Test Network (not yet provisioned)",
+  "name":"Symb Development Test Network (not yet provisioned)",
   "rpcUrl":null,
   "explorerUrl":null,
   "nativeCurrency":{"name":"Test Gas Token","symbol":"tVERY","decimals":18},

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {ILiddeERC20, ILiddeFactory, ILiddePair, ILiddeWrappedVery} from "./interfaces/ILidde.sol";
+import {ISymbERC20, ISymbFactory, ISymbPair, ISymbWrappedVery} from "./interfaces/ISymb.sol";
 
 /// @notice Original MIT-licensed V2-style router for Solidity review and local-only tests.
 /// @dev ETH-named selectors intentionally preserve compatibility with existing Viem ABIs:
 ///      for VERY, "ETH" refers to the chain's native coin.
 ///      Not audited; do not deploy with real funds.
-contract LiddeRouter {
+contract SymbRouter {
     address public immutable factory;
     address public immutable WETH;
 
@@ -28,14 +28,14 @@ contract LiddeRouter {
 
     function _safeTransfer(address token, address to, uint256 amount) internal {
         require(token.code.length > 0, "TOKEN_NOT_CONTRACT");
-        (bool ok, bytes memory data) = token.call(abi.encodeWithSelector(ILiddeERC20.transfer.selector, to, amount));
+        (bool ok, bytes memory data) = token.call(abi.encodeWithSelector(ISymbERC20.transfer.selector, to, amount));
         require(ok && (data.length == 0 || abi.decode(data, (bool))), "TOKEN_TRANSFER_FAILED");
     }
 
     function _safeTransferFrom(address token, address from, address to, uint256 amount) internal {
         require(token.code.length > 0, "TOKEN_NOT_CONTRACT");
         (bool ok, bytes memory data) =
-            token.call(abi.encodeWithSelector(ILiddeERC20.transferFrom.selector, from, to, amount));
+            token.call(abi.encodeWithSelector(ISymbERC20.transferFrom.selector, from, to, amount));
         require(ok && (data.length == 0 || abi.decode(data, (bool))), "TOKEN_TRANSFER_FROM_FAILED");
     }
 
@@ -45,13 +45,13 @@ contract LiddeRouter {
     }
 
     function _getPair(address a, address b) internal view returns (address pair) {
-        pair = ILiddeFactory(factory).getPair(a, b);
+        pair = ISymbFactory(factory).getPair(a, b);
         require(pair != address(0), "PAIR_NOT_FOUND");
     }
 
     function _reserves(address tokenA, address tokenB) internal view returns (uint256 reserveA, uint256 reserveB) {
         address pair = _getPair(tokenA, tokenB);
-        (uint112 r0, uint112 r1,) = ILiddePair(pair).getReserves();
+        (uint112 r0, uint112 r1,) = ISymbPair(pair).getReserves();
         if (tokenA < tokenB) (reserveA, reserveB) = (uint256(r0), uint256(r1));
         else (reserveA, reserveB) = (uint256(r1), uint256(r0));
     }
@@ -88,8 +88,8 @@ contract LiddeRouter {
         address a, address b, uint256 desiredA, uint256 desiredB, uint256 minA, uint256 minB
     ) internal returns (address pair, uint256 amountA, uint256 amountB) {
         require(a != b && a != address(0) && b != address(0), "INVALID_PAIR");
-        pair = ILiddeFactory(factory).getPair(a, b);
-        if (pair == address(0)) pair = ILiddeFactory(factory).createPair(a, b);
+        pair = ISymbFactory(factory).getPair(a, b);
+        if (pair == address(0)) pair = ISymbFactory(factory).createPair(a, b);
         (uint256 rA, uint256 rB) = _reserves(a, b);
         if (rA == 0 && rB == 0) {
             amountA = desiredA;
@@ -116,7 +116,7 @@ contract LiddeRouter {
         (amountA, amountB) = (aValue, bValue);
         _safeTransferFrom(a, msg.sender, pair, amountA);
         _safeTransferFrom(b, msg.sender, pair, amountB);
-        liquidity = ILiddePair(pair).mint(to);
+        liquidity = ISymbPair(pair).mint(to);
     }
 
     function addLiquidityETH(
@@ -128,9 +128,9 @@ contract LiddeRouter {
             _addLiquidity(token, WETH, desiredToken, msg.value, minToken, minETH);
         (amountToken, amountETH) = (tokenValue, nativeValue);
         _safeTransferFrom(token, msg.sender, pair, amountToken);
-        ILiddeWrappedVery(WETH).deposit{value: amountETH}();
+        ISymbWrappedVery(WETH).deposit{value: amountETH}();
         _safeTransfer(WETH, pair, amountETH);
-        liquidity = ILiddePair(pair).mint(to);
+        liquidity = ISymbPair(pair).mint(to);
         if (msg.value > amountETH) _safeNative(msg.sender, msg.value - amountETH);
     }
 
@@ -141,7 +141,7 @@ contract LiddeRouter {
         require(to != address(0) && liquidity > 0, "INVALID_WITHDRAW");
         address pair = _getPair(a, b);
         _safeTransferFrom(pair, msg.sender, pair, liquidity);
-        (uint256 amount0, uint256 amount1) = ILiddePair(pair).burn(to);
+        (uint256 amount0, uint256 amount1) = ISymbPair(pair).burn(to);
         (amountA, amountB) = a < b ? (amount0, amount1) : (amount1, amount0);
         require(amountA >= minA && amountB >= minB, "WITHDRAW_SLIPPAGE");
     }
@@ -153,11 +153,11 @@ contract LiddeRouter {
         require(to != address(0) && token != WETH && liquidity > 0, "INVALID_WITHDRAW");
         address pair = _getPair(token, WETH);
         _safeTransferFrom(pair, msg.sender, pair, liquidity);
-        (uint256 amount0, uint256 amount1) = ILiddePair(pair).burn(address(this));
+        (uint256 amount0, uint256 amount1) = ISymbPair(pair).burn(address(this));
         (amountToken, amountETH) = token < WETH ? (amount0, amount1) : (amount1, amount0);
         require(amountToken >= minToken && amountETH >= minETH, "WITHDRAW_SLIPPAGE");
         _safeTransfer(token, to, amountToken);
-        ILiddeWrappedVery(WETH).withdraw(amountETH);
+        ISymbWrappedVery(WETH).withdraw(amountETH);
         _safeNative(to, amountETH);
     }
 
@@ -170,7 +170,7 @@ contract LiddeRouter {
             uint256 outAmount = amounts[i + 1];
             (uint256 out0, uint256 out1) = input < output ? (uint256(0), outAmount) : (outAmount, uint256(0));
             address to = i + 2 < path.length ? _getPair(output, path[i + 2]) : recipient;
-            ILiddePair(pair).swap(out0, out1, to);
+            ISymbPair(pair).swap(out0, out1, to);
         }
     }
 
@@ -190,7 +190,7 @@ contract LiddeRouter {
         require(path.length >= 2 && path[0] == WETH, "WRONG_NATIVE_PATH");
         amounts = getAmountsOut(msg.value, path);
         require(amounts[amounts.length - 1] >= minOut, "SWAP_SLIPPAGE");
-        ILiddeWrappedVery(WETH).deposit{value: amounts[0]}();
+        ISymbWrappedVery(WETH).deposit{value: amounts[0]}();
         _safeTransfer(WETH, _getPair(path[0], path[1]), amounts[0]);
         _swap(amounts, path, to);
     }
@@ -205,7 +205,7 @@ contract LiddeRouter {
         _safeTransferFrom(path[0], msg.sender, _getPair(path[0], path[1]), amounts[0]);
         _swap(amounts, path, address(this));
         uint256 result = amounts[amounts.length - 1];
-        ILiddeWrappedVery(WETH).withdraw(result);
+        ISymbWrappedVery(WETH).withdraw(result);
         _safeNative(to, result);
     }
 }

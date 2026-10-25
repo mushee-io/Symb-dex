@@ -1,4 +1,4 @@
--- Lidde VERY Chain read-only event indexer schema (not wallet custody).
+-- Symb VERY Chain read-only event indexer schema (not wallet custody).
 -- Apply to an isolated Neon Postgres database after operator review.
 CREATE TABLE IF NOT EXISTS liquidity_pools (
   chain_id INTEGER NOT NULL CHECK (chain_id = 4613),

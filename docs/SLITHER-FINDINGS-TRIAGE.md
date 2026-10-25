@@ -1,4 +1,4 @@
-# Lidde — preliminary Slither finding triage (internal, NOT an external audit)
+# Symb — preliminary Slither finding triage (internal, NOT an external audit)
 
 Scope: original MIT Solidity sources in contracts/src as of 24 October 2026. Source: GitHub Actions Solidity Security Slither job from merged M07 commit f6218ff. This is an internal review, not independent security attestation.
 
@@ -6,8 +6,8 @@ Scope: original MIT Solidity sources in contracts/src as of 24 October 2026. Sou
 
 | Finding pattern | Example | Initial reasoning and action | Status |
 | --- | --- | --- | --- |
-| reentrancy-no-eth | LiddeFactory.createPair calls known LiddePair.initialize before recording mapping | All of that initializer's code is controlled and has no external untrusted calls, but recording mapping first is clearer checks-effects-interactions ordering. | **Changed** in hardening branch; rerun static checks |
-| reentrancy-no-eth / reentrancy-events | LiddePair.swap / burn transfer tokens and then sync/emit | Pair has an explicit lock around mint/burn/swap/sync, plus adversarial callback regression. Other read-only and cross-contract interactions still require external review. | **Mitigated by existing lock; open for external review** |
+| reentrancy-no-eth | SymbFactory.createPair calls known SymbPair.initialize before recording mapping | All of that initializer's code is controlled and has no external untrusted calls, but recording mapping first is clearer checks-effects-interactions ordering. | **Changed** in hardening branch; rerun static checks |
+| reentrancy-no-eth / reentrancy-events | SymbPair.swap / burn transfer tokens and then sync/emit | Pair has an explicit lock around mint/burn/swap/sync, plus adversarial callback regression. Other read-only and cross-contract interactions still require external review. | **Mitigated by existing lock; open for external review** |
 | low-level-calls | Router and Pair use raw ERC-20 transfer and transferFrom | Optional-return support is intentional; EOA token calls can incorrectly return success without token code. Require token.code.length > 0 before low-level ERC-20 sends. | **Changed** in hardening branch |
 | incorrect-equality | Strict comparisons in token-return check and sqrt | Zero and exact boolean-return comparisons are intended. These are not treated as independent exploit findings without a proof. | **Preliminary false-positive classification; external review** |
 | calls-loop | Router multihop swaps | getAmountsOut bounds paths to 2 or 3 hops; nested loops are bounded, but gas profiling and fork execution are still necessary. | **Open: gas profiling** |

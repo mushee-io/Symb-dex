@@ -1,38 +1,38 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
-import {LiddeTestToken} from "../src/testnet/LiddeTestToken.sol";
-import {LiddeTestFaucet} from "../src/testnet/LiddeTestFaucet.sol";
-import {LiddeFactory} from "../src/LiddeFactory.sol";
-import {LiddeRouter} from "../src/LiddeRouter.sol";
-import {LiddeWrappedVery} from "../src/LiddeWrappedVery.sol";
-import {LiddePair} from "../src/LiddePair.sol";
+import {SymbTestToken} from "../src/testnet/SymbTestToken.sol";
+import {SymbTestFaucet} from "../src/testnet/SymbTestFaucet.sol";
+import {SymbFactory} from "../src/SymbFactory.sol";
+import {SymbRouter} from "../src/SymbRouter.sol";
+import {SymbWrappedVery} from "../src/SymbWrappedVery.sol";
+import {SymbPair} from "../src/SymbPair.sol";
 
 interface VmT { function deal(address,uint256) external; function prank(address) external; function warp(uint256) external; }
-contract LiddeTestnetTest {
+contract SymbTestnetTest {
     VmT constant vm=VmT(address(uint160(uint256(keccak256("hevm cheat code")))));
     address constant ALICE=address(0xA11CE);
     address constant BOB=address(0xB0B);
-    LiddeTestToken tUSD;
-    LiddeTestToken tBTC;
-    LiddeTestFaucet faucet;
-    LiddeFactory factory;
-    LiddeRouter router;
-    LiddeWrappedVery wrapped;
+    SymbTestToken tUSD;
+    SymbTestToken tBTC;
+    SymbTestFaucet faucet;
+    SymbFactory factory;
+    SymbRouter router;
+    SymbWrappedVery wrapped;
 
     function setUp() public {
-        tUSD=new LiddeTestToken("Lidde test USD","tUSD",6,1_000_000_000e6);
-        tBTC=new LiddeTestToken("Lidde test BTC","tBTC",8,21_000_000e8);
+        tUSD=new SymbTestToken("Symb test USD","tUSD",6,1_000_000_000e6);
+        tBTC=new SymbTestToken("Symb test BTC","tBTC",8,21_000_000e8);
         address[] memory assets=new address[](2);
         assets[0]=address(tUSD);assets[1]=address(tBTC);
         uint256[] memory payouts=new uint256[](2);
         payouts[0]=1_000e6;payouts[1]=1e7;
-        faucet=new LiddeTestFaucet(assets,payouts,0.01 ether,24 hours);
+        faucet=new SymbTestFaucet(assets,payouts,0.01 ether,24 hours);
         tUSD.mint(address(faucet),100_000e6);
         tBTC.mint(address(faucet),10e8);
         vm.deal(address(faucet),10 ether);
-        factory=new LiddeFactory();
-        wrapped=new LiddeWrappedVery();
-        router=new LiddeRouter(address(factory),address(wrapped));
+        factory=new SymbFactory();
+        wrapped=new SymbWrappedVery();
+        router=new SymbRouter(address(factory),address(wrapped));
     }
     function testGaslessOperatorClaimAndCooldown() public {
         faucet.claimFor(ALICE);
@@ -56,12 +56,12 @@ contract LiddeTestnetTest {
         require(tUSD.balanceOf(BOB)==1000e6,"SELF_CLAIM");
     }
     function testFaucetFailsAtomicallyWithoutInventory() public {
-        tUSD=new LiddeTestToken("Empty USD","tUSD",6,100e6);
+        tUSD=new SymbTestToken("Empty USD","tUSD",6,100e6);
         address[] memory assets=new address[](1);
         assets[0]=address(tUSD);
         uint256[] memory amounts=new uint256[](1);
         amounts[0]=1e6;
-        LiddeTestFaucet empty=new LiddeTestFaucet(assets,amounts,0.01 ether,1 hours);
+        SymbTestFaucet empty=new SymbTestFaucet(assets,amounts,0.01 ether,1 hours);
         vm.deal(address(empty),1 ether);
         (bool ok,)=address(empty).call(abi.encodeWithSelector(empty.claimFor.selector,ALICE));
         require(!ok && !empty.claimed(ALICE) && ALICE.balance==0,"PARTIAL_CLAIM");
@@ -88,11 +88,11 @@ contract LiddeTestnetTest {
         vm.prank(BOB);
         uint256[] memory amounts=router.swapExactTokensForTokens(10e6,1,path,BOB,block.timestamp);
         require(amounts[1]>0 && tBTC.balanceOf(BOB)>1e7,"SWAP_NOT_EXECUTED");
-        uint256 lp=LiddePair(pairAddr).balanceOf(ALICE);
-        vm.prank(ALICE);LiddePair(pairAddr).approve(address(router),lp);
+        uint256 lp=SymbPair(pairAddr).balanceOf(ALICE);
+        vm.prank(ALICE);SymbPair(pairAddr).approve(address(router),lp);
         vm.prank(ALICE);
         (uint256 a,uint256 b)=router.removeLiquidity(address(tUSD),address(tBTC),lp,1,1,ALICE,block.timestamp);
         require(a>0 && b>0,"LP_NOT_WITHDRAWN");
-        require(LiddePair(pairAddr).balanceOf(ALICE)==0,"LP_REMAINS");
+        require(SymbPair(pairAddr).balanceOf(ALICE)==0,"LP_REMAINS");
     }
 }

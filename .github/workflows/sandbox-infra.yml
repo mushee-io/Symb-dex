@@ -23,7 +23,7 @@ jobs:
         env:
           SANDBOX_CHAIN_ID: "31337"
           RPC_HOSTNAME: "rpc.example.invalid"
-          RPC_ALLOWED_ORIGINS: "https://lidde.example.invalid"
+          RPC_ALLOWED_ORIGINS: "https://symb.example.invalid"
         run: docker compose -f infra/docker-compose.sandbox.yml config --quiet
       - name: Syntax-check daemon and deployment tools
         run: |

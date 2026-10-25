@@ -52,7 +52,7 @@ export const server=createServer(async(req,res)=>{
  try{
   // Check the upstream on every request, especially signed tx submissions.
   // A mistaken upstream pointing to VERY Mainnet must be rejected even if
-  // the external endpoint URL itself still says "lidde testnet".
+  // the external endpoint URL itself still says "symb testnet".
   await verifyUpstreamChain();
   const upstreamResponse=await fetch(upstream,{method:"POST",headers:{"Content-Type":"application/json"},
    body:JSON.stringify(json),signal:AbortSignal.timeout(15000)});

@@ -1,6 +1,6 @@
-# Lidde persistent developer blockchain — self-host deployment recipe
+# Symb persistent developer blockchain — self-host deployment recipe
 
-> **Not deployed by GitHub commits.** The compose stack is intended for a separately funded test infrastructure host with a DNS name and Docker Compose. It is a Lidde-operated independent EVM development network, NOT an official VERY testnet. All balances are fake. Never send real assets.
+> **Not deployed by GitHub commits.** The compose stack is intended for a separately funded test infrastructure host with a DNS name and Docker Compose. It is a Symb-operated independent EVM development network, NOT an official VERY testnet. All balances are fake. Never send real assets.
 
 ## What is included
 - Persistent **Anvil** dev EVM, with its state saved to the Docker named volume `anvil-state` every 10 seconds; 2-second blocks.
@@ -11,11 +11,11 @@
 ## Deployment on a designated host
 
 1. Install Docker Compose, set a REAL DNS hostname to point at the host, ensure HTTPS certificates can be issued and public ingress reaches ports 80/443. Review hosting charges and operator budget.
-2. Copy `.env.example` to `.env`. Replace placeholder `LIDDE_RPC_DOMAIN` with actual owned DNS, choose unique chain ID **not 4613**, and limit CORS to frontend origin where compatible.
-3. Run `docker compose up -d`; inspect `docker compose logs -f`, and check `https://$LIDDE_RPC_DOMAIN` responds to `eth_chainId` and `eth_getBlockByNumber`.
+2. Copy `.env.example` to `.env`. Replace placeholder `SYMB_RPC_DOMAIN` with actual owned DNS, choose unique chain ID **not 4613**, and limit CORS to frontend origin where compatible.
+3. Run `docker compose up -d`; inspect `docker compose logs -f`, and check `https://$SYMB_RPC_DOMAIN` responds to `eth_chainId` and `eth_getBlockByNumber`.
 4. Do not publish internal Docker Anvil port 8545. The gateway intentionally blocks administrative and key-holding methods.
 5. Before contract deployment, have a disposable test-only key funded with fake gas from the internal Anvil (or use a dedicated ephemeral Anvil test account, **never a real-value key**). Run the guarded Foundry deployment script against HTTPS RPC.
-6. Save actual Factory/Router/wrapper/faucet and pool receipts, verify all code on-chain and set an HTTPS explorer URL. The Lidde website includes a minimal read-only tx viewer at `/testnet/explorer`, but it does not replace a full production block explorer.
+6. Save actual Factory/Router/wrapper/faucet and pool receipts, verify all code on-chain and set an HTTPS explorer URL. The Symb website includes a minimal read-only tx viewer at `/testnet/explorer`, but it does not replace a full production block explorer.
 7. Run `npm run testnet:verify` (with `TESTNET_EXPECTED_CHAIN_ID`, `TESTNET_RPC_URL`, `TESTNET_EXPLORER_URL`) and explicitly authorize `npm run testnet:configure`. See `docs/M10-DEPLOYMENT.md`.
 8. Apply dedicated Neon migrations, enable the sponsored faucet only after single-signer nonce and rate-limit controls are tested, and schedule external wallet smoke tests.
 9. Back up `anvil-state`; **verify restart and recovery**. Announce resets; contract addresses and user histories will be invalidated if the chain is wiped.
