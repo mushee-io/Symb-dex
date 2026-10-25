@@ -1,4 +1,4 @@
-# Lidde delivery milestones
+# Symb delivery milestones
 
 All code is developed milestone-by-milestone. Checkmarks here represent delivered source code only; no feature is production-ready until its acceptance criteria pass.
 
@@ -126,7 +126,7 @@ No project web or blockchain mainnet trading is represented as live by this road
 
 **ROOT MASTER PLAN:** [Milestone 10 — 25 stages / 175 individually checkable tasks](../MILESTONE-10.md). This is the current delivery track, superseding the past M08/M09 mainnet-oriented schedules as active priorities.
 
-- [ ] Verify a genuine VERY testnet (not yet confirmed), or establish a separately identified persistent Lidde EVM developer network with its own chain ID, faucet, RPC and explorer.
+- [ ] Verify a genuine VERY testnet (not yet confirmed), or establish a separately identified persistent Symb EVM developer network with its own chain ID, faucet, RPC and explorer.
 - [ ] Deploy original MIT Factory, Pair, Router and test wrapped-native token **to test environment only**, record exact addresses and deployment block.
 - [ ] Provide free synthetic tVERY/tUSD/tUSDC/tUSDT/tBTC/tETH assets, testnet wallet onboarding and rate-limited faucets.
 - [ ] Make actual demo swaps, route selection, pool creation, deposits, LP ownership and redemptions work with real test-chain receipts.

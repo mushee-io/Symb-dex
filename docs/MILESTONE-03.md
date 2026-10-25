@@ -36,7 +36,7 @@ This milestone is intentionally independent of Milestone 2. It adds live **read-
 - Existing nonzero allowances must be revoked before a new positive approval request; exact allowance state is fetched on-chain.
 - Receipt is monitored, and only the wallet can authorize the transaction.
 - `config/deployments.json` is intentionally still fail-closed with null router, so approvals are blocked in this milestone.
-- Lidde cannot arbitrarily revoke approvals to unrelated third-party spenders with this screen. Users should use an established revoke tool for that purpose.
+- Symb cannot arbitrarily revoke approvals to unrelated third-party spenders with this screen. Users should use an established revoke tool for that purpose.
 - The UI gate alone is **not** a replacement for contract audits, verified source, independently checked addresses, or permission management.
 
 ### 5. Human smoke-test checklist (required before claiming end-to-end readiness)

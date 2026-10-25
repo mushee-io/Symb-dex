@@ -1,4 +1,4 @@
-# Lidde Milestone 08 — Deep Integration / Mainnet Beta Execution Plan
+# Symb Milestone 08 — Deep Integration / Mainnet Beta Execution Plan
 
 > **Root highlighted checklist:** [MILESTONE-08.md](../MILESTONE-08.md) lists all 18 stages and 90 checkable technical substeps. Start there for progress status, then use this runbook for implementation details.
 
@@ -61,7 +61,7 @@ The canonical WVERY issuer and bytecode are still unconfirmed. Explorer search r
 
 ### 8.1: Complete release candidate and machine-checkable manifest
 **Build:** final Factory, Pair, Router, canonical wrapped token adapter; freeze all contract source and compiler settings.
-**Contracts:** `contracts/src/LiddeFactory.sol`, `LiddePair.sol`, `LiddeRouter.sol`.
+**Contracts:** `contracts/src/SymbFactory.sol`, `SymbPair.sol`, `SymbRouter.sol`.
 **Validation:** `forge build --sizes`, `forge test -vv`, ABI signature comparison against Viem, bytecode hash comparison, 30 bps fee compatibility with frontend.
 **Evidence:** immutable source SHA, compiled artifact hashes, SPDX/provenance record, auditor signature.
 **Stop:** any source change after audit or ABI incompatibility requires re-review.

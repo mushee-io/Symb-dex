@@ -50,7 +50,7 @@ Browse `/pools`, `/pools/create`, `/portfolio`; currently they show honest empty
 
 ## Database and indexing
 
-Apply `db/liquidity-schema.sql` to a separate Neon database. Once a verified factory is set, configure `DATABASE_URL` and `LIDDE_INDEXER_START_BLOCK` as operator-only environment variables. Run `npm run index:liquidity` manually or via a separately authorized scheduler.
+Apply `db/liquidity-schema.sql` to a separate Neon database. Once a verified factory is set, configure `DATABASE_URL` and `SYMB_INDEXER_START_BLOCK` as operator-only environment variables. Run `npm run index:liquidity` manually or via a separately authorized scheduler.
 
 Indexer safety boundaries:
 - Reads only, chain ID and factory bytecode checked; ingests only logs from registered factory pools.

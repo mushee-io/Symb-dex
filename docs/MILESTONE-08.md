@@ -106,7 +106,7 @@
 - Permit public release only through a separate documented approval process.
 
 ## Exit tests
-1. A verified canonical wrapped VERY contract and independently audited Lidde bytecode are documented.
+1. A verified canonical wrapped VERY contract and independently audited Symb bytecode are documented.
 2. Real tiny first mint, token/native swap, partial LP withdrawal and full LP redemption succeed under capped funds.
 3. Explorer events, user balances and indexer records reconcile at explicit confirmed blocks.
 4. Incident procedures, funding limits, signers and monitoring are tested.

@@ -4,7 +4,7 @@
 
 ## What was built
 - Root LICENSE (MIT) and foundry.toml (Solidity 0.8.26, optimizer, Paris EVM, via IR, fuzz/invariant profiles).
-- Original Solidity in contracts/src: LiddeERC20, LiddeWrappedVery, LiddeFactory, LiddePair, LiddeRouter.
+- Original Solidity in contracts/src: SymbERC20, SymbWrappedVery, SymbFactory, SymbPair, SymbRouter.
 - Fixed 30 bps LP fee, ERC-20 swap paths, native VERY-compatible ABI selectors, LP mint/burn and first-1000-LP lock.
 - Foundry Solidity tests: swaps, pool creation, LP accounting, wrapped/native actions, deadlines, slippage, fuzz bounds, adversarial token reentrancy.
 - Stateful fuzz handler and invariant tests: reserve backing, permanently locked initial LP, factory pair identity.
@@ -18,7 +18,7 @@ Original Solidity source is MIT-licensed and uses SPDX-License-Identifier: MIT. 
 - 0.30% fixed swap fee stays in pool reserves for LPs; no owner-controlled fee switch or protocol revenue.
 - Factory and pairs are immutable/unpauseable experimental contracts. A frontend pause does not prevent direct on-chain activity.
 - Unsafe tokens including rebasing, tax-on-transfer, blacklist and upgradeable proxies are NOT automatically supported.
-- LiddeWrappedVery is a LOCAL WRAPPER REFERENCE, not verified as VERY Chain's canonical WVERY.
+- SymbWrappedVery is a LOCAL WRAPPER REFERENCE, not verified as VERY Chain's canonical WVERY.
 - Release configuration in config/deployments.json remains not-deployed/null/false. Do not change flags without signed independent release approval.
 
 ## Still required — not delivered
