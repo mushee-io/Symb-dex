@@ -1,0 +1,9 @@
+{$RPC_HOSTNAME} {
+  encode zstd gzip
+  reverse_proxy gateway:8080
+  header {
+    X-Frame-Options DENY
+    X-Content-Type-Options nosniff
+    Referrer-Policy no-referrer
+  }
+}
