@@ -23,7 +23,7 @@ export function AppShell({children}:{children:ReactNode}){
  return <div className={"dex-app"+(collapsed?" dex-condensed":"")}>
    {mobile&&<button className="dex-backdrop" aria-label="Close menu" type="button" onClick={()=>setMobile(false)}/>}
    <aside className={"dex-sidebar"+(mobile?" dex-sidebar-mobile-open":"")}>
-    <div className="dex-logo-row"><Link href="/" aria-label="Symb Dex public homepage" className="dex-logo"><span>✳</span><b>SYMB DEX</b></Link><button type="button" className="dex-collapse" onClick={()=>setCollapsed(v=>!v)} aria-label={collapsed?"Expand sidebar":"Collapse sidebar"}>⇤</button></div>
+    <div className="dex-logo-row"><Link href="/" aria-label="Symb Dex public homepage" className="dex-logo"><span className="dex-fish-glyph"><img src="/brand/symb-fish.svg" width="48" height="32" alt="" /></span><b>SYMB DEX</b></Link><button type="button" className="dex-collapse" onClick={()=>setCollapsed(v=>!v)} aria-label={collapsed?"Expand sidebar":"Collapse sidebar"}>⇤</button></div>
     <nav aria-label="Exchange navigation" className="dex-sidebar-nav">
      {nav.map(group=><div className="dex-nav-group" key={group.title}>
       <span className="dex-group-label">{group.title}</span>

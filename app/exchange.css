@@ -242,3 +242,8 @@
  .dex-crowd-tabs>a{margin-left:0}
 }
 @media(prefers-reduced-motion:reduce){.dex-sidebar,.dex-nav-item{transition:none}}
+
+/* Official Symb Dex white two-fish mark in the dark exchange sidebar. */
+.dex-logo .dex-fish-glyph{width:52px;height:44px;display:grid;place-items:center;background:#101113;border:1px solid #50545b;border-radius:12px;flex-shrink:0}
+.dex-logo .dex-fish-glyph img{width:45px;height:auto;max-height:35px;object-fit:contain}
+.dex-condensed .dex-logo .dex-fish-glyph{width:43px;height:43px}

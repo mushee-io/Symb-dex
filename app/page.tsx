@@ -4,7 +4,7 @@ import {demoNetwork,testnetReady} from "@/lib/testnet/network";
 export default function HomePage(){
  return <main className="sy-home">
   <section className="sy-home-hero">
-   <div className="sy-announce"><span className="sy-announce-dot">✳</span> Built for the VERY ecosystem</div>
+   <div className="sy-announce"><span className="sy-announce-dot"><img src="/brand/symb-fish.svg" width="25" height="17" alt="" /></span> Built for the VERY ecosystem</div>
    <div className="sy-hero-type">
     <h1><span>Trade Without Limits.</span><span>Built for VERY.</span></h1>
     <p>Swap tokens, create liquidity and discover opportunities on VERY. One connected trading experience, built for the next generation of on-chain markets.</p>
