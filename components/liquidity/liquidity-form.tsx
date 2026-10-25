@@ -6,14 +6,14 @@ import { erc20Abi, formatUnits,parseUnits, type Address } from "viem";
 import { useAccount,useChainId,useReadContract } from "wagmi";
 import deployments from "@/config/deployments.json";
 import { very } from "@/lib/very";
-import { useTokenRegistry,type LiddeToken } from "@/hooks/use-token-registry";
+import { useTokenRegistry,type SymbToken } from "@/hooks/use-token-registry";
 import { useLiquidityPair } from "@/hooks/use-liquidity-pools";
 import { useLiquidityExecution } from "@/hooks/use-liquidity-execution";
 import { previewAdd,previewRemove,percentageOfBalance,applySlippage } from "@/lib/liquidity/math.mjs";
 import { parseSlippage } from "@/lib/swap/math.mjs";
 import { isTradingEnabled } from "@/lib/release-gate.mjs";
 
-type Asset=LiddeToken & {native?:boolean};
+type Asset=SymbToken & {native?:boolean};
 const zero="0x0000000000000000000000000000000000000000" as Address;
 const short=(a:string)=>a.slice(0,7)+"…"+a.slice(-4);
 
@@ -103,8 +103,8 @@ export function LiquidityForm({fixedPair}:{fixedPair?:{token0:Address;token1:Add
       <button type="button" className={mode==="add"?"active":""} onClick={()=>{setMode("add");write.reset();}}>Add liquidity</button>
       <button type="button" className={mode==="remove"?"active":""} onClick={()=>{setMode("remove");write.reset();}}>Remove liquidity</button>
     </div>
-    {!selected && <p className="inline-notice">Only independently reviewed tokens can be deposited. Lidde currently has no configured approved pool contracts or reviewed token pairs.</p>}
-    {!live && <div className="inline-notice"><strong>Transactions locked.</strong> No audited Lidde factory, router and WVERY are approved for production. These forms are a development preview.</div>}
+    {!selected && <p className="inline-notice">Only independently reviewed tokens can be deposited. Symb currently has no configured approved pool contracts or reviewed token pairs.</p>}
+    {!live && <div className="inline-notice"><strong>Transactions locked.</strong> No audited Symb factory, router and WVERY are approved for production. These forms are a development preview.</div>}
     <div className="lp-input-grid">
       <label>Token A
         <select value={first} disabled={Boolean(fixedPair)} onChange={e=>{setFirst(e.target.value);setAmount0("");setInitialConfirmed(false);}}>
@@ -165,7 +165,7 @@ export function LiquidityForm({fixedPair}:{fixedPair?:{token0:Address;token1:Add
       {showApproval(asset1,amountNeeded1,allow1.data)}
     </>}
     {safePlan?.type==="remove" && pool && showApproval({
-      address:pool.address,name:"Lidde LP",symbol:"LP",decimals:18,verified:true
+      address:pool.address,name:"Symb LP",symbol:"LP",decimals:18,verified:true
     },safePlan.burn,allowLp.data,pool.address)}
     <button className="lp-submit" type="button" disabled={!canSend}
       onClick={()=>{

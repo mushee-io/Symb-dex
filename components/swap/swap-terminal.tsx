@@ -51,7 +51,7 @@ export function SwapTerminal() {
   const awaiting = phase === "validating" || phase === "awaiting-signature" || phase === "pending";
   const canSwap = Boolean(swapEnabled && token?.verified && quote && minReceived &&
     isConnected && chainId === very.id && slippageBps !== null && !awaiting && !isFetching);
-  const warning = !swapEnabled ? "No audited and approved Lidde router is deployed. This screen cannot submit transactions." :
+  const warning = !swapEnabled ? "No audited and approved Symb router is deployed. This screen cannot submit transactions." :
     !token ? "Select a reviewed token to request a live quote." :
     !token.verified ? "Imported token is unverified. Trading is blocked; importing never grants verification." :
     !isConnected ? "Connect a wallet to trade." :
