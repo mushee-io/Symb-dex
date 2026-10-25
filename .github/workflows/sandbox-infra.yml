@@ -1,0 +1,42 @@
+name: Persistent sandbox infrastructure checks
+on:
+  push:
+    paths: ["infra/**","scripts/daemon-testnet-indexer.mjs","scripts/export-fun-manifest.mjs",".github/workflows/sandbox-infra.yml"]
+  pull_request:
+    paths: ["infra/**","scripts/daemon-testnet-indexer.mjs","scripts/export-fun-manifest.mjs",".github/workflows/sandbox-infra.yml"]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify public JSON-RPC gateway abuse controls
+        run: node --test infra/rpc-gateway/policy.test.mjs
+      - name: Validate Compose without real infrastructure
+        env:
+          SANDBOX_CHAIN_ID: "31337"
+          RPC_HOSTNAME: "rpc.example.invalid"
+          RPC_ALLOWED_ORIGINS: "https://lidde.example.invalid"
+        run: docker compose -f infra/docker-compose.sandbox.yml config --quiet
+      - name: Syntax-check daemon and deployment tools
+        run: |
+          node --check infra/rpc-gateway/server.mjs
+          node --check scripts/export-fun-manifest.mjs
+          node --check scripts/daemon-testnet-indexer.mjs
+      - name: Report actual deployment inventory without pretending it exists
+        run: |
+          node --input-type=module <<'EOF'
+          import {readFileSync} from "node:fs";
+          for(const name of ["config/networks.testnet.json","config/deployments.testnet.json"]){
+            const x=JSON.parse(readFileSync(name,"utf8"));
+            if(!["not-configured","configured"].includes(x.status))throw Error("Invalid manifest state");
+            console.log(name,x.status);
+          }
+          EOF
