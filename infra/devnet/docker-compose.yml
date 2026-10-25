@@ -10,7 +10,7 @@ services:
       - "--port"
       - "8545"
       - "--chain-id"
-      - "${LIDDE_TEST_CHAIN_ID:-31338}"
+      - "${SYMB_TEST_CHAIN_ID:-31338}"
       - "--state"
       - "/data/state.json"
       - "--state-interval"
@@ -34,8 +34,8 @@ services:
       - UPSTREAM_RPC_URL=http://anvil:8545
       - RPC_BODY_LIMIT=65536
       - RPC_GLOBAL_RATE_PER_MINUTE=500
-      - RPC_ALLOWED_ORIGIN=${LIDDE_ALLOWED_ORIGIN:-*}
-      - RPC_EXPECTED_CHAIN_ID=${LIDDE_TEST_CHAIN_ID:-31338}
+      - RPC_ALLOWED_ORIGIN=${SYMB_ALLOWED_ORIGIN:-*}
+      - RPC_EXPECTED_CHAIN_ID=${SYMB_TEST_CHAIN_ID:-31338}
     command: ["node","/app/gateway.mjs"]
     depends_on: [anvil]
     restart: unless-stopped
@@ -50,7 +50,7 @@ services:
       - caddy-data:/data
       - caddy-config:/config
     environment:
-      - LIDDE_RPC_DOMAIN=${LIDDE_RPC_DOMAIN:?Set real RPC domain before deployment}
+      - SYMB_RPC_DOMAIN=${SYMB_RPC_DOMAIN:?Set real RPC domain before deployment}
     depends_on: [rpc-gateway]
     restart: unless-stopped
     networks: [private-chain]
