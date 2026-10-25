@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" role="img" aria-label="Abstract red and blue smoke">
+ <defs>
+  <linearGradient id="dark" x2="1" y2="1"><stop stop-color="#0a141b"/><stop offset=".5" stop-color="#1e1621"/><stop offset="1" stop-color="#040a10"/></linearGradient>
+  <radialGradient id="blue"><stop stop-color="#8ec9ea" stop-opacity=".9"/><stop offset=".38" stop-color="#3b87b4" stop-opacity=".7"/><stop offset="1" stop-color="#0c3153" stop-opacity="0"/></radialGradient>
+  <radialGradient id="red"><stop stop-color="#ffc3ae" stop-opacity=".85"/><stop offset=".32" stop-color="#d94d62" stop-opacity=".8"/><stop offset="1" stop-color="#6a102a" stop-opacity="0"/></radialGradient>
+  <filter id="f" x="-30%" y="-30%" width="160%" height="160%">
+   <feTurbulence baseFrequency=".012" numOctaves="4" seed="13" result="noise"/>
+   <feDisplacementMap in="SourceGraphic" in2="noise" scale="67" xChannelSelector="R" yChannelSelector="G"/>
+   <feGaussianBlur stdDeviation="14"/>
+  </filter>
+ </defs>
+ <rect width="500" height="500" fill="url(#dark)"/>
+ <g filter="url(#f)">
+  <ellipse cx="175" cy="250" rx="178" ry="240" fill="url(#blue)" transform="rotate(25 175 250)"/>
+  <ellipse cx="360" cy="225" rx="195" ry="245" fill="url(#red)" transform="rotate(-29 360 225)"/>
+  <ellipse cx="195" cy="360" rx="185" ry="90" fill="url(#blue)" opacity=".45"/>
+  <ellipse cx="328" cy="140" rx="115" ry="215" fill="url(#red)" opacity=".3"/>
+ </g>
+ <rect width="500" height="500" fill="#030609" opacity=".13"/>
+</svg>
