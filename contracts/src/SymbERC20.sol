@@ -3,7 +3,7 @@ pragma solidity 0.8.26;
 
 /// @notice Dependency-free, original ERC-20 primitive for LP shares and wrapped native assets.
 /// @dev LP locking requires _mint(address(0), MINIMUM_LIQUIDITY); never use as a general ERC-20 template.
-abstract contract LiddeERC20 {
+abstract contract SymbERC20 {
     string public name;
     string public symbol;
     uint8 public constant decimals = 18;

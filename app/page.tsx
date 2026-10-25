@@ -13,7 +13,7 @@ export default function HomePage(){
   <section className="hero shell">
    <div className="eyebrow"><span className="online-dot"/> TESTNET-FIRST DEVELOPMENT · NO REAL FUNDS</div>
    <h1>Trading belongs<br/><em>to everyone.</em></h1>
-   <p className="hero-copy">Meet Lidde: an experimental decentralized exchange being built toward VERY.
+   <p className="hero-copy">Meet Symb Dex: an experimental decentralized exchange being built toward VERY.
     Our immediate focus is a separate demo network where users can learn, test swaps and explore liquidity using valueless tokens.</p>
    <div className="hero-actions">
     <Link className="primary-link" href="/testnet">Explore testnet <span>↗</span></Link>

@@ -25,6 +25,6 @@ export const demoChain:Chain|null=demoNetwork ? defineChain({
  name:demoNetwork.name,
  nativeCurrency:demoNetwork.nativeCurrency,
  rpcUrls:{default:{http:[demoNetwork.rpcUrl]}},
- blockExplorers:{default:{name:"Lidde Test Explorer",url:demoNetwork.explorerUrl}},
+ blockExplorers:{default:{name:"Symb Test Explorer",url:demoNetwork.explorerUrl}},
  testnet:true,
 }):null;
